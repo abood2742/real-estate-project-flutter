@@ -9,7 +9,7 @@ class MyBlogsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
-        title: Text(
+        title: const Text(
           "طلبات رفع العقار",
           style: TextStyle(color: Colors.white, fontFamily: 'Pacifico'),
         ),

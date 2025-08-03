@@ -8,14 +8,13 @@ import 'package:property_system/client/screens/property_listing_at_an_office_pag
 import 'package:property_system/client/screens/search/comments/on%20property/property_comment_rating_page.dart';
 import 'package:property_system/client/screens/create_blog.dart';
 
-
 class ClientProfile extends StatelessWidget {
   const ClientProfile({super.key});
 
-  static const String fullName = " عبد الرحمن العلي ";
-  static const String username = "obida5679Gmail.com";
-  static const String phone = "0985129560";
-  static const String location = " دمشق السيدة زينب";
+  static const String firstName = " عبد الرحمن  ";
+  static const String lastName = "العلي";
+  static const String receiverIdentifier = "63223324";
+  static const String profilePhoto = " دمشق السيدة زينب";
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +82,10 @@ class ClientProfile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            _infoCard(title: "الاسم الكامل", value: fullName),
-            _infoCard(title: " الحساب", value: username),
-            _infoCard(title: "رقم الجوال", value: phone),
-            _infoCard(title: "موقع المكتب", value: location),
+            _infoCard(title: " الإسم", value: firstName),
+            _infoCard(title: " الكنية", value: lastName),
+            _infoCard(title: " معرف", value: receiverIdentifier),
+            _infoCard(title: "الموقع  ", value: profilePhoto),
             const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
