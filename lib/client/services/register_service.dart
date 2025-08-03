@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:property_system/client/models/start_register_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:property_system/client/models/auth_model.dart';
+import 'package:property_system/client/services/token_service.dart';
 
 class RegisterService {
-  Future<StartRegisterModel?> startRegisterPost(
+  Future<AuthModel?> startRegisterPost(
       {required String email, required String phoneNumber}) async {
     print("$email , + , $phoneNumber");
     Dio dio = Dio();
@@ -21,22 +20,13 @@ class RegisterService {
       );
 
       if (response.statusCode == 201) {
-        StartRegisterModel startRegisterModel =
-            StartRegisterModel.fromJson(response.data);
+        AuthModel authModel = AuthModel.fromJson(response.data);
 
-        print("done");
-        print(startRegisterModel);
-        print(startRegisterModel.runtimeType);
+        AuthService.saveAccessToken(authModel.accessToken);
+        AuthService.saveAccessToken(authModel.refreshToken);
 
-        final prefs = await SharedPreferences.getInstance();
-
-        await prefs.setString('accessToken', startRegisterModel.accessToken);
-        await prefs.setString('refreshToken', startRegisterModel.refreshToken);
-
-        return startRegisterModel;
+        return authModel;
       } else {
-        print('gyg');
-
         return null;
       }
     } catch (e) {
@@ -55,10 +45,7 @@ class RegisterService {
       'verify_code': verifyCode,
     };
 
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('accessToken');
-
-    print(token);
+    var token = await AuthService.getAccessToken();
 
     try {
       Response response =
@@ -94,8 +81,7 @@ class RegisterService {
   }) async {
     Dio dio = Dio();
 
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('accessToken');
+    var token = await AuthService.getAccessToken();
 
     try {
       FormData formData = FormData.fromMap({

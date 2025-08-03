@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/auth/register/register1_page.dart';
+import 'package:property_system/client/models/auth_model.dart';
+import 'package:property_system/client/screens/auth/register/register_page.dart';
+import 'package:property_system/client/screens/main/home_page.dart';
+import 'package:property_system/client/services/login_service.dart';
 
-
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +49,9 @@ class LoginPage extends StatelessWidget {
               flex: 1,
             ),
             TextField(
+              onChanged: (value) {
+                _emailController.text = value;
+              },
               decoration: InputDecoration(
                 suffixIcon: const Icon(
                   Icons.email,
@@ -65,6 +78,9 @@ class LoginPage extends StatelessWidget {
               flex: 2,
             ),
             TextField(
+              onChanged: (value) {
+                _passwordController.text = value;
+              },
               decoration: InputDecoration(
                 suffixIcon: const Icon(
                   Icons.key,
@@ -91,6 +107,14 @@ class LoginPage extends StatelessWidget {
               flex: 3,
             ),
             GestureDetector(
+              onTap: () async{
+                var success = await login();
+
+                if (success == true)
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return HomePage();
+                  }));
+              },
               child: Container(
                 decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 31, 37, 145),
@@ -127,7 +151,7 @@ class LoginPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Register1Page();
+                        return RegisterPage();
                       }));
                     },
                     child: Text(
@@ -149,5 +173,21 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool?> login() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    print('$email + email');
+    print('$password + password');
+
+    var authModel =
+        await LoginService().login(email: email, password: password);
+    if (authModel?.accessToken != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

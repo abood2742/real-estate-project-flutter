@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/screens/auth/login/login_page.dart';
 import 'package:property_system/client/screens/auth/register/verification_code.dart';
-import 'package:property_system/client/models/start_register_model.dart';
 import 'package:property_system/client/services/register_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class Register1Page extends StatefulWidget {
-  Register1Page({super.key});
+class RegisterPage extends StatefulWidget {
+  RegisterPage({super.key});
 
   @override
-  State<Register1Page> createState() => _Register1PageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
 String? phoneNumber, email;
 
-class _Register1PageState extends State<Register1Page> {
+class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

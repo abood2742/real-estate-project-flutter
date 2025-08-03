@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/components/expired_components.dart';
 import 'package:property_system/client/screens/auth/register/registerType_page.dart';
 import 'package:property_system/client/screens/auth/register/officeowener.dart';
-import 'package:property_system/client/screens/search/comments/client_comments.dart';
 import 'package:property_system/client/screens/more/client_properties/client_expired_property_page.dart';
 import 'package:property_system/client/screens/more/client_properties/property_details_in_expired_property_page.dart';
 import 'package:property_system/client/screens/more/reserved_properties/client_reserverd_page.dart';
 import 'package:property_system/client/screens/more/property_offer/post_property2.dart';
 import 'package:property_system/client/screens/more/property_offer/post_property1.dart';
 
-import 'package:property_system/client/screens/search/resault/office/office_page_in_search_list_page.dart';
 import 'package:property_system/client/screens/more/complaint/one_complaint_page.dart';
-import 'package:property_system/client/screens/search/comments/on%20property/property_comment_rating_page.dart';
-import 'package:property_system/client/screens/more/complaint/send_complaint_page.dart';
-import 'package:property_system/client/screens/auth/register/user_info_enter_page.dart';
-import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/client/screens/search/comments/on%20property/comments_on_property_page.dart';
 import 'package:property_system/client/screens/more/complaint/complaient_page.dart';
 import 'package:property_system/client/screens/more/complaint/push_complaint_page.dart';
-import 'package:property_system/client/screens/initial_page.dart';
-import 'package:property_system/client/screens/more/notification/client_notification_page.dart';
 import 'package:property_system/client/screens/more/profile/client_profile.dart';
-import 'package:property_system/client/screens/auth/register/register1_page.dart';
-import 'package:property_system/client/screens/auth/register/verification_code.dart';
+import 'package:property_system/client/screens/auth/register/register_page.dart';
 
 class MorePage extends StatefulWidget {
   MorePage({super.key});
@@ -228,7 +218,7 @@ class _MorePageState extends State<MorePage> {
                 label: 'Authontication',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Register1Page();
+                    return RegisterPage();
                   }));
                 },
               ),
