@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/auth/login/login_page.dart';
 
 class BlockPage extends StatelessWidget {
   const BlockPage({super.key});

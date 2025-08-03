@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/common/screens/client_change_password_page.dart';
-import 'package:property_system/client/screens/search/comments/on%20property/comments_on_property_page.dart';
 import 'package:property_system/client/screens/more/profile/client_edit_information_page.dart';
 import 'package:property_system/client/screens/more/notification/client_notification_page.dart';
-import 'package:property_system/client/screens/more/property_offer/post_property1.dart';
 import 'package:property_system/client/screens/property_listing_at_an_office_page.dart';
-import 'package:property_system/client/screens/search/comments/on%20property/property_comment_rating_page.dart';
 import 'package:property_system/client/screens/create_blog.dart';
 
 

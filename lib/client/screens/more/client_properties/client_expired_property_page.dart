@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/saved/SavedOfficesPage.dart';
-import 'package:property_system/client/screens/saved/SavedPropertiesPage.dart';
 import 'package:property_system/client/screens/more/client_properties/client_experid_for_rent_page_.dart';
 import 'package:property_system/client/screens/more/client_properties/client_expired_for_buy_page.dart';
 

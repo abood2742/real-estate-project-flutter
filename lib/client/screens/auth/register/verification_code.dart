@@ -97,7 +97,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                 if (verifyCode.isNotEmpty) {
                   var message = await RegisterService()
                       .verifyCodePost(verifyCode: verifyCode);
-                  print(message);
+                  print('$message + message');
                   if (message!) {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {

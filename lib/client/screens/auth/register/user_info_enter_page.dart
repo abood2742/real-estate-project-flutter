@@ -198,7 +198,7 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
     );
   }
 
-  Widget _buildTextField(String label, TextInputType keyboardType,
+  Widget _buildTextField(String label, TextInputType keyboardType, 
       TextEditingController controller,
       {bool obscureText = false}) {
     return TextField(

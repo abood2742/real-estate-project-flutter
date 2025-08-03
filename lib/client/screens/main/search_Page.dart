@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:property_system/client/components/rectangle.dart';
 import 'package:property_system/client/components/widget_search.dart';
 import 'package:property_system/client/screens/search/filter/filters_page.dart';
