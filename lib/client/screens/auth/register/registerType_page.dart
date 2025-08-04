@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/main/main_page.dart';
-import 'package:property_system/client/screens/auth/register/officeowener.dart';
 import 'package:property_system/client/screens/auth/register/register_page.dart';
+import 'package:property_system/client/screens/main/main_page.dart';
 
 class RegistertypePage extends StatelessWidget {
   const RegistertypePage({super.key});
@@ -46,7 +45,7 @@ class RegistertypePage extends StatelessWidget {
               color: const Color(0xFF7B61FF),
               onTap: () {
                 Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) =>  RegisterPage()),
+                  MaterialPageRoute(builder: (_) => RegisterPage(type: false)),
                 );
               },
             ),
@@ -58,7 +57,7 @@ class RegistertypePage extends StatelessWidget {
               color: const Color(0xFF46A3FF),
               onTap: () {
                 Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) =>  OfficeOwner()),
+                  MaterialPageRoute(builder: (_) => RegisterPage(type: true)),
                 );
               },
             ),

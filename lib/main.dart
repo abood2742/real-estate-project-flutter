@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/main/main_page.dart';
+import 'package:property_system/client/screens/initial_page.dart';
 
 
 void main() {
@@ -21,7 +21,7 @@ class PropertySystem extends StatelessWidget {
       },
       home: Scaffold(
         backgroundColor: Colors.white,
-        body: MainPage(),
+        body: InitialPage(),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/models/auth_model.dart';
-import 'package:property_system/client/screens/auth/register/register_page.dart';
+//import 'package:property_system/client/models/auth_model.dart';
+import 'package:property_system/client/screens/auth/register/registerType_page.dart';
+//import 'package:property_system/client/screens/auth/register/register_page.dart';
 import 'package:property_system/client/screens/main/home_page.dart';
 import 'package:property_system/client/services/login_service.dart';
 
@@ -151,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return RegisterPage();
+                        return RegistertypePage();
                       }));
                     },
                     child: Text(
