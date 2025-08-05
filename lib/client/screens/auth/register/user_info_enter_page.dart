@@ -226,7 +226,7 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
 
   Future<void> enterInfo() async {
     print(_nationalNumberController.value);
-    await RegisterService(). enterInfoPost(
+    await RegisterService(). enterClientInfoPost(
   firstName: _firstNameController.text,
   lastName: _lastNameController.text,
   nationalNumber: _nationalNumberController.text,

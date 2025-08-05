@@ -4,7 +4,9 @@ import 'package:property_system/client/screens/auth/register/verification_code.d
 import 'package:property_system/client/services/register_service.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({super.key});
+  final bool type;
+
+  RegisterPage({super.key, required this.type});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -97,16 +99,34 @@ class _RegisterPageState extends State<RegisterPage> {
             GestureDetector(
               onTap: () async {
                 try {
-                  var token = await RegisterService().startRegisterPost(
-                      email: email!, phoneNumber: phoneNumber!);
+                  if (widget.type) {
+                    var token = await RegisterService().startOfficeRegisterPost(
+                        email: email!, phoneNumber: phoneNumber!);
 
-                  if (token != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VerificationCode(),
-                      ),
-                    );
+                    if (token != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VerificationCode(
+                            type: widget.type,
+                          ),
+                        ),
+                      );
+                    }
+                  } else {
+                    var token = await RegisterService().startClientRegisterPost(
+                        email: email!, phoneNumber: phoneNumber!);
+
+                    if (token != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VerificationCode(
+                            type: widget.type,
+                          ),
+                        ),
+                      );
+                    }
                   }
                 } catch (e) {
                   print('Error: $e');

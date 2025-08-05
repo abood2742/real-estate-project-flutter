@@ -35,19 +35,19 @@ class OfficeOwner extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              _buildTextField('الإسم الكامل', TextInputType.name),
+              _buildTextField('Full Name', TextInputType.name),
               const SizedBox(height: 16),
-              _buildTextField('إسم المكتب', TextInputType.text),
+              _buildTextField('Office Name', TextInputType.text),
               const SizedBox(height: 16),
-              _buildTextField('الإيميل', TextInputType.emailAddress),
+              _buildTextField('Email', TextInputType.emailAddress),
               const SizedBox(height: 16),
-              _buildTextField('كلمة المرور', TextInputType.text, obscureText: true),
+              _buildTextField('Password', TextInputType.text, obscureText: true),
               const SizedBox(height: 16),
-              _buildTextField('رقم المبايل ', TextInputType.phone),
+              _buildTextField('Phone Number', TextInputType.phone),
               const SizedBox(height: 16),
               _buildTextField('رقم الاستماع', TextInputType.number),
               const SizedBox(height: 16),
-              _buildTextField('موقع المكتب', TextInputType.text),
+              _buildTextField('Office Location', TextInputType.text),
               const SizedBox(height: 20),
 
               Align(
@@ -72,6 +72,24 @@ class OfficeOwner extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+
+                    FloatingActionButton(
+                      mini: true,
+                      onPressed: () {
+                        print('تم الضغط على زر +');
+                      },
+                      backgroundColor: Colors.blue,
+                      child: const Icon(Icons.add),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Lift the office photo',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.blueGrey[800],
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -82,6 +100,7 @@ class OfficeOwner extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     print('تم الضغط على Sign Up');
+                    
                     // وظيفة التسجيل هنا
                   },
                   style: ElevatedButton.styleFrom(

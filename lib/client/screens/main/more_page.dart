@@ -218,7 +218,7 @@ class _MorePageState extends State<MorePage> {
                 label: 'Authontication',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return RegisterPage();
+                    return RegistertypePage();
                   }));
                 },
               ),
