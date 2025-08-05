@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:property_system/client/models/profile.model.dart';
+import 'package:property_system/client/services/user_profile.service.dart';
 import 'package:property_system/common/screens/client_change_password_page.dart';
 import 'package:property_system/client/screens/more/profile/client_edit_information_page.dart';
 import 'package:property_system/client/screens/more/notification/client_notification_page.dart';
 import 'package:property_system/client/screens/property_listing_at_an_office_page.dart';
 import 'package:property_system/client/screens/create_blog.dart';
 
-class ClientProfile extends StatelessWidget {
+class ClientProfile extends StatefulWidget {
   const ClientProfile({super.key});
 
   static const String firstName = " عبد الرحمن  ";
@@ -14,7 +16,61 @@ class ClientProfile extends StatelessWidget {
   static const String profilePhoto = " دمشق السيدة زينب";
 
   @override
+  State<ClientProfile> createState() => _ClientProfileState();
+}
+
+class _ClientProfileState extends State<ClientProfile> {
+  late ProfileModel? profileModel;
+  var isLoading;
+  var hasError;
+
+
+  @override
+  void initState() {
+    super.initState();
+    loadProfile(); // استدعاء تابع منفصل لتحميل البيانات
+  }
+
+  Future<void> loadProfile() async {
+    setState(() {
+      isLoading = true;
+      hasError = false;
+    });
+    try {
+      profileModel = await ProfileService().getProfile();
+    } catch (e) {
+      hasError = true;
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    if (isLoading) {
+    // عرض مؤشر تحميل
+    return Scaffold(
+      appBar: AppBar(title: const Text("ملفي الشخصي")),
+      body: const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
+    if (hasError || profileModel == null) {
+      // الصفحة تعرض رسالة خطأ أو صفحة تحميل مثلاً
+      return Scaffold(
+        appBar: AppBar(title: const Text("ملفي الشخصي")),
+        body: Center(
+          child: Text(
+            "حدث خطأ في تحميل بيانات الملف الشخصي.",
+            style: TextStyle(fontSize: 18, color: Colors.red),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -48,10 +104,10 @@ class ClientProfile extends StatelessWidget {
                       child: InteractiveViewer(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            'assets/images/client.jpg',
-                            fit: BoxFit.cover,
-                          ),
+                          // child: Image.asset(
+                          //   //'assets/images/client.jpg',
+                          //   //fit: BoxFit.cover,
+                          // ),
                         ),
                       ),
                     ),
@@ -70,19 +126,26 @@ class ClientProfile extends StatelessWidget {
                         offset: Offset(0, 4),
                       ),
                     ],
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/client.jpg'),
-                      fit: BoxFit.cover,
-                    ),
+                    // image: const DecorationImage(
+                    //   image: AssetImage('assets/images/client.jpg'),
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 24),
-            _infoCard(title: " الإسم", value: firstName),
-            _infoCard(title: " الكنية", value: lastName),
-            _infoCard(title: " معرف", value: receiverIdentifier),
-            _infoCard(title: "الموقع  ", value: profilePhoto),
+            _infoCard(
+                title: " الإسم",
+                value: "${profileModel!.firstName} ${profileModel!.lastName}"),
+            //_infoCard(title: " الكنية", value: ClientProfile.lastName),
+            _infoCard(title: " البريد الإلكتروني", value: profileModel!.email),
+            _infoCard(title: "الرقم", value: profileModel!.phone),
+            _infoCard(
+                title: "الرقم الوطني", value: profileModel!.nationalNumber),
+            //_infoCard(title: "الموقع  ", value: ClientProfile.profilePhoto),
+            //_infoCard(title: "الموقع  ", value: ClientProfile.profilePhoto),
+
             const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

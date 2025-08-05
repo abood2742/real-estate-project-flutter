@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'package:property_system/client/models/auth_model.dart';
-import 'package:property_system/client/screens/auth/register/registerType_page.dart';
-//import 'package:property_system/client/screens/auth/register/register_page.dart';
-import 'package:property_system/client/screens/main/home_page.dart';
+import 'package:property_system/client/screens/auth/register/register_page.dart';
 import 'package:property_system/client/services/login_service.dart';
+import 'package:property_system/client/screens/main/main_page.dart';
+import 'package:property_system/client/services/token_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -108,12 +107,13 @@ class _LoginPageState extends State<LoginPage> {
               flex: 3,
             ),
             GestureDetector(
-              onTap: () async{
+              onTap: () async {
                 var success = await login();
 
                 if (success == true)
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return HomePage();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return MainPage();
                   }));
               },
               child: Container(
@@ -125,6 +125,35 @@ class _LoginPageState extends State<LoginPage> {
                 child: Center(
                   child: Text(
                     'LOGIN',
+                    style: TextStyle(
+                        fontFamily: 'Pacifico',
+                        color: Colors.white,
+                        fontSize: 22),
+                  ),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                var token = await AuthService.getAccessToken();
+                print('$token');
+                AuthService.clearAccessToken();
+                var token1 = await AuthService.getAccessToken();
+                print('$token1');
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return MainPage();
+                }));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 31, 37, 145),
+                    borderRadius: BorderRadius.circular(16)),
+                height: 50,
+                width: 300,
+                child: Center(
+                  child: Text(
+                    'skip',
                     style: TextStyle(
                         fontFamily: 'Pacifico',
                         color: Colors.white,
@@ -152,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return RegistertypePage();
+                        return RegisterPage();
                       }));
                     },
                     child: Text(

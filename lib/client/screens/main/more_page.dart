@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/auth/register/registerType_page.dart';
 import 'package:property_system/client/screens/auth/register/officeowener.dart';
 import 'package:property_system/client/screens/more/client_properties/client_expired_property_page.dart';
 import 'package:property_system/client/screens/more/client_properties/property_details_in_expired_property_page.dart';
@@ -145,16 +144,7 @@ class _MorePageState extends State<MorePage> {
                 
               ),
 
-                buildMenuButton(
-                icon: Icons.language,
-                label: 'user type',
-                onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return RegistertypePage();
-                  }));
-                  
-                },
-              ),
+                
                         buildMenuButton(
                 icon: Icons.language,
                 label: 'PostProperty1',
@@ -218,7 +208,7 @@ class _MorePageState extends State<MorePage> {
                 label: 'Authontication',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return RegistertypePage();
+                    return RegisterPage();
                   }));
                 },
               ),

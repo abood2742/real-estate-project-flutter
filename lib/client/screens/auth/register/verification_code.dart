@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:property_system/client/screens/auth/register/officeowener.dart';
 import 'package:property_system/client/screens/auth/register/user_info_enter_page.dart';
 import 'package:property_system/client/services/register_service.dart';
 
 class VerificationCode extends StatefulWidget {
-  final bool type;
-  const VerificationCode({super.key, required this.type});
+  //final bool type;
+  const VerificationCode({super.key});
 
   @override
   State<VerificationCode> createState() => _VerificationCodeState();
@@ -101,17 +100,12 @@ class _VerificationCodeState extends State<VerificationCode> {
                       .verifyCodePost(verifyCode: verifyCode);
                   print('$message + message');
                   if (message!) {
-                    if (widget.type) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return OfficeOwner();
-                      }));
-                    } else {
+                    
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return UserInfoEnterPage();
                       }));
-                    }
+                    
                   }
                 }
               },

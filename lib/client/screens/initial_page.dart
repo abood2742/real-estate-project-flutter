@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/auth/register/registerType_page.dart';
+import 'package:property_system/client/screens/auth/login/login_page.dart';
+
 
 class InitialPage extends StatelessWidget {
   const InitialPage({super.key});
@@ -61,7 +62,7 @@ class InitialPage extends StatelessWidget {
             ),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return RegistertypePage();
+                return LoginPage();
               }));
             },
             child: const Text(
