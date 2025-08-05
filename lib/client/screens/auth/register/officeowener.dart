@@ -9,7 +9,7 @@ class OfficeOwner extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: const Text(
-          'Office Owner',
+          'تسجيل كمكتب عقاري',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -35,19 +35,19 @@ class OfficeOwner extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              _buildTextField('Full Name', TextInputType.name),
+              _buildTextField('الإسم الكامل', TextInputType.name),
               const SizedBox(height: 16),
-              _buildTextField('Office Name', TextInputType.text),
+              _buildTextField('إسم المكتب', TextInputType.text),
               const SizedBox(height: 16),
-              _buildTextField('Email', TextInputType.emailAddress),
+              _buildTextField('الإيميل', TextInputType.emailAddress),
               const SizedBox(height: 16),
-              _buildTextField('Password', TextInputType.text, obscureText: true),
+              _buildTextField('كلمة المرور', TextInputType.text, obscureText: true),
               const SizedBox(height: 16),
-              _buildTextField('Phone Number', TextInputType.phone),
+              _buildTextField('رقم المبايل ', TextInputType.phone),
               const SizedBox(height: 16),
-              _buildTextField('Number License', TextInputType.number),
+              _buildTextField('رقم الاستماع', TextInputType.number),
               const SizedBox(height: 16),
-              _buildTextField('Office Location', TextInputType.text),
+              _buildTextField('موقع المكتب', TextInputType.text),
               const SizedBox(height: 20),
 
               Align(
@@ -65,7 +65,7 @@ class OfficeOwner extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Lift the license',
+                      'إرفاق وسائط',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.blueGrey[800],
