@@ -9,7 +9,7 @@ class OfficeOwner extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: const Text(
-          'Office Owner',
+          'تسجيل كمكتب عقاري',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -35,16 +35,20 @@ class OfficeOwner extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
+              _buildTextField('Full Name', TextInputType.name),
+              const SizedBox(height: 16),
               _buildTextField('Office Name', TextInputType.text),
+              const SizedBox(height: 16),
+              _buildTextField('Email', TextInputType.emailAddress),
               const SizedBox(height: 16),
               _buildTextField('Password', TextInputType.text, obscureText: true),
               const SizedBox(height: 16),
-              _buildTextField('Number License', TextInputType.number),
+              _buildTextField('Phone Number', TextInputType.phone),
               const SizedBox(height: 16),
-              _buildTextField('Personal Identity Number', TextInputType.number),
+              _buildTextField('رقم الاستماع', TextInputType.number),
               const SizedBox(height: 16),
-              // _buildTextField('Office Location', TextInputType.text),
-              // const SizedBox(height: 20),
+              _buildTextField('Office Location', TextInputType.text),
+              const SizedBox(height: 20),
 
               Align(
                 alignment: Alignment.centerLeft,
@@ -61,7 +65,7 @@ class OfficeOwner extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Lift the license',
+                      'إرفاق وسائط',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.blueGrey[800],
