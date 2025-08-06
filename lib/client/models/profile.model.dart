@@ -10,7 +10,7 @@ String welcomeToJson(ProfileModel data) => json.encode(data.toJson());
 
 class ProfileModel {
     String id;
-    String? firstName;
+    String firstName;
     String lastName;
     ProfilePhoto profilePhoto;
     String nationalNumber;

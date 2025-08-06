@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/components/office_card.dart';
+import 'package:property_system/client/components/office_cards/office_card.dart';
 
 
 
@@ -12,7 +12,7 @@ class SavedOfficesPage extends StatelessWidget {
       body: ListView(
         children: [
           OfficeCard(
-  imageUrl: 'assets/images/office.jpg',
+  imageUrl: 'assets/images/office1.jpg',
   rating: 4.5,
   location: 'Bab Toma',
   onShowPressed: () {

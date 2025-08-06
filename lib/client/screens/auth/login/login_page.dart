@@ -135,11 +135,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             GestureDetector(
               onTap: () async {
-                var token = await AuthService.getAccessToken();
-                print('$token');
                 AuthService.clearAccessToken();
-                var token1 = await AuthService.getAccessToken();
-                print('$token1');
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
                   return MainPage();

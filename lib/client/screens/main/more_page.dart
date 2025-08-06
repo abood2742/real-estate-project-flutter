@@ -93,7 +93,7 @@ class _MorePageState extends State<MorePage> {
                   height: 40,
                   width: 40,
                   child: Lottie.asset(
-                    'assets/moer_amolation.json',
+                    'assets/more_amolation.json',
                     repeat: true,
                     animate: true,
                     delegates: LottieDelegates(
@@ -133,7 +133,7 @@ class _MorePageState extends State<MorePage> {
                 },
                 
               ),
-    buildMenuButton(
+              buildMenuButton(
                 icon: Icons.language,
                 label: 'OfficeOwner',
                 onTap: () {
@@ -143,6 +143,8 @@ class _MorePageState extends State<MorePage> {
                 },
                 
               ),
+
+            
 
                 
                         buildMenuButton(

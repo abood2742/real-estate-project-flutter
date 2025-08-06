@@ -24,7 +24,6 @@ class _ClientProfileState extends State<ClientProfile> {
   var isLoading;
   var hasError;
 
-
   @override
   void initState() {
     super.initState();
@@ -48,16 +47,15 @@ class _ClientProfileState extends State<ClientProfile> {
 
   @override
   Widget build(BuildContext context) {
-
     if (isLoading) {
-    // عرض مؤشر تحميل
-    return Scaffold(
-      appBar: AppBar(title: const Text("ملفي الشخصي")),
-      body: const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
+      // عرض مؤشر تحميل
+      return Scaffold(
+        appBar: AppBar(title: const Text("ملفي الشخصي")),
+        body: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
 
     if (hasError || profileModel == null) {
       // الصفحة تعرض رسالة خطأ أو صفحة تحميل مثلاً
@@ -71,6 +69,7 @@ class _ClientProfileState extends State<ClientProfile> {
         ),
       );
     }
+    final imageUrl = profileModel!.profilePhoto.url;
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -104,46 +103,51 @@ class _ClientProfileState extends State<ClientProfile> {
                       child: InteractiveViewer(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          // child: Image.asset(
-                          //   //'assets/images/client.jpg',
-                          //   //fit: BoxFit.cover,
-                          // ),
+                          child: Image.network(
+                            imageUrl,
+                            height: 130,
+                            width: 150,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
                   );
                 },
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.brown.shade300, width: 3),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 6,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                    // image: const DecorationImage(
-                    //   image: AssetImage('assets/images/client.jpg'),
-                    //   fit: BoxFit.cover,
-                    // ),
-                  ),
+                // child: InteractiveViewer(
+                child: CircleAvatar(
+                  radius: 65,
+                  backgroundImage: NetworkImage(imageUrl),
                 ),
+
+                // child: Container(
+                //   width: 120,
+                //   height: 120,
+                //   decoration: BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     border: Border.all(color: Colors.brown.shade300, width: 3),
+                //     boxShadow: const [
+                //       BoxShadow(
+                //         color: Colors.black12,
+                //         blurRadius: 6,
+                //         offset: Offset(0, 4),
+                //       ),
+                //     ],
+                //     // image: const DecorationImage(
+                //     //   image: AssetImage('assets/images/client.jpg'),
+                //     //   fit: BoxFit.cover,
+                //     // ),
+                //   ),
+                // ),
               ),
             ),
             const SizedBox(height: 24),
-            _infoCard(
-                title: " الإسم",
-                value: "${profileModel!.firstName} ${profileModel!.lastName}"),
-            //_infoCard(title: " الكنية", value: ClientProfile.lastName),
+            _infoCard(title: " الإسم", value: profileModel!.firstName),
+            _infoCard(title: " الكنية", value: profileModel!.lastName),
             _infoCard(title: " البريد الإلكتروني", value: profileModel!.email),
             _infoCard(title: "الرقم", value: profileModel!.phone),
-            _infoCard(
-                title: "الرقم الوطني", value: profileModel!.nationalNumber),
-            //_infoCard(title: "الموقع  ", value: ClientProfile.profilePhoto),
+            _infoCard(title: "الرقم الوطني", value: profileModel!.nationalNumber),
+            //_infoCard(title: "رقم البطاقة البنكية", value: profileModel!.re),
             //_infoCard(title: "الموقع  ", value: ClientProfile.profilePhoto),
 
             const SizedBox(height: 30),
