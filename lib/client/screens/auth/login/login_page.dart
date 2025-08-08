@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             GestureDetector(
               onTap: () async {
-                AuthService.clearAccessToken();
+                print('accessToken = ${await AuthService.getAccessToken()} ');
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
                   return MainPage();
@@ -204,9 +204,6 @@ class _LoginPageState extends State<LoginPage> {
   Future<bool?> login() async {
     final email = _emailController.text;
     final password = _passwordController.text;
-
-    print('$email + email');
-    print('$password + password');
 
     var authModel =
         await LoginService().login(email: email, password: password);

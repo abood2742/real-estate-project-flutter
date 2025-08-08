@@ -21,6 +21,8 @@ class _SearchPageState extends State<SearchPage> {
 
   List<OfficeCardModel>? officeCardModels;
 
+  var list;
+
   void _showOffices() async {
     setState(() {
       isLoadingOffices = true;
@@ -142,7 +144,9 @@ class _SearchPageState extends State<SearchPage> {
               ),
               const SizedBox(width: 30),
               GestureDetector(
-                onTap: _showOffices,
+                onTap: () {
+                  _showOffices();
+                },
                 child: Container(
                   height: 60,
                   width: 195,
@@ -176,9 +180,9 @@ class _SearchPageState extends State<SearchPage> {
           /// عرض حالة التحميل أو المكاتب أو العقارات
           if (isLoadingOffices)
             const Center(child: CircularProgressIndicator())
-          else if (showOffices && officeCardModels != null)
+          else if (showOffices && officeCardModels != null) ...[
             ..._buildOfficeWidgets()
-          else if (showProperties) ...[
+          ] else if (showProperties) ...[
             const WidgetSearch(
               returned: PropertyDetailesPage(),
               title: 'Deppartment',
@@ -207,7 +211,7 @@ class _SearchPageState extends State<SearchPage> {
         name: office.name,
         phone: office.officePhone,
         imageUrl: office.officePhoto.url,
-        ratingsCount: office.ratingsCount,
+        rating: office.ratings,
         onTap: () {
           Navigator.push(
               context,

@@ -1,6 +1,8 @@
+
 import 'package:dio/dio.dart';
 import 'package:property_system/client/models/office_card_model.dart';
 import 'package:property_system/client/models/office_details_model.dart';
+import 'package:property_system/client/services/token_service.dart';
 
 class SearchService {
   Future<List<OfficeCardModel>?> getAllOffices() async {
@@ -13,8 +15,6 @@ class SearchService {
       if (response.statusCode == 200) {
         PageModel pageModel = PageModel.fromJson(response.data);
         List<OfficeCardModel> officeCardModels = pageModel.data;
-        officeCardModels[0].ratingsCount = 3;
-        officeCardModels[1].ratingsCount = 4.5;
 
         return officeCardModels;
       } else {
@@ -36,11 +36,26 @@ class SearchService {
       Response response =
           await dio.get('http://localhost:3000/api/office/$officeId');
 
-      if (response.statusCode == 200) {
-        OfficeDetailsModel officeDetailsModel =
-            OfficeDetailsModel.fromJson(response.data);
+      var token = await AuthService.getAccessToken();
 
-        officeDetailsModel.ratingsCount = 3.5;
+      if (response.statusCode == 200) {
+        OfficeDetailsModel officeDetailsModel;
+        if (token == null) {
+          officeDetailsModel =
+              OfficeDetailsModel.fromJson(response.data, isFavorite: false);
+        } else {
+          Response isFavorite = await dio.get(
+              'http://localhost:3000/api/favorite-office/$officeId',
+              options: Options(headers: {'Authorization': 'Bearer $token'}));
+          if(isFavorite.data == 'true'){
+          officeDetailsModel = OfficeDetailsModel.fromJson(response.data,
+              isFavorite: true);
+          } else {
+          officeDetailsModel = OfficeDetailsModel.fromJson(response.data,
+              isFavorite: false);
+          }
+
+        }
         return officeDetailsModel;
       } else {
         return null;

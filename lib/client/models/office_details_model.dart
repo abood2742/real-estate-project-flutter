@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-OfficeDetailsModel welcomeFromJson(String str) =>
-    OfficeDetailsModel.fromJson(json.decode(str));
+// OfficeDetailsModel welcomeFromJson(String str) =>
+//     OfficeDetailsModel.fromJson(json.decode(str));
 
 String welcomeToJson(OfficeDetailsModel data) => json.encode(data.toJson());
 
@@ -18,7 +18,8 @@ class OfficeDetailsModel {
   LicensePhoto licensePhoto;
   String licenseNumber;
   String personalIdentityNumber;
-  double ratingsCount;
+  double rating;
+  bool isFavorite;
   List<dynamic> blogs;
 
   OfficeDetailsModel({
@@ -30,11 +31,12 @@ class OfficeDetailsModel {
     required this.licensePhoto,
     required this.licenseNumber,
     required this.personalIdentityNumber,
-    required this.ratingsCount,
+    required this.rating,
+    required this.isFavorite,
     required this.blogs,
   });
 
-  factory OfficeDetailsModel.fromJson(Map<String, dynamic> json) =>
+  factory OfficeDetailsModel.fromJson(Map<String, dynamic> json, {required bool isFavorite}) =>
       OfficeDetailsModel(
         id: json["id"],
         name: json["name"],
@@ -44,7 +46,8 @@ class OfficeDetailsModel {
         licensePhoto: LicensePhoto.fromJson(json["license_photo"]),
         licenseNumber: json["license_Number"],
         personalIdentityNumber: json["personal_identity_number"],
-        ratingsCount: json["ratingsCount"],
+        isFavorite: isFavorite,
+        rating: json["rating"],
         blogs: List<dynamic>.from(json["blogs"].map((x) => x)),
       );
 
@@ -57,9 +60,15 @@ class OfficeDetailsModel {
         "license_photo": licensePhoto.toJson(),
         "license_Number": licenseNumber,
         "personal_identity_number": personalIdentityNumber,
-        "ratingsCount": ratingsCount,
+        "rating": rating,
+        "isFavorite": isFavorite,
         "blogs": List<dynamic>.from(blogs.map((x) => x)),
       };
+
+  @override
+  String toString() {
+    return "favoritOffice : (id: $id \nname: $name \noffice_phone: $officePhone \noffice_email: $officeEmail \noffice_photo: $officePhoto \nlicense_photo: $licensePhoto \nlicense_Number: $licenseNumber \npersonal_identity_number: $personalIdentityNumber \nratings: $rating \nisFavorite: $isFavorite \nblogs: $blogs)";
+  }
 }
 
 class OfficePhoto {

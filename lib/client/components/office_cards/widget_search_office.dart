@@ -5,18 +5,19 @@ class OfficeWidget extends StatelessWidget {
   final String name;
   final String phone;
   final String imageUrl;
-  final double ratingsCount; // غيرت إلى double لدعم نصف النجوم
+  final double rating; // لدعم نصف النجوم
   final VoidCallback? onTap;
+  final VoidCallback? onRemove;
 
   const OfficeWidget({
     super.key,
     required this.name,
     required this.phone,
     required this.imageUrl,
-    required this.ratingsCount,
+    required this.rating,
     this.onTap,
+    this.onRemove,
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +26,13 @@ class OfficeWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           elevation: 2,
           shadowColor: const Color.fromARGB(255, 53, 145, 133),
           child: Padding(
-            padding: const EdgeInsets.all(12), // Padding داخلي للكارد
+            padding: const EdgeInsets.all(12),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start, // يضمن محاذاة من الأعلى
               children: [
                 // الصورة على اليمين
                 ClipRRect(
@@ -47,15 +48,15 @@ class OfficeWidget extends StatelessWidget {
                         width: 120,
                         color: Colors.grey[300],
                         child: const Center(
-                            child: Icon(Icons.broken_image, size: 40)),
+                          child: Icon(Icons.broken_image, size: 40),
+                        ),
                       );
                     },
                   ),
                 ),
-                const SizedBox(
-                  width: 150,
-                ),
-                // الجزء الأيسر: الاسم، رقم الهاتف، تقييم النجوم
+                const SizedBox(width: 12),
+
+                // الجزء الأيسر: النصوص + النجوم + زر الحذف في الأسفل
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,26 +75,38 @@ class OfficeWidget extends StatelessWidget {
                           Text(
                             phone,
                             style: const TextStyle(
-                                fontSize: 15, color: Colors.grey),
+                              fontSize: 15,
+                              color: Colors.grey,
+                            ),
                           ),
                           const SizedBox(width: 4),
                           const Icon(Icons.phone, size: 20, color: Colors.grey),
                         ],
                       ),
                       const SizedBox(height: 10),
-                      Row(
-                        children:[
-                        RatingStarsWidget(rating: ratingsCount),
+                      RatingStarsWidget(rating: rating),
 
-                        ]
-
-                           // List.generate(5, (index) => _buildStar(index + 1)),
-                      ),
+                      const SizedBox(height: 10), // مسافة قبل الزر
+                      if (onRemove != null)
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: RawMaterialButton(
+                            onPressed: onRemove,
+                            elevation: 2.0,
+                            fillColor: const Color(0xFF1565C0),
+                            constraints: const BoxConstraints(minWidth: 0.0),
+                            child: const Icon(
+                              Icons.delete_outline_sharp,
+                              color: Colors.white,
+                              size: 15.0,
+                            ),
+                            padding: const EdgeInsets.all(12.0),
+                            shape: const CircleBorder(),
+                          ),
+                        ),
                     ],
                   ),
                 ),
-
-                const SizedBox(width: 12),
               ],
             ),
           ),
