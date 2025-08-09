@@ -38,8 +38,6 @@ class RegisterService {
     }
   }
 
-
-
   Future<bool?> verifyCodePost({required String verifyCode}) async {
     Dio dio = Dio();
 
@@ -90,7 +88,7 @@ class RegisterService {
         'first_name': firstName,
         'last_name': lastName,
         'national_number': nationalNumber,
-        'receiverIdentifier': receiverIdentifier,
+        'receiver_identifier': receiverIdentifier,
         'password': password,
         if (image != null)
           'profile_photo': await MultipartFile.fromFile(
@@ -130,8 +128,8 @@ class RegisterService {
     required String licenseNumber,
     required String personalIdentityNumber,
     required String receiverIdentifier,
-    File? officePhoto,// خليها nullable عشان ممكن ما ترسلش صورة
-    File? licensePhoto, 
+    File? officePhoto, // خليها nullable عشان ممكن ما ترسلش صورة
+    File? licensePhoto,
   }) async {
     Dio dio = Dio();
 

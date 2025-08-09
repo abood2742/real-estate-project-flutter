@@ -158,7 +158,6 @@ class _MorePageState extends State<MorePage> {
                   }));
                 },
               ),
-             
               buildMenuButton(
                 icon: Icons.report_problem,
                 label: 'تقديم شكوى',
@@ -248,9 +247,7 @@ class _MorePageState extends State<MorePage> {
                 },
               ),
               GestureDetector(
-                onTap: () {
-                  
-                },
+                onTap: () {},
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   padding:
