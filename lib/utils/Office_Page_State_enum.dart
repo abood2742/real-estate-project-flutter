@@ -1,4 +1,4 @@
-enum OfficePageState {
+enum PagesState {
   loading,
   success,
   error,

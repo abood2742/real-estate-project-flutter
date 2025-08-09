@@ -158,6 +158,31 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
+            GestureDetector(
+              onTap: () async {
+                await AuthService.clearAccessToken();
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return MainPage();
+                }));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 31, 37, 145),
+                    borderRadius: BorderRadius.circular(16)),
+                height: 50,
+                width: 300,
+                child: const Center(
+                  child: Text(
+                    'skip 2',
+                    style: TextStyle(
+                        fontFamily: 'Pacifico',
+                        color: Colors.white,
+                        fontSize: 22),
+                  ),
+                ),
+              ),
+            ),
             Spacer(
               flex: 3,
             ),

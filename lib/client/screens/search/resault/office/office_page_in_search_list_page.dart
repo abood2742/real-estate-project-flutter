@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/custom_buttons/build_stars.dart';
 import 'package:property_system/client/models/office_details_model.dart';
+import 'package:property_system/client/screens/search/comments/Add_Comment_And_Rating_Page.dart';
+import 'package:property_system/client/screens/search/comments/Comments_Page.dart';
 import 'package:property_system/client/services/favorite_office_service.dart';
 import 'package:property_system/client/services/search_service.dart';
 import 'package:property_system/utils/Office_Page_State_enum.dart';
 
-// the name of this page i think need to be changed
-// look at SavedOfficesPage page to understand
 class OfficePageInSearchListPage extends StatefulWidget {
   final String officeId;
   const OfficePageInSearchListPage({super.key, required this.officeId});
@@ -18,7 +18,7 @@ class OfficePageInSearchListPage extends StatefulWidget {
 
 class _OfficePageInSearchListPageState
     extends State<OfficePageInSearchListPage> {
-  OfficePageState pageState = OfficePageState.loading;
+  PagesState pageState = PagesState.loading;
   OfficeDetailsModel? officeDetailsModel;
 
   @override
@@ -31,20 +31,13 @@ class _OfficePageInSearchListPageState
     try {
       officeDetailsModel =
           await SearchService().getOneOffice(officeId: widget.officeId);
-
       if (officeDetailsModel != null) {
-        setState(() {
-          pageState = OfficePageState.success;
-        });
+        setState(() => pageState = PagesState.success);
       } else {
-        setState(() {
-          pageState = OfficePageState.error;
-        });
+        setState(() => pageState = PagesState.error);
       }
     } catch (e) {
-      setState(() {
-        pageState = OfficePageState.error;
-      });
+      setState(() => pageState = PagesState.error);
     }
   }
 
@@ -52,12 +45,9 @@ class _OfficePageInSearchListPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'معلومات المكتب',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: const Text('معلومات المكتب'),
         actions: [
-          if (pageState == OfficePageState.success)
+          if (pageState == PagesState.success)
             IconButton(
               icon: Icon(
                 officeDetailsModel!.isFavorite
@@ -69,10 +59,7 @@ class _OfficePageInSearchListPageState
               ),
               onPressed: () async {
                 final newStatus = !officeDetailsModel!.isFavorite;
-                setState(() {
-                  officeDetailsModel!.isFavorite = newStatus;
-                });
-
+                setState(() => officeDetailsModel!.isFavorite = newStatus);
                 if (newStatus) {
                   await FavoriteOfficeService()
                       .addOfficeToFavorite(officeId: officeDetailsModel!.id);
@@ -87,30 +74,30 @@ class _OfficePageInSearchListPageState
       body: Builder(
         builder: (_) {
           switch (pageState) {
-            case OfficePageState.loading:
+            case PagesState.loading:
               return const Center(child: CircularProgressIndicator());
-
-            case OfficePageState.error:
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.error, color: Colors.red, size: 48),
-                    const SizedBox(height: 8),
-                    const Text('حدث خطأ أثناء تحميل البيانات'),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: getOneOffice,
-                      child: const Text('إعادة المحاولة'),
-                    ),
-                  ],
-                ),
-              );
-
-            case OfficePageState.success:
+            case PagesState.error:
+              return _buildError();
+            case PagesState.success:
               return _buildOfficeDetails();
           }
         },
+      ),
+    );
+  }
+
+  Widget _buildError() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.error, color: Colors.red, size: 48),
+          const SizedBox(height: 8),
+          const Text('حدث خطأ أثناء تحميل البيانات'),
+          const SizedBox(height: 16),
+          ElevatedButton(
+              onPressed: getOneOffice, child: const Text('إعادة المحاولة')),
+        ],
       ),
     );
   }
@@ -143,25 +130,13 @@ class _OfficePageInSearchListPageState
           RatingStarsWidget(rating: officeDetailsModel!.rating),
           const SizedBox(height: 16),
           _buildInfoCard(
-            icon: Icons.web,
-            title: 'البريد الإلكتروني',
-            subtitle: officeDetailsModel!.officeEmail,
-          ),
+              Icons.web, 'البريد الإلكتروني', officeDetailsModel!.officeEmail),
           _buildInfoCard(
-            icon: Icons.phone,
-            title: 'رقم الهاتف',
-            subtitle: officeDetailsModel!.officePhone,
-          ),
-          _buildInfoCard(
-            icon: Icons.description,
-            title: 'رقم الرخصة',
-            subtitle: officeDetailsModel!.licenseNumber,
-          ),
-          _buildInfoCard(
-            icon: Icons.badge,
-            title: 'الرقم الوطني',
-            subtitle: officeDetailsModel!.personalIdentityNumber,
-          ),
+              Icons.phone, 'رقم الهاتف', officeDetailsModel!.officePhone),
+          _buildInfoCard(Icons.description, 'رقم الرخصة',
+              officeDetailsModel!.licenseNumber),
+          _buildInfoCard(Icons.badge, 'الرقم الوطني',
+              officeDetailsModel!.personalIdentityNumber),
           const SizedBox(height: 16),
           ElevatedButton.icon(
             onPressed: () {
@@ -175,15 +150,40 @@ class _OfficePageInSearchListPageState
             icon: const Icon(Icons.image),
             label: const Text('عرض صورة الترخيص'),
           ),
+          const SizedBox(height: 20),
+          // الزر الجديد - إضافة تقييم
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AddCommentAndRatingPage(officeId: widget.officeId,),
+                ),
+              );
+            },
+            icon: const Icon(Icons.rate_review),
+            label: const Text('إضافة تعليق وتقييم'),
+          ),
+          const SizedBox(height: 10),
+          // الزر الجديد - عرض كل التعليقات
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CommentsPage(officeId: officeDetailsModel!.id,),
+                ),
+              );
+            },
+            icon: const Icon(Icons.comment),
+            label: const Text('عرض كل التعليقات'),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildInfoCard(
-      {required IconData icon,
-      required String title,
-      required String subtitle}) {
+  Widget _buildInfoCard(IconData icon, String title, String subtitle) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/screens/search/reservation/Property_reservation.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
-import 'package:property_system/client/screens/search/comments/on%20property/property_comment_rating_page.dart';
+import 'package:property_system/client/screens/search/comments/Add_Comment_And_Rating_Page.dart';
 import 'package:property_system/client/screens/report/report_post_page.dart';
 
 class PropertyDetailesPage extends StatefulWidget {
@@ -179,7 +179,7 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const PropertyCommentRatingPage()));
+                                  const AddCommentAndRatingPage(officeId: '',)));
                     },
                     child: const Text(
                       'التقييم والتعليق',

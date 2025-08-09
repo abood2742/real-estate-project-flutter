@@ -8,7 +8,6 @@ import 'package:property_system/client/screens/more/property_offer/post_property
 import 'package:property_system/client/screens/more/property_offer/post_property1.dart';
 
 import 'package:property_system/client/screens/more/complaint/one_complaint_page.dart';
-import 'package:property_system/client/screens/search/comments/on%20property/comments_on_property_page.dart';
 import 'package:property_system/client/screens/more/complaint/complaient_page.dart';
 import 'package:property_system/client/screens/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/more/profile/client_profile.dart';
@@ -131,52 +130,35 @@ class _MorePageState extends State<MorePage> {
                 onTap: () {
                   _showLanguageSheet(context);
                 },
-                
               ),
               buildMenuButton(
                 icon: Icons.language,
                 label: 'OfficeOwner',
                 onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return OfficeOwner();
                   }));
                 },
-                
               ),
-
-            
-
-                
-                        buildMenuButton(
+              buildMenuButton(
                 icon: Icons.language,
                 label: 'PostProperty1',
                 onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return PostProperty1();
                   }));
-                  
                 },
-  
               ),
-
-                        buildMenuButton(
+              buildMenuButton(
                 icon: Icons.language,
                 label: 'PostProperty2',
                 onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return PostProperty2();
                   }));
-                  
-                },                
+                },
               ),
-
-               
-
-                
-
-                
-                
-              
+             
               buildMenuButton(
                 icon: Icons.report_problem,
                 label: 'تقديم شكوى',
@@ -186,7 +168,6 @@ class _MorePageState extends State<MorePage> {
                   }));
                 },
               ),
-
               buildMenuButton(
                 icon: Icons.report_problem,
                 label: 'الشكاوى',
@@ -268,9 +249,7 @@ class _MorePageState extends State<MorePage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return CommentsOnPropertyPage();
-                  }));
+                  
                 },
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 8),
