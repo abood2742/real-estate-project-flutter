@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/saved/SavedOfficesPage.dart';
+import 'package:property_system/client/screens/saved/Favorite_Offices_Page.dart';
 import 'package:property_system/client/screens/saved/SavedPropertiesPage.dart';
 
 class SavedPage extends StatelessWidget {
@@ -48,7 +48,7 @@ class SavedPage extends StatelessWidget {
           body: TabBarView(
             children: [
               SavedPropertiesPage(), // ✅ صفحة العقارات
-              SavedOfficesPage(),    // ✅ صفحة المكاتب
+              FavoriteOfficesPage(),    // ✅ صفحة المكاتب
             ],
           ),
         ),

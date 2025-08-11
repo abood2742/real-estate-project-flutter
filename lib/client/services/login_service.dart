@@ -7,9 +7,6 @@ class LoginService {
       {required String email, required String password}) async {
     Dio dio = Dio();
 
-   print('$email + email');
-    print('$password + password');
-
     final body = {'email': email, 'password': password};
 
     try {
@@ -19,9 +16,10 @@ class LoginService {
       if (response.statusCode == 201) {
         AuthModel authModel = AuthModel.fromJson(response.data);
 
-        AuthService.saveAccessToken(authModel.accessToken);
+        await AuthService.saveAccessToken(authModel.accessToken);
         AuthService.saveAccessToken(authModel.refreshToken);
 
+        print('accessToken = ${await AuthService.getAccessToken()}');
         return authModel;
       } else {
         return null;

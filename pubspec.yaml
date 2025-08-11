@@ -38,23 +38,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/pic1.jpg
-    - assets/images/pic2.jpg
-    - assets/images/sliver.png
-    - assets/images/sliver2.png
-    - assets/images/pic1.jpg
-    - assets/more_Animation.json
-    - assets/moer_amolation.json
-    - assets/filter_amolation.json
-    - assets/complaint.json
-    - assets/images/card.jpg
-    - assets/images/office.jpg
-    - assets/images/off1.jpg
-    - assets/images/off2.jpg
-    - assets/images/off3.jpg
-    - assets/images/init.png
-    - assets/images/pic3.jpg
-
+    - assets/images/
+    - assets/
   fonts:
     - family: Pacifico
       fonts:
