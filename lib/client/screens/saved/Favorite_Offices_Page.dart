@@ -52,7 +52,7 @@ class _FavoriteOfficesPageState extends State<FavoriteOfficesPage> {
       name: office.name,
       phone: office.officePhone,
       imageUrl: office.officePhoto.url,
-      rating: office.rating,
+      rating: office.ratings,
       onTap: () {
         Navigator.push(
             context,

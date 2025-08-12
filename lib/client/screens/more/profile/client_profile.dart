@@ -10,11 +10,6 @@ import 'package:property_system/client/screens/create_blog.dart';
 class ClientProfile extends StatefulWidget {
   const ClientProfile({super.key});
 
-  static const String firstName = " عبد الرحمن  ";
-  static const String lastName = "العلي";
-  static const String receiverIdentifier = "63223324";
-  static const String profilePhoto = " دمشق السيدة زينب";
-
   @override
   State<ClientProfile> createState() => _ClientProfileState();
 }
@@ -69,7 +64,7 @@ class _ClientProfileState extends State<ClientProfile> {
         ),
       );
     }
-    final imageUrl = profileModel!.profilePhoto.url;
+    final imageUrl = profileModel?.profilePhoto?.url;
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -95,50 +90,38 @@ class _ClientProfileState extends State<ClientProfile> {
             Center(
               child: GestureDetector(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => Dialog(
-                      backgroundColor: Colors.transparent,
-                      insetPadding: const EdgeInsets.all(10),
-                      child: InteractiveViewer(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            imageUrl,
-                            height: 130,
-                            width: 150,
-                            fit: BoxFit.cover,
+                  if (imageUrl != null && imageUrl.isNotEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (_) => Dialog(
+                        backgroundColor: Colors.transparent,
+                        insetPadding: const EdgeInsets.all(10),
+                        child: InteractiveViewer(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              imageUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/images/default_avatar.png',
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
-                // child: InteractiveViewer(
                 child: CircleAvatar(
                   radius: 65,
-                  backgroundImage: NetworkImage(imageUrl),
+                  backgroundImage: imageUrl != null && imageUrl.isNotEmpty
+                      ? NetworkImage(imageUrl)
+                      : const AssetImage('assets/images/default_avatar.png')
+                          as ImageProvider,
                 ),
-
-                // child: Container(
-                //   width: 120,
-                //   height: 120,
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     border: Border.all(color: Colors.brown.shade300, width: 3),
-                //     boxShadow: const [
-                //       BoxShadow(
-                //         color: Colors.black12,
-                //         blurRadius: 6,
-                //         offset: Offset(0, 4),
-                //       ),
-                //     ],
-                //     // image: const DecorationImage(
-                //     //   image: AssetImage('assets/images/client.jpg'),
-                //     //   fit: BoxFit.cover,
-                //     // ),
-                //   ),
-                // ),
               ),
             ),
             const SizedBox(height: 24),
@@ -146,7 +129,8 @@ class _ClientProfileState extends State<ClientProfile> {
             _infoCard(title: " الكنية", value: profileModel!.lastName),
             _infoCard(title: " البريد الإلكتروني", value: profileModel!.email),
             _infoCard(title: "الرقم", value: profileModel!.phone),
-            _infoCard(title: "الرقم الوطني", value: profileModel!.nationalNumber),
+            _infoCard(
+                title: "الرقم الوطني", value: profileModel!.nationalNumber),
             //_infoCard(title: "رقم البطاقة البنكية", value: profileModel!.re),
             //_infoCard(title: "الموقع  ", value: ClientProfile.profilePhoto),
 

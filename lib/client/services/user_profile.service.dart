@@ -8,7 +8,6 @@ class ProfileService {
 
     var token = await AuthService.getAccessToken();
 
-    print(token);
     try {
       Response response =
           await dio.get('http://localhost:3000/api/user/get-current',
@@ -18,12 +17,9 @@ class ProfileService {
               }));
 
       if (response.statusCode == 200) {
-        print('${response.data} + rf');
         ProfileModel profileModel = ProfileModel.fromJson(response.data);
         return profileModel;
       } else {
-        print('${response.data} + rf');
-
         return null;
       }
     } catch (e) {

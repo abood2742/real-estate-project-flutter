@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:property_system/client/models/office_card_model.dart';
 import 'package:property_system/client/models/office_details_model.dart';
@@ -47,14 +46,13 @@ class SearchService {
           Response isFavorite = await dio.get(
               'http://localhost:3000/api/favorite-office/$officeId',
               options: Options(headers: {'Authorization': 'Bearer $token'}));
-          if(isFavorite.data == 'true'){
-          officeDetailsModel = OfficeDetailsModel.fromJson(response.data,
-              isFavorite: true);
+          if (isFavorite.data == 'true') {
+            officeDetailsModel =
+                OfficeDetailsModel.fromJson(response.data, isFavorite: true);
           } else {
-          officeDetailsModel = OfficeDetailsModel.fromJson(response.data,
-              isFavorite: false);
+            officeDetailsModel =
+                OfficeDetailsModel.fromJson(response.data, isFavorite: false);
           }
-
         }
         return officeDetailsModel;
       } else {

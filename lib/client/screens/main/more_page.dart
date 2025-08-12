@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/auth/register/officeowener.dart';
+import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
 import 'package:property_system/client/screens/more/client_properties/client_expired_property_page.dart';
 import 'package:property_system/client/screens/more/client_properties/property_details_in_expired_property_page.dart';
 import 'package:property_system/client/screens/more/reserved_properties/client_reserverd_page.dart';
@@ -11,7 +11,6 @@ import 'package:property_system/client/screens/more/complaint/one_complaint_page
 import 'package:property_system/client/screens/more/complaint/complaient_page.dart';
 import 'package:property_system/client/screens/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/more/profile/client_profile.dart';
-import 'package:property_system/client/screens/auth/register/register_page.dart';
 
 class MorePage extends StatefulWidget {
   MorePage({super.key});
@@ -136,7 +135,7 @@ class _MorePageState extends State<MorePage> {
                 label: 'OfficeOwner',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return OfficeOwner();
+                    return CreateOfficePage();
                   }));
                 },
               ),
@@ -182,15 +181,6 @@ class _MorePageState extends State<MorePage> {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return PostProperty1();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.report_problem,
-                label: 'Authontication',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return RegisterPage();
                   }));
                 },
               ),
