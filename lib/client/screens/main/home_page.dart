@@ -48,7 +48,6 @@ class HomePage extends StatelessWidget {
                     children: [
                       Spacer(flex: 2),
                       Icon(Icons.location_on, size: 20, color: Colors.grey),
-                      Spacer(flex: 1),
                       Text(
                         'location ',
                         style: TextStyle(

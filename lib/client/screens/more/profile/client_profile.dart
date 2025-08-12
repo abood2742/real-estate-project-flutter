@@ -57,9 +57,17 @@ class _ClientProfileState extends State<ClientProfile> {
       return Scaffold(
         appBar: AppBar(title: const Text("ملفي الشخصي")),
         body: Center(
-          child: Text(
-            "حدث خطأ في تحميل بيانات الملف الشخصي.",
-            style: TextStyle(fontSize: 18, color: Colors.red),
+          child: Column(
+            children: [
+              Text(
+                "حدث خطأ في تحميل بيانات الملف الشخصي.",
+               
+               
+                style: TextStyle(fontSize: 18, color: Colors.red),
+                
+              ),
+              
+            ],
           ),
         ),
       );

@@ -13,7 +13,7 @@ class ProfileService {
           await dio.get('http://localhost:3000/api/user/get-current',
               options: Options(headers: {
                 'Authorization': 'Bearer $token',
-                'Content-Type': 'multipart/form-data', // مهم جدًا
+            //    'Content-Type': 'multipart/form-data', // مهم جدًا
               }));
 
       if (response.statusCode == 200) {
