@@ -3,8 +3,8 @@ import 'package:lottie/lottie.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
 import 'package:property_system/client/screens/more/client_properties/client_expired_property_page.dart';
 import 'package:property_system/client/screens/more/client_properties/property_details_in_expired_property_page.dart';
+import 'package:property_system/client/screens/more/create_property/Property_Type_Page.dart';
 import 'package:property_system/client/screens/more/reserved_properties/client_reserverd_page.dart';
-import 'package:property_system/client/screens/more/property_offer/post_property2.dart';
 import 'package:property_system/client/screens/more/property_offer/post_property1.dart';
 
 import 'package:property_system/client/screens/more/complaint/one_complaint_page.dart';
@@ -132,10 +132,19 @@ class _MorePageState extends State<MorePage> {
               ),
               buildMenuButton(
                 icon: Icons.language,
-                label: 'OfficeOwner',
+                label: 'إنشاء مكتب',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return CreateOfficePage();
+                  }));
+                },
+              ),
+              buildMenuButton(
+                icon: Icons.language,
+                label: 'نشر عقار',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return PropertyTypesPage();
                   }));
                 },
               ),
@@ -145,15 +154,6 @@ class _MorePageState extends State<MorePage> {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return PostProperty1();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.language,
-                label: 'PostProperty2',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return PostProperty2();
                   }));
                 },
               ),
@@ -175,15 +175,7 @@ class _MorePageState extends State<MorePage> {
                   }));
                 },
               ),
-              buildMenuButton(
-                icon: Icons.add_business,
-                label: 'نشر عقار',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return PostProperty1();
-                  }));
-                },
-              ),
+              
               buildMenuButton(
                 icon: Icons.report_problem,
                 label: 'Authontication1',
