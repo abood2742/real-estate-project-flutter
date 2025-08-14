@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:property_system/client/screens/auth/register/officeowener.dart';
+import 'package:property_system/client/screens/auth/register/user_info_enter_page.dart';
 import 'package:property_system/client/screens/more/client_properties/client_expired_property_page.dart';
 import 'package:property_system/client/screens/more/client_properties/property_details_in_expired_property_page.dart';
 import 'package:property_system/client/screens/more/reserved_properties/client_reserverd_page.dart';
@@ -119,8 +120,18 @@ class _MorePageState extends State<MorePage> {
                 icon: Icons.person,
                 label: 'ملفي الشخصي',
                 onTap: () {
+                  print("object");
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ClientProfile();
+                  }));
+                },
+              ),
+              buildMenuButton(
+                icon: Icons.person,
+                label: 'ادخال  ',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return UserInfoEnterPage();
                   }));
                 },
               ),

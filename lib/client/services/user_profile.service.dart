@@ -18,8 +18,10 @@ class ProfileService {
               }));
 
       if (response.statusCode == 200) {
-        print('${response.data} + rf');
+        print('\n\n\n\n${response.data}');
         ProfileModel profileModel = ProfileModel.fromJson(response.data);
+                print('omar2');
+
         return profileModel;
       } else {
         print('${response.data} + rf');

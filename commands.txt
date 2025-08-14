@@ -3,7 +3,7 @@ r يسوي هوت ستارت
 
 
 git add .
-git commit -m " "
+git commit -m " r"
 git push origin master
 
 git push --force origin master
