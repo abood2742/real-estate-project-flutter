@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:property_system/client/components/Custom_textField.dart';
 import 'package:property_system/client/components/custom_button.dart';
 
-class ChingPasswordPage extends StatefulWidget {
-  const ChingPasswordPage({super.key});
+class ChingPasswordProfilePage extends StatefulWidget {
+  const ChingPasswordProfilePage({super.key});
 
   @override
-  State<ChingPasswordPage> createState() => _ChingPasswordPageState();
+  State<ChingPasswordProfilePage> createState() => _ChingPasswordPageState();
 }
 
-class _ChingPasswordPageState extends State<ChingPasswordPage> {
+class _ChingPasswordPageState extends State<ChingPasswordProfilePage> {
   final TextEditingController currentPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
@@ -30,7 +30,7 @@ class _ChingPasswordPageState extends State<ChingPasswordPage> {
       return;
     }
 
-    // منطق تغيير كلمة المرور هنا (API, تحقق، إلخ)
+
 
     // الرجوع للصفحة السابقة بعد التعديل
     Navigator.pop(context); // بدون تمرير 'password_changed'
