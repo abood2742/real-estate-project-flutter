@@ -6,7 +6,7 @@ import 'package:property_system/client/services/register_service.dart';
 class RegisterPage extends StatefulWidget {
   //final bool type;
 
-  RegisterPage({super.key});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();

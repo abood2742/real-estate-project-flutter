@@ -1,12 +1,16 @@
+import 'dart:io' as io;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 import 'package:property_system/client/screens/auth/login/login_page.dart';
 import 'package:property_system/client/screens/main/main_page.dart';
 import 'package:property_system/client/services/register_service.dart';
 
 class UserInfoEnterPage extends StatefulWidget {
+  const UserInfoEnterPage({super.key});
+
   @override
   _UserInfoEnterPageState createState() => _UserInfoEnterPageState();
 }
@@ -21,17 +25,31 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
   final TextEditingController _receiverIdentifierController =
       TextEditingController();
 
-  File? _licenseImage;
+  Uint8List? _ProfileImageBytes; // للويب
+  io.File? _ProfileImageFile; // للهاتف
+
   final ImagePicker _picker = ImagePicker();
   bool isLoading = false; // ✅ أضفنا متغير التحميل
 
-  Future<void> _pickLicenseImage() async {
+  Future<void> _pickProfileImage() async {
     final XFile? pickedFile =
         await _picker.pickImage(source: ImageSource.gallery);
+
     if (pickedFile != null) {
-      setState(() {
-        _licenseImage = File(pickedFile.path);
-      });
+      if (kIsWeb) {
+        // على الويب نقرأ الصورة كـ Uint8List
+        final bytes = await pickedFile.readAsBytes();
+        setState(() {
+          _ProfileImageBytes = bytes;
+          _ProfileImageFile = null;
+        });
+      } else {
+        // على الهاتف نستخدم File عادي
+        setState(() {
+          _ProfileImageFile = io.File(pickedFile.path);
+          _ProfileImageBytes = null;
+        });
+      }
     }
   }
 
@@ -91,7 +109,7 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
                   children: [
                     FloatingActionButton(
                       mini: true,
-                      onPressed: _pickLicenseImage,
+                      onPressed: _pickProfileImage,
                       backgroundColor: Colors.blue,
                       child: const Icon(Icons.add),
                     ),
@@ -108,17 +126,20 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              if (_licenseImage != null)
-                Column(
-                  children: [
-                    Image.file(
-                      _licenseImage!,
-                      height: 150,
-                    ),
-                    const SizedBox(height: 10),
-                    const Text('تم اختيار صورة الرخصة'),
-                  ],
-                ),
+              if (_ProfileImageBytes != null) // على الويب
+                Image.memory(
+                  _ProfileImageBytes!,
+                  height: 150,
+                  fit: BoxFit.cover,
+                )
+              else if (_ProfileImageFile != null) // على الهاتف
+                Image.file(
+                  _ProfileImageFile!,
+                  height: 150,
+                  fit: BoxFit.cover,
+                )
+              else
+                const Text('لم يتم اختيار صورة'),
               const SizedBox(height: 30),
               Center(
                 child: isLoading
@@ -131,13 +152,11 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
 
                           try {
                             await enterInfo();
-                            print('success');
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return MainPage();
                             }));
                           } catch (e) {
-                            print(e.toString());
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("حدث خطأ أثناء التسجيل")),
                             );
@@ -230,16 +249,23 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
   }
 
   Future<void> enterInfo() async {
-    print(_lastNameController.text);
-        print(_firstNameController.text);
-    print(_nationalNumberController.value);
-    await RegisterService().enterClientInfoPost(
+    dynamic imageData;
+
+    if (!kIsWeb && _ProfileImageFile != null) {
+      imageData = _ProfileImageFile;
+    } else if (kIsWeb && _ProfileImageBytes != null) {
+      imageData = _ProfileImageBytes;
+    } else {
+      imageData = null;
+    }
+
+    await RegisterService().enterInfoPost(
       firstName: _firstNameController.text,
       lastName: _lastNameController.text,
       nationalNumber: _nationalNumberController.text,
       receiverIdentifier: _receiverIdentifierController.text,
       password: _passwordController.text,
-      image: _licenseImage, // هنا تمرر الصورة المختارة
+      image: imageData, // هنا تمرر الصورة المختارة
     );
   }
 }

@@ -12,7 +12,7 @@ class ProfileModel {
     String id;
     String firstName;
     String lastName;
-    ProfilePhoto profilePhoto;
+    ProfilePhoto? profilePhoto;
     String nationalNumber;
     String phone;
     String email;
@@ -24,7 +24,7 @@ class ProfileModel {
         required this.id,
         required this.firstName,
         required this.lastName,
-        required this.profilePhoto,
+        this.profilePhoto,
         required this.nationalNumber,
         required this.phone,
         required this.email,
@@ -37,7 +37,9 @@ class ProfileModel {
         id: json["id"],
         firstName: json["first_name"],
         lastName: json["last_name"],
-        profilePhoto: ProfilePhoto.fromJson(json["profile_photo"]),
+        profilePhoto: json["profile_photo"] != null
+      ? ProfilePhoto.fromJson(json["profile_photo"])
+      : null,
         nationalNumber: json["national_number"],
         phone: json["phone"],
         email: json["email"],
@@ -50,7 +52,7 @@ class ProfileModel {
         "id": id,
         "first_name": firstName,
         "last_name": lastName,
-        "profile_photo": profilePhoto.toJson(),
+        "profile_photo": profilePhoto?.toJson(),
         "national_number": nationalNumber,
         "phone": phone,
         "email": email,

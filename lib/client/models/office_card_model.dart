@@ -100,7 +100,7 @@ class OfficeCardModel {
       "office_email": officeEmail,
       "status": status,
       "office_photo": officePhoto.toJson(),
-      "rating": ratings,
+      "ratings": ratings,
       "blogs": List<dynamic>.from(blogs.map((x) => x)),
     };
   }

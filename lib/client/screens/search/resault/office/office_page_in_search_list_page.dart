@@ -127,7 +127,7 @@ class _OfficePageInSearchListPageState
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
-          RatingStarsWidget(rating: officeDetailsModel!.rating),
+          RatingStarsWidget(rating: officeDetailsModel!.ratings),
           const SizedBox(height: 16),
           _buildInfoCard(
               Icons.web, 'البريد الإلكتروني', officeDetailsModel!.officeEmail),
