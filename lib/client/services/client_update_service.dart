@@ -44,7 +44,7 @@ class UpdateProductService {
           String ext = profilePhoto.path.split('.').last;
           MediaType mediaType = getMediaTypeFromExtension(ext);
 
-          formData.files.add(
+          formData.files.add( // ifohasifa
             MapEntry(
               'profile_photo',
               await MultipartFile.fromFile(
