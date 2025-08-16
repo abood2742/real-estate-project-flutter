@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/more/create_property/post_property2.dart';
+import 'package:property_system/client/screens/more/create_property/Create_Property_Page.dart';
 
 
 class PostProperty1 extends StatelessWidget {
@@ -76,7 +76,7 @@ class PostProperty1 extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return PostProperty2(propertyTypeId: '',);
+                        return CreateProperty();
                       }));
                     },
                     icon: Icon(Icons.send, color: Colors.white),

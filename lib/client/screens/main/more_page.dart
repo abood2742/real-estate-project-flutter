@@ -4,7 +4,7 @@ import 'package:property_system/client/screens/auth/register/Create_Office_Page.
 import 'package:property_system/client/screens/auth/register/user_info_enter_page.dart';
 import 'package:property_system/client/screens/more/client_properties/client_expired_property_page.dart';
 import 'package:property_system/client/screens/more/client_properties/property_details_in_expired_property_page.dart';
-import 'package:property_system/client/screens/more/create_property/Property_Type_Page.dart';
+import 'package:property_system/client/screens/more/create_property/Create_Property_Page.dart';
 import 'package:property_system/client/screens/more/reserved_properties/client_reserverd_page.dart';
 import 'package:property_system/client/screens/more/property_offer/post_property1.dart';
 
@@ -155,7 +155,7 @@ class _MorePageState extends State<MorePage> {
                 label: 'نشر عقار',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return PropertyTypesPage();
+                    return CreateProperty();
                   }));
                 },
               ),
