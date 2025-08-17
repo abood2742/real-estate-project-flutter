@@ -105,7 +105,7 @@ class HomePage extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        // TODO: التنقل إلى صفحة المدونات
+                
                       },
                       child: Text(
                         'عرض الكل',

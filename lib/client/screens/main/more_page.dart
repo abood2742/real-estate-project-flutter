@@ -12,6 +12,7 @@ import 'package:property_system/client/screens/more/complaint/one_complaint_page
 import 'package:property_system/client/screens/more/complaint/complaient_page.dart';
 import 'package:property_system/client/screens/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/more/profile/client_profile.dart';
+import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 
 class MorePage extends StatefulWidget {
@@ -175,6 +176,15 @@ class _MorePageState extends State<MorePage> {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return PushComplaintPage();
+                  }));
+                },
+              ),
+                buildMenuButton(
+                icon: Icons.report_problem,
+                label: 'الخريطة ',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return MapPage();
                   }));
                 },
               ),

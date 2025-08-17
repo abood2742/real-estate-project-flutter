@@ -152,7 +152,7 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MapPage()),
+                              builder: (context) =>  MapPage()),
                         );
                       },
                       child: const Text(
