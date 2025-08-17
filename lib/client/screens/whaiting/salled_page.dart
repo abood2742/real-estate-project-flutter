@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/components/card_property_salled_waite_component.dart';
+import 'package:property_system/client/components/4cart_waiting/card_property_salled_waite_component.dart';
 
 class SalledPage extends StatelessWidget {
   const SalledPage({super.key});

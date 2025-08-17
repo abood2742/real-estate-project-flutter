@@ -224,3 +224,113 @@ class _SubscriptionsOfficePaeState extends State<SubscriptionsOfficePage> {
     );
   }
 }
+/*
+
+import 'package:flutter/material.dart';
+import 'package:property_system/client/components/subscripions_card.dart';
+import 'package:property_system/office/screens/subscriptions_next_page.dart';
+import 'package:property_system/client/services/all_subscriptions_service.dart';
+import 'package:property_system/client/models/property_type_model.dart';
+
+class SubscriptionsOfficePage extends StatefulWidget {
+  const SubscriptionsOfficePage({super.key});
+
+  @override
+  State<SubscriptionsOfficePage> createState() =>
+      _SubscriptionsOfficePaeState();
+}
+
+class _SubscriptionsOfficePaeState extends State<SubscriptionsOfficePage> {
+  int selectedPlan = 0;
+  List<PropertyTypeModel> subscriptions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSubscriptions();
+  }
+
+  void fetchSubscriptions() async {
+    final result = await AllSubscriptionsService().getPropertyTypes();
+    if (result != null) {
+      setState(() {
+        subscriptions = result;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 54, 36, 88),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'خطة الدفع',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 30),
+
+            // ====== Cards ======
+            Expanded(
+              child: subscriptions.isEmpty
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: subscriptions.length,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 16),
+                      itemBuilder: (context, index) {
+                        final sub = subscriptions[index];
+                        return SubscriptionCard(
+                          title: sub.name,
+                          price: '${sub.price}\$',
+                          features: sub.description,
+                          icon: Icons.star_outline,
+                          isSelected: selectedPlan == index,
+                          onTap: () => setState(() => selectedPlan = index),
+                          numberOfProperty: sub.maxProperties.toString(),
+                          numberOfPromotions: sub.maxPromotions.toString(),
+                          period: sub.period,
+                        );
+                      },
+                    ),
+            ),
+
+            const SizedBox(height: 20),
+
+            Center(
+              child: ElevatedButton(
+                onPressed: selectedPlan == 0
+                    ? null
+                    : () {
+                        final selected = subscriptions[selectedPlan];
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => SubscriptionsNextPage(
+                              planName: selected.name,
+                              planPrice: selected.price,
+                            ),
+                          ),
+                        );
+                      },
+                child: const Text('استمرار'),
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+*/ 

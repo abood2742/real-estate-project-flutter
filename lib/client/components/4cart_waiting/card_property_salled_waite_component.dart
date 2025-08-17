@@ -111,62 +111,77 @@ class CardPropertySalledWaiteComponent extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: onTap,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Colors.white,
-            ),
-            width: 300,
-            height: 450,
-            margin: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-        
-                // صورة العقار + الحواف
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
+          child: Card(
+            elevation: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Colors.white,
+              ),
+              width: 350,
+              height: 300,
+              margin: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  // صورة العقار + الحواف
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                    child: Image.network(
+                      imageUrl,
+                      height: 180,
+                      width: 280,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  child: Image.network(
-                    imageUrl,
-                    height: 380,
-                    width: 280,
-                    fit: BoxFit.cover,
+
+                  // معلومات العقار
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(date, textDirection: TextDirection.rtl),
+                            const Text(' تم البيع',
+                                textDirection: TextDirection.rtl),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(location, textDirection: TextDirection.rtl),
+                            const SizedBox(width: 6),
+                            const Icon(Icons.location_on, size: 16),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-        
-                // معلومات العقار
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(date, textDirection: TextDirection.rtl),
-                          const Text(' تم البيع', textDirection: TextDirection.rtl),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(location, textDirection: TextDirection.rtl),
-                          const SizedBox(width: 6),
-                          const Icon(Icons.location_on, size: 16),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-        SizedBox(height: 10,),
-        Divider(height: 1,color: const Color.fromARGB(255, 65, 128, 221),),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Divider(
+            height: 2,
+            thickness: 2,
+            color: const Color.fromARGB(255, 163, 176, 181),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
       ],
     );
   }

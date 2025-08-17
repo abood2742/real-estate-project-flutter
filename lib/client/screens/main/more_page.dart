@@ -146,7 +146,7 @@ class _MorePageState extends State<MorePage> {
                 },
               ),
               buildMenuButton(
-                icon: Icons.language,
+                icon: Icons.local_post_office,
                 label: 'إنشاء مكتب',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -155,7 +155,7 @@ class _MorePageState extends State<MorePage> {
                 },
               ),
               buildMenuButton(
-                icon: Icons.language,
+                icon: Icons.create,
                 label: 'نشر عقار',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -164,8 +164,8 @@ class _MorePageState extends State<MorePage> {
                 },
               ),
               buildMenuButton(
-                icon: Icons.language,
-                label: 'PostProperty1',
+                icon: Icons.create,
+                label: 'نشر عقار 2',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return PostProperty1();
@@ -182,7 +182,7 @@ class _MorePageState extends State<MorePage> {
                 },
               ),
                 buildMenuButton(
-                icon: Icons.report_problem,
+                icon: Icons.map,
                 label: 'الخريطة ',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -201,7 +201,7 @@ class _MorePageState extends State<MorePage> {
               ),
 
                buildMenuButton(
-                icon: Icons.report_problem,
+                icon: Icons.subscript,
                 label: 'الإشتراكات',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -236,7 +236,7 @@ class _MorePageState extends State<MorePage> {
                 },
               ),
               buildMenuButton(
-                icon: Icons.report_problem,
+                icon: Icons.book,
                 label: 'العقارات المحجوزة ',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -246,7 +246,7 @@ class _MorePageState extends State<MorePage> {
               ),
               buildMenuButton(
                 icon: Icons.report_problem,
-                label: 'معلومات الشكوى  OneComplaintPage',
+                label: 'معلومات الشكوى ',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return OneComplaintPage();
@@ -255,7 +255,7 @@ class _MorePageState extends State<MorePage> {
               ),
                buildMenuButton(
                 icon: Icons.report_problem,
-                label: ' العقار في حالة انتظار  ThePropertiesInWhaitingPage',
+                label: ' العقار في حالة انتظار  ',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ThePropertiesInWhaitingPage();
@@ -273,7 +273,7 @@ class _MorePageState extends State<MorePage> {
               ),
                buildMenuButton(
                 icon: Icons.report_problem,
-                label: 'BlockPage الحساب محظور ',
+                label: ' الحساب محظور ',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return BlockPage();
