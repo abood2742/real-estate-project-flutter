@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/services/user_profile.service.dart';
-import 'package:property_system/common/screens/client_change_password_page.dart';
+import 'package:property_system/common/screens/ching_password_profile_page.dart';
 import 'package:property_system/client/screens/more/profile/client_edit_information_page.dart';
 import 'package:property_system/client/screens/more/notification/client_notification_page.dart';
 import 'package:property_system/client/screens/property_listing_at_an_office_page.dart';
@@ -144,7 +144,6 @@ class _ClientProfileState extends State<ClientProfile> {
 
             const SizedBox(height: 30),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton.icon(
                   onPressed: () {
@@ -173,30 +172,41 @@ class _ClientProfileState extends State<ClientProfile> {
                     ),
                   ),
                 ),
-                OutlinedButton.icon(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return ClientChangePasswordPage();
-                    }));
-                  },
-                  icon: const Icon(Icons.lock),
-                  label: const Text("تغيير كلمة المرور"),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color.fromARGB(255, 41, 47, 100),
-                    side: const BorderSide(color: Colors.black),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
+                SizedBox(width: 5,),
+                  ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) {
+                  return ChingPasswordProfilePage();
+                }));
+              },
+              icon: const Icon(
+                Icons.key,
+                color: Colors.white,
+              ),
+              label: const Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 1),
+                child: const Text(
+                  "تغيير كلمة المرور",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 75, 137, 163),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
               ],
             ),
+            
             const SizedBox(
               height: 24,
             ),
+             
             const SizedBox(
               height: 15,
             ),

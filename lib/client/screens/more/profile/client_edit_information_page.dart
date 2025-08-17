@@ -664,12 +664,12 @@ class _ClientEditInformationPageState extends State<ClientEditInformationPage> {
                 const SizedBox(height: 50),
                 CustomTextField(
                   controller: firstNameController,
-                  hintText: 'الاسم الأول',
+                  hintText: 'الاسم الأول', suffixIcon: null,
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: lastNameController,
-                  hintText: 'الاسم الأخير',
+                  hintText: 'الاسم الأخير', suffixIcon: null,
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
