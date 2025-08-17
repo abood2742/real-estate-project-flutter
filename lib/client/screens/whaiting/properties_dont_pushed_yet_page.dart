@@ -23,6 +23,8 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:property_system/client/screens/whaiting/to_rent_page.dart';
+import 'package:property_system/client/screens/whaiting/to_sall_page.dart';
 
 class PropertiesDontPushedYetPage extends StatefulWidget {
   @override
@@ -35,28 +37,34 @@ class _TwoButtonsPageState extends State<PropertiesDontPushedYetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
       body: Column(
         children: [
           Row(
             children: [
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: TextButton(
-
-           
                   onPressed: () => setState(() => selectedPage = 1),
                   child: Text(
                     ' عقارات للبيع',
                     style: TextStyle(
-                      fontWeight: selectedPage == 1 ? FontWeight.bold : FontWeight.normal,fontFamily: 'Pacifico',
+                      fontWeight: selectedPage == 1
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                      fontFamily: 'Pacifico',
                     ),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Container(width: 1, height: 40,     color: const Color.fromARGB(255, 29, 167, 134),),
+                child: Container(
+                  width: 1,
+                  height: 40,
+                  color: const Color.fromARGB(255, 29, 167, 134),
+                ),
               ),
               Expanded(
                 child: TextButton(
@@ -64,16 +72,21 @@ class _TwoButtonsPageState extends State<PropertiesDontPushedYetPage> {
                   child: Text(
                     ' عقارات للإيجار',
                     style: TextStyle(
-                      fontWeight: selectedPage == 2 ? FontWeight.bold : FontWeight.normal,fontFamily: 'Pacifico',
+                      fontWeight: selectedPage == 2
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                      fontFamily: 'Pacifico',
                     ),
                   ),
                 ),
               ),
             ],
           ),
-        //  const Divider(),
+          //  const Divider(),
           Expanded(
-            child: selectedPage == 1 ? buildFirstPageContent() : buildSecondPageContent(),
+            child: selectedPage == 1
+                ? buildFirstPageContent()
+                : buildSecondPageContent(),
           ),
         ],
       ),
@@ -81,14 +94,10 @@ class _TwoButtonsPageState extends State<PropertiesDontPushedYetPage> {
   }
 
   Widget buildFirstPageContent() {
-    return Center(
-      child: Text('محتوى الصفحة الأولى', style: TextStyle(fontSize: 20)),
-    );
+    return ToSallPage();
   }
 
   Widget buildSecondPageContent() {
-    return Center(
-      child: Text('محتوى الصفحة الثانية', style: TextStyle(fontSize: 20)),
-    );
+    return ToRentPage();
   }
 }

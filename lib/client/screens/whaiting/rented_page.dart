@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/components/card_property_rented_wait_components.dart';
+import 'package:property_system/client/components/4cart_waiting/card_property_rented_wait_components.dart';
 
 class RentedPage extends StatelessWidget {
   const RentedPage({super.key});

@@ -13,7 +13,7 @@ class ThePropertiesInWhaitingPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 29, 167, 134),
+          backgroundColor: const Color.fromARGB(255, 53, 150, 148),
           // أزلت toolbarHeight أو خليته صغير إذا حبيت:
           toolbarHeight: 40, // جرب 70 لو 56 صغير جدا لك
           title: Row(
