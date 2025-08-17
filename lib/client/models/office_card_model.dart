@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:property_system/client/models/photo_model.dart';
+
 PageModel welcomeFromJson(String str) {
   final jsonData = json.decode(str);
   return PageModel.fromJson(jsonData);
@@ -60,7 +62,7 @@ class OfficeCardModel {
 
   String status; /* * */
 
-  OfficePhoto officePhoto;
+  Photo officePhoto;
   double ratings;
 
   List<dynamic> blogs; /* * */
@@ -86,7 +88,7 @@ class OfficeCardModel {
       officePhone: json["office_phone"],
       officeEmail: json["office_email"],
       status: json["status"],
-      officePhoto: OfficePhoto.fromJson(json["office_photo"]),
+      officePhoto: Photo.fromJson(json["office_photo"]),
       ratings: json["ratings"],
       blogs: List<dynamic>.from(json["blogs"].map((x) => x)),
     );
@@ -106,30 +108,5 @@ class OfficeCardModel {
   }
 }
 
-class OfficePhoto {
-  String id;
-  String url;
-  String publicId;
 
-  OfficePhoto({
-    required this.id,
-    required this.url,
-    required this.publicId,
-  });
 
-  factory OfficePhoto.fromJson(Map<String, dynamic> json) {
-    return OfficePhoto(
-      id: json["id"],
-      url: json["url"],
-      publicId: json["public_id"],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "url": url,
-      "public_id": publicId,
-    };
-  }
-}

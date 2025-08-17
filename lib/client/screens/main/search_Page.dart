@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:property_system/client/components/property_card.dart';
 import 'package:property_system/client/components/widget_search.dart';
 import 'package:property_system/client/components/office_cards/widget_search_office.dart';
 import 'package:property_system/client/models/office_card_model.dart';
+import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/filter/filters_page.dart';
 import 'package:property_system/client/screens/search/resault/office/office_page_in_search_list_page.dart';
 import 'package:property_system/client/screens/search/resault/property/property_detailes_page.dart';
@@ -18,10 +20,10 @@ class _SearchPageState extends State<SearchPage> {
   bool showOffices = false;
   bool showProperties = false;
   bool isLoadingOffices = false;
+  bool isLoadingProperties = false;
 
   List<OfficeCardModel>? officeCardModels;
-
-  var list;
+  List<PropertyModel>? propertyModels;
 
   void _showOffices() async {
     setState(() {
@@ -39,8 +41,15 @@ class _SearchPageState extends State<SearchPage> {
 
   void _showProperties() async {
     setState(() {
+      isLoadingProperties = true;
       showOffices = false;
+    });
+
+    propertyModels = await SearchService().getAllProperties();
+
+    setState(() {
       showProperties = true;
+      isLoadingProperties = false;
     });
   }
 
@@ -183,22 +192,7 @@ class _SearchPageState extends State<SearchPage> {
           else if (showOffices && officeCardModels != null) ...[
             ..._buildOfficeWidgets()
           ] else if (showProperties) ...[
-            const WidgetSearch(
-              returned: PropertyDetailesPage(),
-              title: 'Deppartment',
-              location: 'Hamidia , Damascus',
-              price: '20000\$',
-              imageUrl: 'assets/images/office2.jpg',
-              area: 30,
-            ),
-            const WidgetSearch(
-              returned: PropertyDetailesPage(),
-              title: 'Deppartment',
-              location: 'Hamidia , Damascus',
-              price: '20000\$',
-              imageUrl: 'assets/images/pic3.jpg',
-              area: 30,
-            ),
+            ..._buildPropertyWidgets()
           ],
         ],
       ),
@@ -222,5 +216,25 @@ class _SearchPageState extends State<SearchPage> {
       );
     }).toList();
   }
-}
 
+  List<Widget> _buildPropertyWidgets() {
+    return propertyModels!.map((property) {
+      return PropertyCard(
+        // onTap: () {
+        //   Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (_) => OfficePageInSearchListPage(officeId: office.id),
+        //       ));
+        // },
+        title: property.propertyType.name,
+        location: property.location.city,
+        price: property.price,
+        area: property.space.toString(),
+        imageUrl: (property.photos != null && property.photos.isNotEmpty)
+            ? property.photos[0].url
+            : null, // أو رابط صورة افتراضية
+      );
+    }).toList();
+  }
+}

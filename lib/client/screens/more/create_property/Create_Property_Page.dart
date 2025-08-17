@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:property_system/client/models/Prooerty_Type_model.dart';
+import 'package:property_system/client/models/property_type_model.dart';
 import 'package:property_system/client/services/property_service.dart';
 import 'package:property_system/client/services/propety_Type_service.dart';
 

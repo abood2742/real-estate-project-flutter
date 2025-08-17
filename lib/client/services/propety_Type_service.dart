@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:property_system/client/models/Prooerty_Type_model.dart';
+import 'package:property_system/client/models/property_type_model.dart';
 
 class PropertyTypeService {
   final Dio _dio = Dio();
