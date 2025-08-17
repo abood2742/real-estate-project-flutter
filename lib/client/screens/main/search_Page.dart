@@ -220,18 +220,18 @@ class _SearchPageState extends State<SearchPage> {
   List<Widget> _buildPropertyWidgets() {
     return propertyModels!.map((property) {
       return PropertyCard(
-        // onTap: () {
-        //   Navigator.push(
-        //       context,
-        //       MaterialPageRoute(
-        //         builder: (_) => OfficePageInSearchListPage(officeId: office.id),
-        //       ));
-        // },
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => PropertyDetailesPage( propertyModel: property),
+              ));
+        },
         title: property.propertyType.name,
         location: property.location.city,
         price: property.price,
         area: property.space.toString(),
-        imageUrl: (property.photos != null && property.photos.isNotEmpty)
+        imageUrl: (property.photos.isNotEmpty)
             ? property.photos[0].url
             : null, // أو رابط صورة افتراضية
       );
