@@ -14,8 +14,9 @@ class PropertyTypeModel {
     var attrs = <AttributesModel>[];
     if (jsonData['attributes'] != null) {
       attrs = List<AttributesModel>.from(
-          jsonData['attributes'].map((x) => AttributesModel.fromJson(x)));
-    }
+    jsonData['attributes'].map((x) => AttributesModel.fromJson(x, hasWrapper: true))
+);
+}
 
     return PropertyTypeModel(
       id: jsonData['id'],
@@ -24,7 +25,6 @@ class PropertyTypeModel {
     );
   }
 }
-
 class AttributesModel {
   String id;
   String name;
@@ -36,12 +36,12 @@ class AttributesModel {
     required this.type,
   });
 
-  factory AttributesModel.fromJson(Map<String, dynamic> json) {
-
+  factory AttributesModel.fromJson(Map<String, dynamic> json, {bool hasWrapper = false}) {
+    final data = hasWrapper ? json["attribute"] : json;
     return AttributesModel(
-      id: json["attribute"]["id"],
-      name: json["attribute"]["name"],
-      type: json["attribute"]["type"],
+      id: data["id"],
+      name: data["name"],
+      type: data["type"],
     );
   }
 }

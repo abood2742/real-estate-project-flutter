@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:property_system/client/models/photo_model.dart';
+
 ProfileModel welcomeFromJson(String str) => ProfileModel.fromJson(json.decode(str));
 
 String welcomeToJson(ProfileModel data) => json.encode(data.toJson());
@@ -12,7 +14,7 @@ class ProfileModel {
     String id;
     String firstName;
     String lastName;
-    ProfilePhoto? profilePhoto;
+    Photo? profilePhoto;
     String nationalNumber;
     String phone;
     String email;
@@ -38,7 +40,7 @@ class ProfileModel {
         firstName: json["first_name"],
         lastName: json["last_name"],
         profilePhoto: json["profile_photo"] != null
-      ? ProfilePhoto.fromJson(json["profile_photo"])
+      ? Photo.fromJson(json["profile_photo"])
       : null,
         nationalNumber: json["national_number"],
         phone: json["phone"],
@@ -62,26 +64,4 @@ class ProfileModel {
     };
 }
 
-class ProfilePhoto {
-    String id;
-    String url;
-    String publicId;
 
-    ProfilePhoto({
-        required this.id,
-        required this.url,
-        required this.publicId,
-    });
-
-    factory ProfilePhoto.fromJson(Map<String, dynamic> json) => ProfilePhoto(
-        id: json["id"],
-        url: json["url"],
-        publicId: json["public_id"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "url": url,
-        "public_id": publicId,
-    };
-}

@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:property_system/client/models/photo_model.dart';
+
 // OfficeDetailsModel welcomeFromJson(String str) =>
 //     OfficeDetailsModel.fromJson(json.decode(str));
 
@@ -14,8 +16,8 @@ class OfficeDetailsModel {
   String name;
   String officePhone;
   String officeEmail;
-  OfficePhoto officePhoto;
-  LicensePhoto licensePhoto;
+  Photo officePhoto;
+  Photo licensePhoto;
   String licenseNumber;
   String personalIdentityNumber;
   double ratings;
@@ -42,8 +44,8 @@ class OfficeDetailsModel {
         name: json["name"],
         officePhone: json["office_phone"],
         officeEmail: json["office_email"],
-        officePhoto: OfficePhoto.fromJson(json["office_photo"]),
-        licensePhoto: LicensePhoto.fromJson(json["license_photo"]),
+        officePhoto: Photo.fromJson(json["office_photo"]),
+        licensePhoto: Photo.fromJson(json["license_photo"]),
         licenseNumber: json["license_Number"],
         personalIdentityNumber: json["personal_identity_number"],
         isFavorite: isFavorite,
@@ -71,50 +73,3 @@ class OfficeDetailsModel {
   }
 }
 
-class OfficePhoto {
-  String id;
-  String url;
-  String publicId;
-
-  OfficePhoto({
-    required this.id,
-    required this.url,
-    required this.publicId,
-  });
-
-  factory OfficePhoto.fromJson(Map<String, dynamic> json) => OfficePhoto(
-        id: json["id"],
-        url: json["url"],
-        publicId: json["public_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "url": url,
-        "public_id": publicId,
-      };
-}
-
-class LicensePhoto {
-  String id;
-  String url;
-  String publicId;
-
-  LicensePhoto({
-    required this.id,
-    required this.url,
-    required this.publicId,
-  });
-
-  factory LicensePhoto.fromJson(Map<String, dynamic> json) => LicensePhoto(
-        id: json["id"],
-        url: json["url"],
-        publicId: json["public_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "url": url,
-        "public_id": publicId,
-      };
-}
