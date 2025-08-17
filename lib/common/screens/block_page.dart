@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:property_system/client/screens/auth/login/login_page.dart';
 
 class BlockPage extends StatelessWidget {
   const BlockPage({super.key});
@@ -21,7 +22,7 @@ class BlockPage extends StatelessWidget {
             ),
           ),
           const SizedBox(
-          height: 100,
+            height: 100,
           ),
           const Row(
             children: [
@@ -37,7 +38,7 @@ class BlockPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-               height: 20,
+                height: 20,
               ),
               Text(
                 ' تعليق غير أخلاقي  ',
@@ -50,7 +51,7 @@ class BlockPage extends StatelessWidget {
             ],
           ),
           const SizedBox(
-           height: 100,
+            height: 100,
           ),
           const Row(
             children: [
@@ -66,7 +67,7 @@ class BlockPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-              height: 20,
+                height: 20,
               ),
               Text(
                 ' 8 / 8 / 2020 ',
@@ -78,15 +79,20 @@ class BlockPage extends StatelessWidget {
               ),
             ],
           ),
-         const SizedBox(
-           height: 200,
+          const SizedBox(
+            height: 200,
           ),
           GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return LoginPage();
+              }));
+            },
             child: Container(
               decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 31, 37, 145),
                   borderRadius: BorderRadius.circular(16)),
-            height : 50,
+              height: 50,
               width: 300,
               child: const Center(
                 child: Text(

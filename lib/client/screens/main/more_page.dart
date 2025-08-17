@@ -13,6 +13,8 @@ import 'package:property_system/client/screens/more/complaint/complaient_page.da
 import 'package:property_system/client/screens/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/more/profile/client_profile.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
+import 'package:property_system/client/screens/whaiting/the_properties_in_whaiting_page.dart';
+import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 
 class MorePage extends StatefulWidget {
@@ -226,7 +228,7 @@ class _MorePageState extends State<MorePage> {
               ),
               buildMenuButton(
                 icon: Icons.report_problem,
-                label: 'test',
+                label: 'تقديم الشكوى ',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ComplaientPage();
@@ -244,19 +246,37 @@ class _MorePageState extends State<MorePage> {
               ),
               buildMenuButton(
                 icon: Icons.report_problem,
-                label: 'test1',
+                label: 'معلومات الشكوى  OneComplaintPage',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return OneComplaintPage();
                   }));
                 },
               ),
+               buildMenuButton(
+                icon: Icons.report_problem,
+                label: ' العقار في حالة انتظار  ThePropertiesInWhaitingPage',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ThePropertiesInWhaitingPage();
+                  }));
+                },
+              ),
               buildMenuButton(
                 icon: Icons.report_problem,
-                label: 'expired',
+                label: 'منتهي الصلاحية ',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ClientExpiredPropertyPage();
+                  }));
+                },
+              ),
+               buildMenuButton(
+                icon: Icons.report_problem,
+                label: 'BlockPage الحساب محظور ',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return BlockPage();
                   }));
                 },
               ),
