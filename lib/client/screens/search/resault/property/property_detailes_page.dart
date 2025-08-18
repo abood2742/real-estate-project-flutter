@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/property_model.dart';
+import 'package:property_system/client/screens/search/resault/office/Office_Detailes_Page.dart';
 import 'package:property_system/client/screens/search/reservation/Property_reservation.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/client/screens/search/comments/Add_Comment_And_Rating_Page.dart';
 import 'package:property_system/client/screens/report/report_post_page.dart';
+import 'package:property_system/client/services/favorite_service.dart';
 // import 'package:property_system/client/screens/office/office_profile_page.dart'; // <-- صفحة المكتب
 
 class PropertyDetailesPage extends StatefulWidget {
@@ -15,7 +17,28 @@ class PropertyDetailesPage extends StatefulWidget {
 }
 
 class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
-  bool isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    chechIfPropertyIsFavorite();
+  }
+
+  Future<void> chechIfPropertyIsFavorite() async {
+    try {
+      
+      widget.propertyModel.isFavorite = await FavoriteService()
+          .chechIfPropertyIsFavorite(propertyId: widget.propertyModel.id);
+      // if (officeDetailsModel != null) {
+      //   setState(() => pageState = PagesState.success);
+      // } else {
+      //   setState(() => pageState = PagesState.error);
+      // }
+    } catch (e) {
+      //setState(() => pageState = PagesState.error);
+      print('Exception in property page: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +63,19 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
           actions: [
             IconButton(
               icon: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: isFavorite ? Colors.blue : Colors.grey,
+                widget.propertyModel.isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: widget.propertyModel.isFavorite ? Colors.blue : Colors.grey,
               ),
-              onPressed: () {
-                setState(() {
-                  isFavorite = !isFavorite;
-                });
+              onPressed: () async{
+                  final newStatus = !widget.propertyModel.isFavorite;
+                  setState(() => widget.propertyModel.isFavorite = newStatus);
+                  if (newStatus) {
+                    await FavoriteService().addPropertyToFavorite(
+                        propertyId: widget.propertyModel.id);
+                  } else {
+                    await FavoriteService().removePropertyFromFavorite(
+                        propertyId: widget.propertyModel.id);
+                  }
               },
             ),
           ],
@@ -55,14 +84,14 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
           padding: const EdgeInsets.all(12),
           children: [
             /// صورة العقار الرئيسية
-           PropertyImagesGallery(
-  mainImage: property.photos.isNotEmpty
-      ? property.photos.first.url
-      : 'assets/images/pic3.jpg',
-  extraImages: property.photos.length > 1
-      ? property.photos.skip(1).map((e) => e.url).toList()
-      : [],
-),
+            PropertyImagesGallery(
+              mainImage: property.photos.isNotEmpty
+                  ? property.photos.first.url
+                  : 'assets/images/pic3.jpg',
+              extraImages: property.photos.length > 1
+                  ? property.photos.skip(1).map((e) => e.url).toList()
+                  : [],
+            ),
 
             const SizedBox(height: 12),
 
@@ -103,7 +132,9 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
                 label: const Text(
                   'عرض على الخريطة',
                   style: TextStyle(
-                      fontSize: 14, color: Colors.white, fontFamily: 'Pacifico'),
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontFamily: 'Pacifico'),
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -133,9 +164,121 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
             ),
             const SizedBox(height: 24),
 
-            
+            /// 🔹 داخل body بعد الوصف مباشرة
+            const Text(
+              'معلومات العقار',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            Card(
+              margin: const EdgeInsets.symmetric(vertical: 6),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.numbers),
+                    title: const Text('رقم العقار'),
+                    subtitle: Text(property.propertyNumber),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.category),
+                    title: const Text('نوع العقار'),
+                    subtitle: Text(property.propertyType.name),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.swap_horiz),
+                    title: const Text('نوع العملية'),
+                    subtitle: Text(property.typeOperation),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.straighten),
+                    title: const Text('المساحة'),
+                    subtitle: Text('${property.space} م²'),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.date_range),
+                    title: const Text('تاريخ النشر'),
+                    subtitle: Text(
+                      '${property.publishDate.toLocal()}'.split(' ')[0],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            /// 🔹 تفاصيل الترخيص
+            const SizedBox(height: 16),
+            const Text(
+              'تفاصيل الترخيص',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            Card(
+              margin: const EdgeInsets.symmetric(vertical: 6),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.badge),
+                    title: const Text('رقم الترخيص'),
+                    subtitle: Text(property.licenseDetails.licenseNumber),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.business),
+                    title: const Text('اسم المكتب'),
+                    subtitle: Text(property.office.officeName),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.date_range),
+                    title: const Text('تاريخ الترخيص'),
+                    subtitle: Text(
+                      '${property.licenseDetails.date.toLocal()}'.split(' ')[0],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            /// 🔹 الخصائص Attributes (ديناميكي)
+            const SizedBox(height: 16),
+            const Text(
+              'خصائص العقار',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            if (property.propertyAttributes.isNotEmpty)
+              Card(
+                margin: const EdgeInsets.symmetric(vertical: 6),
+                child: Column(
+                  children: property.propertyAttributes.map((attr) {
+                    return ListTile(
+                      leading: const Icon(Icons.check_circle_outline),
+                      title: Text(attr.attribute.name),
+                      subtitle: Text(attr.value),
+                    );
+                  }).toList(),
+                ),
+              )
+            else
+              const Text('لا توجد خصائص مسجلة'),
+
             const SizedBox(height: 12),
-            const SizedBox(height: 24),
           ],
         ),
 
@@ -191,14 +334,30 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
           ),
         ),
 
-        /// ✅ زر بروفايل المكتب
+        // ✅ زر بروفايل المكتب باستخدام OfficeOfProperty
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            // TODO: هنا تستدعي صفحة المكتب
-            // Navigator.push(context, MaterialPageRoute(builder: (_) => OfficeProfilePage(officeId: property.licenseDetails.license.id)));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => OfficeDetailesPage(
+                  officeId: property.office.officeId,
+                ),
+              ),
+            );
           },
-          icon: const Icon(Icons.business),
-          label: Text(property.licenseDetails.license.name),
+          icon: property.office.officePhoto != null
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    property.office.officePhoto!.url,
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              : const Icon(Icons.business),
+          label: Text(property.office.officeName),
         ),
       ),
     );
@@ -250,7 +409,6 @@ class PropertyImagesGallery extends StatelessWidget {
     );
   }
 }
-
 
 /// ✅ عرض الصورة بالحجم الكامل
 class FullImageView extends StatelessWidget {

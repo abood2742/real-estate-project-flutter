@@ -3,21 +3,21 @@ import 'package:property_system/client/components/custom_buttons/build_stars.dar
 import 'package:property_system/client/models/office_details_model.dart';
 import 'package:property_system/client/screens/search/comments/Add_Comment_And_Rating_Page.dart';
 import 'package:property_system/client/screens/search/comments/Comments_Page.dart';
-import 'package:property_system/client/services/favorite_office_service.dart';
+import 'package:property_system/client/services/favorite_service.dart';
 import 'package:property_system/client/services/search_service.dart';
 import 'package:property_system/utils/Office_Page_State_enum.dart';
 
-class OfficePageInSearchListPage extends StatefulWidget {
+class OfficeDetailesPage extends StatefulWidget {
   final String officeId;
-  const OfficePageInSearchListPage({super.key, required this.officeId});
+  const OfficeDetailesPage({super.key, required this.officeId});
 
   @override
-  State<OfficePageInSearchListPage> createState() =>
-      _OfficePageInSearchListPageState();
+  State<OfficeDetailesPage> createState() =>
+      _OfficeDetailesPageState();
 }
 
-class _OfficePageInSearchListPageState
-    extends State<OfficePageInSearchListPage> {
+class _OfficeDetailesPageState
+    extends State<OfficeDetailesPage> {
   PagesState pageState = PagesState.loading;
   OfficeDetailsModel? officeDetailsModel;
 
@@ -61,10 +61,10 @@ class _OfficePageInSearchListPageState
                 final newStatus = !officeDetailsModel!.isFavorite;
                 setState(() => officeDetailsModel!.isFavorite = newStatus);
                 if (newStatus) {
-                  await FavoriteOfficeService()
+                  await FavoriteService()
                       .addOfficeToFavorite(officeId: officeDetailsModel!.id);
                 } else {
-                  await FavoriteOfficeService().removeOfficeFromFavorite(
+                  await FavoriteService().removeOfficeFromFavorite(
                       officeId: officeDetailsModel!.id);
                 }
               },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/components/office_cards/widget_search_office.dart';
+import 'package:property_system/client/components/office_cards/office_card.dart';
 import 'package:property_system/client/models/office_details_model.dart';
-import 'package:property_system/client/screens/search/resault/office/office_page_in_search_list_page.dart';
-import 'package:property_system/client/services/favorite_office_service.dart';
+import 'package:property_system/client/screens/search/resault/office/Office_Detailes_Page.dart';
+import 'package:property_system/client/services/favorite_service.dart';
 
 class FavoriteOfficesPage extends StatefulWidget {
   const FavoriteOfficesPage({super.key});
@@ -22,7 +22,7 @@ class _FavoriteOfficesPageState extends State<FavoriteOfficesPage> {
   }
 
   Future<void> getFavoriteOffices() async {
-    favoriteOffices = await FavoriteOfficeService().getFavoriteOffices();
+    favoriteOffices = await FavoriteService().getFavoriteOffices();
 
     setState(() {
       isLoading = false;
@@ -48,7 +48,7 @@ class _FavoriteOfficesPageState extends State<FavoriteOfficesPage> {
   }
 
   Widget _buildOfficeWidgets(OfficeDetailsModel office) {
-    return OfficeWidget(
+    return OfficeCard(
       name: office.name,
       phone: office.officePhone,
       imageUrl: office.officePhoto.url,
@@ -58,15 +58,15 @@ class _FavoriteOfficesPageState extends State<FavoriteOfficesPage> {
             context,
             MaterialPageRoute(
               // i think this page name has to be changed
-              builder: (_) => OfficePageInSearchListPage(officeId: office.id),
+              builder: (_) => OfficeDetailesPage(officeId: office.id),
             )).then((removed) {
-              if (removed == true) {
-    getFavoriteOffices();
-  }
-            });
+          if (removed == true) {
+            getFavoriteOffices();
+          }
+        });
       },
       onRemove: () async {
-        final success = await FavoriteOfficeService()
+        final success = await FavoriteService()
             .removeOfficeFromFavorite(officeId: office.id);
 
         if (success) {
@@ -76,8 +76,7 @@ class _FavoriteOfficesPageState extends State<FavoriteOfficesPage> {
           });
 
           // جلب جديد من السيرفر في الخلفية بدون مسح البيانات
-          final updatedList =
-              await FavoriteOfficeService().getFavoriteOffices();
+          final updatedList = await FavoriteService().getFavoriteOffices();
           setState(() {
             favoriteOffices = updatedList;
           });

@@ -29,9 +29,35 @@ class PropertyPageModel {
   }
 }
 
+class OfficeOfProperty {
+  String officeId;
+  String officeName;
+  String officeEmail;
+  Photo? officePhoto;
+
+  OfficeOfProperty({
+    required this.officeId,
+    required this.officeName,
+    required this.officeEmail,
+    this.officePhoto,
+  });
+
+  factory OfficeOfProperty.fromJson(Map<String, dynamic> json) {
+    return OfficeOfProperty(
+      officeId: json["id"],
+      officeName: json["name"],
+      officeEmail: json["office_email"],
+      officePhoto: json["office_photo"] != null
+          ? Photo.fromJson(json["office_photo"])
+          : null,
+    );
+  }
+}
+
 class PropertyModel {
   String id;
   String propertyNumber;
+  OfficeOfProperty office;
   String typeOperation;
   int space;
   String price;
@@ -45,24 +71,26 @@ class PropertyModel {
   LicenseDetails licenseDetails;
   List<PropertyAttribute> propertyAttributes;
   DateTime createdAt;
+  bool isFavorite;
 
-  PropertyModel({
-    required this.id,
-    required this.propertyNumber,
-    required this.typeOperation,
-    required this.space,
-    required this.price,
-    required this.description,
-    required this.propertyType,
-    required this.location,
-    required this.publishDate,
-    required this.status,
-    required this.softDelete,
-    required this.photos,
-    required this.licenseDetails,
-    required this.propertyAttributes,
-    required this.createdAt,
-  });
+  PropertyModel(
+      {required this.id,
+      required this.propertyNumber,
+      required this.office,
+      required this.typeOperation,
+      required this.space,
+      required this.price,
+      required this.description,
+      required this.propertyType,
+      required this.location,
+      required this.publishDate,
+      required this.status,
+      required this.softDelete,
+      required this.photos,
+      required this.licenseDetails,
+      required this.propertyAttributes,
+      required this.createdAt,
+      required this.isFavorite});
 
   factory PropertyModel.fromJson(Map<String, dynamic> json) {
     var convertedPhotos = <Photo>[];
@@ -80,6 +108,7 @@ class PropertyModel {
     return PropertyModel(
         id: json["id"],
         propertyNumber: json["propertyNumber"],
+        office: OfficeOfProperty.fromJson(json["office"]),
         typeOperation: json["typeOperation"],
         space: json["space"],
         price: json["price"],
@@ -92,7 +121,9 @@ class PropertyModel {
         photos: convertedPhotos,
         licenseDetails: LicenseDetails.fromJson(json["licenseDetails"]),
         propertyAttributes: convertedPropertyAttributes,
-        createdAt: DateTime.parse(json["createdAt"]));
+        createdAt: DateTime.parse(json["createdAt"]),
+        isFavorite: false
+        );
   }
 }
 

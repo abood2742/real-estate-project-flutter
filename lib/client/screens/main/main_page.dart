@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/screens/main/more_page.dart';
 import 'package:property_system/client/screens/main/home_page.dart';
-import 'package:property_system/client/screens/saved/saved_page.dart';
-import 'package:property_system/client/screens/main/search_Page.dart';
-
+import 'package:property_system/client/screens/main/Search_For_Offices_Page.dart';
+import 'package:property_system/client/screens/favorite/Favorite_page.dart';
+import 'package:property_system/client/screens/main/Search_For_Properties_Page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -16,10 +16,11 @@ class _BottomNavExampleState extends State<MainPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-  HomePage(),
-  SavedPage(),
-  SearchPage(),
-  MorePage(),
+    HomePage(),
+    FavoritePage(),
+    SearchPage(),   // البحث للعقارات
+    OfficesSearchPage(),  // ✅ صفحة المكاتب
+    MorePage(),
   ];
 
   @override
@@ -28,10 +29,8 @@ class _BottomNavExampleState extends State<MainPage> {
       body: _screens[_selectedIndex],
       bottomNavigationBar: Container(
         height: 90,
-        decoration: BoxDecoration(
-          
-          color: const Color.fromARGB(255, 76, 68, 138),
-         // borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 76, 68, 138),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -51,9 +50,10 @@ class _BottomNavExampleState extends State<MainPage> {
             showUnselectedLabels: true,
             items: [
               _buildBarItem(Icons.home, 'Home', 0),
-              _buildBarItem(Icons.bookmark, 'Saved', 1),
-              _buildBarItem(Icons.search, 'Search', 2),
-              _buildBarItem(Icons.apps, 'More', 3),
+              _buildBarItem(Icons.favorite, 'Favorite', 1),
+              _buildBarItem(Icons.search, 'Search', 2),     // العقارات
+              _buildBarItem(Icons.business, 'Offices', 3), // المكاتب
+              _buildBarItem(Icons.apps, 'More', 4),
             ],
           ),
         ),
@@ -67,12 +67,12 @@ class _BottomNavExampleState extends State<MainPage> {
       icon: Container(
         padding: const EdgeInsets.all(8),
         decoration: isSelected
-            ? BoxDecoration(
-                color: const Color.fromARGB(255, 159, 149, 149),
+            ? const BoxDecoration(
+                color: Color.fromARGB(255, 159, 149, 149),
                 shape: BoxShape.circle,
               )
-            : null ,
-        child: Icon(icon,size: 24,),
+            : null,
+        child: Icon(icon, size: 24),
       ),
       label: label,
     );

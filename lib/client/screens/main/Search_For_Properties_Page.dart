@@ -1,0 +1,135 @@
+import 'package:flutter/material.dart';
+import 'package:property_system/client/components/property_cards/property_card.dart';
+import 'package:property_system/client/models/property_model.dart';
+import 'package:property_system/client/screens/search/filter/filters_page.dart';
+import 'package:property_system/client/screens/search/resault/property/property_detailes_page.dart';
+import 'package:property_system/client/services/search_service.dart';
+
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key}); // هذه الصفحة تبقى للعقارات فقط
+
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  bool isLoadingProperties = false;
+  List<PropertyModel>? propertyModels;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProperties();
+  }
+
+  Future<void> _loadProperties() async {
+    setState(() => isLoadingProperties = true);
+    propertyModels = await SearchService().getAllProperties();
+    setState(() => isLoadingProperties = false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh: _loadProperties,
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 6),
+              child: Text(
+                'Search property',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 53, 145, 133),
+                  fontFamily: 'Pacifico',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.search),
+                      hintText: "Search location",
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    // TODO: اربط البحث بالباك لاحقًا إذا لزم
+                  ),
+                ),
+                const SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const FiltersPage()),
+                    );
+                  },
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.filter_list),
+                        SizedBox(height: 4),
+                        Text('Filter', style: TextStyle(fontSize: 10)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            if (isLoadingProperties)
+              const Center(child: Padding(
+                padding: EdgeInsets.only(top: 24),
+                child: CircularProgressIndicator(),
+              ))
+            else if ((propertyModels ?? []).isEmpty)
+              const Padding(
+                padding: EdgeInsets.only(top: 24),
+                child: Center(child: Text('لا توجد عقارات حالياً')),
+              )
+            else
+              ..._buildPropertyWidgets(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildPropertyWidgets() {
+    return propertyModels!.map((property) {
+      return PropertyCard(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => PropertyDetailesPage(propertyModel: property),
+            ),
+          );
+        },
+        title: property.propertyType.name,
+        location: property.location.city,
+        price: property.price,
+        area: property.space.toString(),
+        imageUrl: property.photos.isNotEmpty ? property.photos[0].url : null,
+      );
+    }).toList();
+  }
+}
