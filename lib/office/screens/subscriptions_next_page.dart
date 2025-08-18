@@ -458,6 +458,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dio/dio.dart';
+import 'package:property_system/client/models/create_subscription_model.dart';
+import 'package:property_system/client/services/create_subscription_service.dart';
 
 class SubscriptionsNextPage extends StatefulWidget {
   final String planName;
@@ -807,7 +809,35 @@ class _PaymentDetailsPageState extends State<SubscriptionsNextPage> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed:(){},
+onPressed: () async {
+  if (_formKey.currentState!.validate()) {
+    setState(() => _isProcessing = true);
+
+    final service = SubscriptionService();
+
+    // استدعاء الموديل الجاهز مع القيم
+    final model = CreateSubscriptionModel(
+      subscriptionId: widget.planName, // أو الـ id اذا عندك
+      cardNumber: _cardNumberController.text,
+      expiryMonth: int.parse(_expiryDateController.text.split('/')[0]),
+      expiryYear: int.parse(_expiryDateController.text.split('/')[1]),
+      cvv: _cvvController.text,
+      type: _selectedDuration,
+    );
+
+    final success = await service.registerSubscription(model);
+
+    setState(() => _isProcessing = false);
+
+    if (success) {
+      _showPaymentSuccessDialog();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('فشل في الدفع، حاول لاحقاً')),
+      );
+    }
+  }
+},
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(

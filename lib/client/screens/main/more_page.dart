@@ -201,7 +201,7 @@ class _MorePageState extends State<MorePage> {
               ),
 
                buildMenuButton(
-                icon: Icons.subscript,
+                icon: Icons.money,
                 label: 'الإشتراكات',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
