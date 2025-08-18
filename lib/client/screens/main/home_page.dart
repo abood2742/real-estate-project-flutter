@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                   const Text(
                       'من مدونتنا ',
                       style: TextStyle(
                         color: Colors.blue,
