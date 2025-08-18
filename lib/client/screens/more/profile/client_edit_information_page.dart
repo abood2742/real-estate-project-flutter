@@ -739,7 +739,7 @@ class _ClientEditInformationPageState extends State<ClientEditInformationPage> {
                             ? widget.clientInfo?.firstName ?? ''
                             : firstNameController.text.trim(),
                         lastName: lastNameController.text.trim().isEmpty
-                            ? widget.clientInfo?.lastName ?? ''d
+                            ? widget.clientInfo?.lastName ?? ''
                             : lastNameController.text.trim(),
                         receiverIdentifier:
                             receiverIdentifierController.text.trim().isEmpty
