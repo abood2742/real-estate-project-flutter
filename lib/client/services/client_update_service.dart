@@ -5,7 +5,7 @@ import 'package:property_system/client/models/client_info_model.dart';
 import 'package:property_system/client/services/token_service.dart';
 import 'package:http_parser/http_parser.dart';
 import 'dart:io';
-import 'dart:html' as html; // للويب فقط
+
 
 class UpdateProductService {
   final Dio _dio = Dio();
