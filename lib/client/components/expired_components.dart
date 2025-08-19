@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:property_system/client/screens/more/client_properties/property_details_in_expired_property_page.dart';
+import 'package:property_system/client/screens/main/more/client_properties/property_details_in_expired_property_page.dart';
 
 class ExpiredComponents extends StatelessWidget {
   final String nameType;

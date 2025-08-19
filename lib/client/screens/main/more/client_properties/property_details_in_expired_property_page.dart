@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/card_info_components.dart';
-import 'package:property_system/client/screens/more/complaint/push_complaint_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
 
 class ClientPagePropertyInExpiredPropertyPage extends StatelessWidget {
   ClientPagePropertyInExpiredPropertyPage(

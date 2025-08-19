@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/services/user_profile.service.dart';
 import 'package:property_system/common/screens/ching_password_profile_page.dart';
-import 'package:property_system/client/screens/more/profile/client_edit_information_page.dart';
-import 'package:property_system/client/screens/more/notification/client_notification_page.dart';
+import 'package:property_system/client/screens/main/more/profile/client_edit_information_page.dart';
+import 'package:property_system/client/screens/main/more/notification/client_notification_page.dart';
 import 'package:property_system/client/screens/property_listing_at_an_office_page.dart';
 import 'package:property_system/client/screens/create_blog.dart';
 
