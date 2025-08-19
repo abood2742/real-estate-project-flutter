@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/more/create_property/Create_Property_Page.dart';
+import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
 
 
 class PostProperty1 extends StatelessWidget {

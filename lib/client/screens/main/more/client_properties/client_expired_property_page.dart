@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/more/client_properties/client_experid_for_rent_page_.dart';
-import 'package:property_system/client/screens/more/client_properties/client_expired_for_buy_page.dart';
+import 'package:property_system/client/screens/main/more/client_properties/client_experid_for_rent_page_.dart';
+import 'package:property_system/client/screens/main/more/client_properties/client_expired_for_buy_page.dart';
 
 class ClientExpiredPropertyPage extends StatelessWidget {
   const ClientExpiredPropertyPage({super.key});

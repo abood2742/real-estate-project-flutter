@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/more/reserved_properties/client_reserved_property_for_rent_page.dart';
-import 'package:property_system/client/screens/more/reserved_properties/client_reserved_property_for_sell_page.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_rent_page.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_sell_page.dart';
 
 
 class ClientReserverdPage extends StatelessWidget {

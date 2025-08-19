@@ -1,99 +1,84 @@
-// import 'package:dio/dio.dart';
-// import 'package:property_system/client/models/create_subscription_model.dart';
-
-// class SubscriptionService {
-//   final Dio _dio = Dio();
-//   // دالة تسجيل الاشتراك
-//   Future<bool> registerSubscription(CreateSubscriptionModel payment) async {
-//     final url = 'http://localhost:3000/api/office-subscription';
-
-//     try {
-//        print('1');
-
-//       final response = await _dio.post(
-//         url,
-//         data: payment.toJson(),
-//         options: Options(
-//           headers: {'Content-Type': 'application/json'},
-//         ),
-//       );
-//        print('2');
-
-//       if (response.statusCode == 200) {
-//         // التسجيل نجح
-//      print('3');
-
-//         return true;
-//       } else {
-//         // فشل التسجيل
-//         print('Failed: ${response.data}');
-//         return false;
-//       }
-//     } catch (e) {
-//       print('Error: $e');
-//       return false;
-//     }
-//   }
-// }
-// /*
-// import 'package:dio/dio.dart';
-// import 'package:property_system/client/models/create_subscription_model.dart';
-
-// class SubscriptionService {
-//   final Dio _dio = Dio();
-
-//   Future<bool> registerSubscription(CreateSubscriptionModel payment) async {
-//     try {
-//       final response = await _dio.post(
-//         'http://localhost:3000/api/office-subscription',
-//         data: payment.toJson(),
-//       );
-
-//       print('API RESPONSE: ${response.data}');
-
-//       if (response.statusCode == 200) {
-//         return true;
-//       } else {
-//         return false;
-//       }
-//     } catch (e) {
-//       print('Exception: $e');
-//       return false;
-//     }
-//   }
-// }
-
-// */import 'package:dio/dio.dart';
 import 'package:dio/dio.dart';
 import 'package:property_system/client/models/create_subscription_model.dart';
 import 'package:property_system/client/services/token_service.dart';
 
-class SubscriptionService {
+class CreateSubscriptionService {
   final Dio _dio = Dio();
 
   Future<bool> registerSubscription(CreateSubscriptionModel payment) async {
     try {
-      // جلب التوكن من AuthService
-      final String? accessToken = await AuthService.getAccessToken();
+      // جلب التوكن الحقيقي
+      final accessToken = await AuthService.getAccessToken();
+      print('TOKEN = $accessToken');
+
+      // طباعة الـ body للتأكد فقط
+      print(payment.toJson());
+      print('success');
+      print(
+        payment.subscriptionId,
+      );
+      print(
+        payment.expiryMonth,
+      );
+
+      print(
+        payment.expiryYear,
+      );
+
+      print(
+        payment.cvv,
+      );
+       print(
+        payment.type,
+      );
+
+     
+
+      print('success');
+    
+      print('SENT TOKEN = Bearer $accessToken');
+
 
       final response = await _dio.post(
         'http://localhost:3000/api/office-subscription',
-        data: payment.toJson(),
+        data: {
+          'subscriptionId': payment.subscriptionId,
+          'cardNumber': payment.cardNumber,
+          'expiryMonth': payment.expiryMonth,
+          'expiryYear': payment.expiryYear,
+          'cvv': payment.cvv,
+          'type':payment.type,
+          // نحول "1 شهر" إلى رقم فقط
+          // 'duration': payment.duration,
+          // 'duration': int.parse(payment.duration.split(' ')[0]),
+
+
+          // 'amount': payment.amount, //
+        },
         options: Options(
           headers: {
-            'Authorization': 'Bearer $accessToken',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer $accessToken',
           },
         ),
       );
-
-      if (response.statusCode == 200) {
-        return true;
+      print('STATUS CODE = ${response.statusCode}');
+      if (response.statusCode == 201) {
+        print('ok');
       } else {
-        return false;
+        print('no');
       }
+
+      print('success1');
+
+      print('STATUS = ${response.statusCode}');
+      print('BODY   = ${response.data}');
+
+      return response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300;
     } catch (e) {
-      print('Exception: $e');
+      print('Error: $e');
       return false;
     }
   }

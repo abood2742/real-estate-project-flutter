@@ -432,7 +432,9 @@ class _SubscriptionsOfficePaeState extends State<SubscriptionsOfficePage> {
                           MaterialPageRoute(
                             builder: (_) => SubscriptionsNextPage(
                               planName: selected.name,
-                              planPrice: selected.price,
+                              planPrice: selected.price, 
+                              id: selected.id,
+                          
                             ),
                           ),
                         );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/more/complaint/cloused_compailent_page.dart';
-import 'package:property_system/client/screens/more/complaint/existing_compailent_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/cloused_compailent_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/existing_compailent_page.dart';
 
 class ComplaientPage extends StatelessWidget {
   const ComplaientPage({super.key});
