@@ -2,6 +2,7 @@ flutter run -d chrome
 r يسوي هوت ستارت
 
 
+git add .
 git commit -m " r"
 git push origin master
 

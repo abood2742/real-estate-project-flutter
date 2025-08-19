@@ -7,11 +7,11 @@ class ReservedPropertComponents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return PropertyDetailesPage();
-        }));
-      },
+      // onTap: () {
+      //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //     return PropertyDetailesPage(propertyModel: );
+      //   }));
+      // },
       child: Card(
         color: const Color.fromARGB(255, 232, 228, 228),
         margin: const EdgeInsets.all(10),

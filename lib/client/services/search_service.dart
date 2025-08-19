@@ -76,10 +76,8 @@ class SearchService {
           await dio.get('http://localhost:3000/api/property?page=1&limit=10');
       if (response.statusCode == 200) {
         PropertyPageModel pageModel = PropertyPageModel.fromJson(response.data);
-              print(response.statusCode);
 
         List<PropertyModel> propertyModels = pageModel.data;
-        print(propertyModels);
         return propertyModels;
       } else {
         return null;

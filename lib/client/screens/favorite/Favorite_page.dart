@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/saved/Favorite_Offices_Page.dart';
-import 'package:property_system/client/screens/saved/SavedPropertiesPage.dart';
+import 'package:property_system/client/screens/favorite/Favorite_Offices_Page.dart';
+import 'package:property_system/client/screens/favorite/Favorite_Properties_Page.dart';
 
-class SavedPage extends StatelessWidget {
-  const SavedPage({super.key});
+class FavoritePage extends StatelessWidget {
+  const FavoritePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class SavedPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'محفوظات',
+                  'Favorite',
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 SizedBox(width: 6),
@@ -47,7 +47,7 @@ class SavedPage extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              SavedPropertiesPage(), // ✅ صفحة العقارات
+              FavoritePropertiesPage(), // ✅ صفحة العقارات
               FavoriteOfficesPage(),    // ✅ صفحة المكاتب
             ],
           ),

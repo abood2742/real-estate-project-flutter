@@ -116,6 +116,7 @@ class PropertyCard extends StatelessWidget {
                     bottomRight: Radius.circular(16),
                   ),
                   child: imageUrl != null
+                  
                       ? Image.network(
                           imageUrl!,
                           height: 150,
