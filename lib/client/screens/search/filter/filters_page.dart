@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:property_system/client/components/area.dart';
 import 'package:property_system/client/components/rectangle.dart';
-
-
+import 'package:property_system/client/models/property_type_model.dart';
+import 'package:property_system/client/services/propety_Type_service.dart';
 
 class FiltersPage extends StatefulWidget {
   const FiltersPage({super.key});
@@ -20,25 +19,30 @@ class _FiltersPageState extends State<FiltersPage> {
   int? selectedBathroomCount;
   int? selectedBedroomCount; // متغير لتخزين عدد الحمامات المحدد
 
+  List<String> propertyTypes = [
+    "residential",
+    "commercial",
+    "industrial",
+    "agricultural"
+  ];
+  String selectedType = "سكني"; // القيمة الافتراضية
+
+  List<PropertyTypeModel>? fetchedPropertyTypesInfo;
+  @override
+  void initState() {
+    super.initState();
+    fetchPropertyTypesInfo();
+  }
+
+  void fetchPropertyTypesInfo() async {
+    final propertyTypes = await PropertyTypeService().getPropertyTypes();
+    setState(() {
+      fetchedPropertyTypesInfo = propertyTypes;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Widget> residentialProperties = [
-      _buildSelectableProperty("Home", Icons.home),
-      _buildSelectableProperty("apartment", Icons.apartment),
-      _buildSelectableProperty("villa", Icons.villa),
-      _buildSelectableProperty("garage", Icons.garage),
-    ];
-
-    List<Widget> commercialProperties = [
-      _buildSelectableProperty("Store", Icons.store),
-      _buildSelectableProperty("office", Icons.money_off_csred_outlined),
-      _buildSelectableProperty("restaurant", Icons.restaurant),
-      _buildSelectableProperty("mall", Icons.local_mall),
-      _buildSelectableProperty("cafe", Icons.local_cafe),
-      _buildSelectableProperty("hotel", Icons.hotel),
-      _buildSelectableProperty("warehouse", Icons.warehouse),
-    ];
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -81,33 +85,26 @@ class _FiltersPageState extends State<FiltersPage> {
               textAlign: TextAlign.right,
             ),
             const SizedBox(height: 10),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: ToggleButtons(
                 borderRadius: BorderRadius.circular(12),
-                isSelected: typeSelection,
+                isSelected:
+                    propertyTypes.map((type) => type == selectedType).toList(),
                 selectedColor: Colors.white,
                 fillColor: const Color.fromARGB(255, 21, 129, 217),
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    child:
-                        Text('سكني', style: TextStyle(fontFamily: 'Pacifico')),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    child:
-                        Text('تجاري', style: TextStyle(fontFamily: 'Pacifico')),
-                  ),
-                ],
+                children: propertyTypes.map((type) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(type, style: const TextStyle(fontFamily: 'Pacifico')),
+                  );
+                }).toList(),
                 onPressed: (int index) {
                   setState(() {
-                    for (int i = 0; i < typeSelection.length; i++) {
-                      typeSelection[i] = i == index;
-                    }
+                    selectedType = propertyTypes[index];
                     selectedPropertyType = null;
-                    selectedBathroomCount =
-                        null; // إعادة تعيين عدد الحمامات عند تغيير النوع
+                    selectedBathroomCount = null;
                   });
                 },
               ),
@@ -161,9 +158,18 @@ class _FiltersPageState extends State<FiltersPage> {
                 height: 100,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: typeSelection[0]
-                      ? residentialProperties
-                      : commercialProperties,
+                  children: fetchedPropertyTypesInfo != null // إضافة فحص null
+                      ? fetchedPropertyTypesInfo!
+                          .where((p) => p.type == selectedType)
+                          .map((p) => _buildSelectableProperty(p.name))
+                          .toList()
+                      : [
+                          // يمكنك إضافة عنصر loading هنا
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            child: CircularProgressIndicator(),
+                          )
+                        ], // قائمة فارغة أو loading widget
                 ),
               ),
             ),
@@ -271,9 +277,7 @@ class _FiltersPageState extends State<FiltersPage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: GestureDetector(
-                    onTap: (){
-                  
-                    },
+                    onTap: () {},
                     child: const Center(
                       child: Text(
                         'بحث',
@@ -294,9 +298,7 @@ class _FiltersPageState extends State<FiltersPage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: GestureDetector(
-                    onTap: (){
-                      
-                    },
+                    onTap: () {},
                     child: const Center(
                       child: Text(
                         'إعادة تهيئة ',
@@ -339,25 +341,36 @@ class _FiltersPageState extends State<FiltersPage> {
     );
   }
 
-  Widget _buildSelectableProperty(String name, IconData icon) {
+  Widget _buildSelectableProperty(String name) {
     final isSelected = selectedPropertyType == name;
-
     return GestureDetector(
       onTap: () {
         setState(() {
           selectedPropertyType = name;
         });
       },
+      
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 6),
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: isSelected ? Colors.green : Colors.grey,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(8),
+          color: isSelected ? Colors.teal : Colors.grey[300],
+          borderRadius: BorderRadius.circular(12),
         ),
-        child: Rectangle(name: name, icon: icon),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //Icon(icon, color: isSelected ? Colors.white : Colors.black),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.black,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -497,7 +510,8 @@ class _FiltersPageState extends State<FiltersPage> {
           ),
           const SizedBox(height: 20),
           CheckboxListTile(
-            title: const Text('مدخل سيارة', style: TextStyle(fontFamily: 'Pacifico')),
+            title: const Text('مدخل سيارة',
+                style: TextStyle(fontFamily: 'Pacifico')),
             value: true,
             onChanged: (_) {},
           ),

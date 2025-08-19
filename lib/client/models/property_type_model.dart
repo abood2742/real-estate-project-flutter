@@ -1,30 +1,33 @@
 class PropertyTypeModel {
   String id;
   String name;
+  String type;
   List<AttributesModel>
       attributes; // ⬅ غير List<dynamic> إلى List<AttributesModel>
 
   PropertyTypeModel({
     required this.id,
     required this.name,
+    required this.type,
     required this.attributes,
   });
 
   factory PropertyTypeModel.fromJson(Map<String, dynamic> jsonData) {
     var attrs = <AttributesModel>[];
     if (jsonData['attributes'] != null) {
-      attrs = List<AttributesModel>.from(
-    jsonData['attributes'].map((x) => AttributesModel.fromJson(x, hasWrapper: true))
-);
-}
+      attrs = List<AttributesModel>.from(jsonData['attributes']
+          .map((x) => AttributesModel.fromJson(x, hasWrapper: true)));
+    }
 
     return PropertyTypeModel(
       id: jsonData['id'],
       name: jsonData['name'],
+      type: jsonData["type"],
       attributes: attrs,
     );
   }
 }
+
 class AttributesModel {
   String id;
   String name;
@@ -36,7 +39,8 @@ class AttributesModel {
     required this.type,
   });
 
-  factory AttributesModel.fromJson(Map<String, dynamic> json, {bool hasWrapper = false}) {
+  factory AttributesModel.fromJson(Map<String, dynamic> json,
+      {bool hasWrapper = false}) {
     final data = hasWrapper ? json["attribute"] : json;
     return AttributesModel(
       id: data["id"],

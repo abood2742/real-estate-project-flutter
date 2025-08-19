@@ -48,15 +48,15 @@ class _CreatePropertyState extends State<CreateProperty> {
   @override
   void initState() {
     super.initState();
-    fetchPropertyTypes();
+    fetchPropertyTypesInfo();
   }
 
-  void fetchPropertyTypes() async {
-    List<PropertyTypeModel>? fetchedPropertyTypes =
+  void fetchPropertyTypesInfo() async {
+    List<PropertyTypeModel>? fetchedPropertyTypesInfo =
         await PropertyTypeService().getPropertyTypes();
 
     setState(() {
-      propertyTypes = fetchedPropertyTypes;
+      propertyTypes = fetchedPropertyTypesInfo;
 
       if (propertyTypes!.isNotEmpty) {
         selectedPropertyType = propertyTypes!.first;
