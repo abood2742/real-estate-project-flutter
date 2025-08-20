@@ -15,6 +15,7 @@ import 'package:property_system/client/screens/main/more/profile/client_profile.
 import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/client/screens/waiting/the_properties_in_whaiting_page.dart';
 import 'package:property_system/common/screens/block_page.dart';
+import 'package:property_system/notification/screen/notification_page.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 
 class MorePage extends StatefulWidget {
@@ -181,7 +182,7 @@ class _MorePageState extends State<MorePage> {
                   }));
                 },
               ),
-                buildMenuButton(
+              buildMenuButton(
                 icon: Icons.map,
                 label: 'الخريطة ',
                 onTap: () {
@@ -199,8 +200,7 @@ class _MorePageState extends State<MorePage> {
                   }));
                 },
               ),
-
-               buildMenuButton(
+              buildMenuButton(
                 icon: Icons.money,
                 label: 'الإشتراكات',
                 onTap: () {
@@ -209,7 +209,6 @@ class _MorePageState extends State<MorePage> {
                   }));
                 },
               ),
-              
               buildMenuButton(
                 icon: Icons.report_problem,
                 label: 'Authontication1',
@@ -253,7 +252,7 @@ class _MorePageState extends State<MorePage> {
                   }));
                 },
               ),
-               buildMenuButton(
+              buildMenuButton(
                 icon: Icons.report_problem,
                 label: ' العقار في حالة انتظار  ',
                 onTap: () {
@@ -271,7 +270,7 @@ class _MorePageState extends State<MorePage> {
                   }));
                 },
               ),
-               buildMenuButton(
+              buildMenuButton(
                 icon: Icons.report_problem,
                 label: ' الحساب محظور ',
                 onTap: () {
@@ -281,7 +280,11 @@ class _MorePageState extends State<MorePage> {
                 },
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return NotificationPage();
+                  }));
+                },
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   padding:
