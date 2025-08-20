@@ -1,12 +1,16 @@
+// import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/blog_model.dart';
 import 'package:property_system/client/components/spechial_offer.dart';
+import 'package:property_system/l10n/app_localizations.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -25,9 +29,11 @@ class HomePage extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                     title: Text(
-                      isCollapsed ? 'Home Page' : 'Property System',
+                      isCollapsed
+                          ? localizations.translate('home_page')
+                          : localizations.translate('property_system'),
                       style: const TextStyle(
-                        color: Color(0xFF30274C),
+                        color: Color.fromARGB(255, 88, 57, 182),
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         fontFamily: 'Pacifico',
@@ -39,41 +45,42 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(top: 20, right: 16),
+                padding: const EdgeInsets.only(top: 20, right: 16),
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Row(
                     children: [
-                      Spacer(flex: 2),
-                      Icon(Icons.location_on, size: 20, color: Colors.grey),
+                      const Spacer(flex: 2),
+                      const Icon(Icons.location_on, size: 20, color: Colors.grey),
                       Text(
-                        'location ',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16,
+                        localizations.translate('location'),
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Pacifico',
+                          color: Color.fromARGB(255, 155, 156, 175),
+                          fontSize: 18,
                         ),
                       ),
-                      Spacer(flex: 22),
+                      const Spacer(flex: 22),
                     ],
                   ),
                 ),
               ),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Spacer(flex: 1),
+                  const Spacer(flex: 1),
                   Padding(
-                    padding: EdgeInsets.only(right: 16),
+                    padding: const EdgeInsets.only(right: 16),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        'Syria , Damascus',
-                        style: TextStyle(
+                        localizations.translate('syria_damascus'),
+                        style: const TextStyle(
                           color: Colors.blue,
                           fontFamily: 'Pacifico',
                           fontSize: 16,
@@ -82,21 +89,19 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Spacer(flex: 10),
+                  const Spacer(flex: 10),
                 ],
               ),
             ),
-
-            // ===== من مدونتنا + زر =====
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(top: 20, right: 16, left: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                   const Text(
-                      'من مدونتنا ',
-                      style: TextStyle(
+                    Text(
+                      localizations.translate('from_our_blog'),
+                      style: const TextStyle(
                         color: Colors.blue,
                         fontFamily: 'Pacifico',
                         fontSize: 18,
@@ -105,11 +110,11 @@ class HomePage extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                
+                        // TODO: الانتقال إلى صفحة المدونة
                       },
                       child: Text(
-                        'عرض الكل',
-                        style: TextStyle(
+                        localizations.translate('view_all'),
+                        style: const TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -120,7 +125,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 400,
@@ -136,16 +140,14 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-
-            // ===== عروض خاصة =====
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(top: 20, right: 16),
+                padding: const EdgeInsets.only(top: 20, right: 16),
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    'عروض خاصة ',
-                    style: TextStyle(
+                    localizations.translate('special_offers'),
+                    style: const TextStyle(
                       color: Colors.blue,
                       fontFamily: 'Pacifico',
                       fontSize: 18,
@@ -155,23 +157,20 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
                   return OfferCard(
                     imagePath: 'assets/images/pic1.jpg',
-                    title: 'Home in Homs',
-                    subtitle: 'The offer for 2 month',
-                    price: '20000',
+                    title: localizations.translate('home_in_homs'),
+                    subtitle: localizations.translate('offer_for_two_months'),
+                    price: localizations.translate('price_20000'),
                     onDetailsPressed: () {},
                   );
                 },
                 childCount: 3,
               ),
             ),
-
-            // ===== زر "عرض المزيد" أسفل العروض =====
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
@@ -188,9 +187,9 @@ class HomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: const Text(
-                      'عرض المزيد',
-                      style: TextStyle(
+                    child: Text(
+                      localizations.translate('show_more'),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

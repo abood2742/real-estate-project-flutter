@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:property_system/client/screens/auth/login/login_page.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
 import 'package:property_system/client/screens/auth/register/user_info_enter_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
@@ -112,7 +113,8 @@ class _MorePageState extends State<MorePage> {
                 ),
               ],
             ),
-            backgroundColor: const Color.fromARGB(255, 88, 66, 146),
+           // backgroundColor: const Color.fromARGB(255, 88, 66, 146),
+            backgroundColor: Color.fromARGB(255, 24, 55, 147),
             centerTitle: false,
           ),
         ),
@@ -267,6 +269,15 @@ class _MorePageState extends State<MorePage> {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ClientExpiredPropertyPage();
+                  }));
+                },
+              ),
+                buildMenuButton(
+                icon: Icons.report_problem,
+                label: ' hhhhhhhhhh ',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return LoginPage();
                   }));
                 },
               ),

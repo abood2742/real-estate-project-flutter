@@ -1,0 +1,547 @@
+import 'package:flutter/material.dart';
+import 'package:property_system/l10n/app_localizations.dart';
+
+List<Widget> getTranslatedTextWidgets(BuildContext context) {
+  return [
+    Text(
+      AppLocalizations.of(context)!.translate('real_estate_system'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('location'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('view_all'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('from_our_blog'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('click_for_details'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('bathrooms'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('bedrooms'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('home'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('favorites'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('search'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('offices'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('more'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('properties'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('search_property'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('search_location'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('filter'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('search_offices'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('profile'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('enter_your_data'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('enter_your_info'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('language'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('arabic'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('english'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('create_office'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('publish_property'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('submit_complaint'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('map'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('complaints'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('subscriptions'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('reserved_properties'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('complaint_info'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('property_status'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('expired'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('account_blocked'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('notifications'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('login'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('signup'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('skip'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('no_account'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('have_another_account'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('password'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('signup_email'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('first_name'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('last_name'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('email'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('mobile_number'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('national_id'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('edit_data'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('change_password'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('property_upload_requests'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('expired_properties'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('id_number'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('choose_profile_picture'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('no_picture_selected'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('edit'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('new_password'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('current_password'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('confirm_new_password'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('confirm'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+    Text(
+      AppLocalizations.of(context)!.translate('list_property_at_office'),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Pacifico',
+        color: Color.fromARGB(255, 31, 37, 145),
+        fontSize: 24,
+      ),
+    ),
+  ];
+}

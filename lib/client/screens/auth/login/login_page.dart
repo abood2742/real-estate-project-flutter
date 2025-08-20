@@ -3,6 +3,7 @@ import 'package:property_system/client/screens/auth/register/register_page.dart'
 import 'package:property_system/client/services/login_service.dart';
 import 'package:property_system/client/screens/main/main_page.dart';
 import 'package:property_system/client/services/token_service.dart';
+import 'package:property_system/l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,14 +20,15 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Rigester account',
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Pacifico',
-              color: const Color.fromARGB(255, 31, 37, 145),
-              fontSize: 24),
-        ),
+        title:Text(
+  AppLocalizations.of(context)!.translate('login'),
+  style: const TextStyle(
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Pacifico',
+    color: Color.fromARGB(255, 31, 37, 145),
+    fontSize: 24,
+  ),
+)
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
