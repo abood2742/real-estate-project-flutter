@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/whaiting/expired_properties_to_push_page.dart';
-import 'package:property_system/client/screens/whaiting/properties_dont_pushed_yet_page.dart';
+import 'package:property_system/client/screens/waiting/expired_properties_to_push_page.dart';
+import 'package:property_system/client/screens/waiting/properties_dont_pushed_yet_page.dart';
 
 
 class ThePropertiesInWhaitingPage extends StatelessWidget {

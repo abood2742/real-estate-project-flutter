@@ -6,7 +6,9 @@ import 'package:property_system/client/screens/search/resault/property/property_
 import 'package:property_system/client/services/search_service.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key}); // هذه الصفحة تبقى للعقارات فقط
+  final Map<String, dynamic>? filterData;
+
+  const SearchPage({super.key, this.filterData});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -24,7 +26,11 @@ class _SearchPageState extends State<SearchPage> {
 
   Future<void> _loadProperties() async {
     setState(() => isLoadingProperties = true);
-    propertyModels = await SearchService().getAllProperties();
+
+ 
+      propertyModels = await SearchService().getAllProperties();
+    
+
     setState(() => isLoadingProperties = false);
   }
 
@@ -68,11 +74,22 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 const SizedBox(width: 10),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    // افتح صفحة الفلاتر وانتظر نتيجة الفلاتر
+                    final Map<String, dynamic>? filterData =
+                        await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const FiltersPage()),
+                      MaterialPageRoute(
+                          builder: (_) => const PropertyFilterPage()),
                     );
+
+                    if (filterData != null) {
+                      // جلب العقارات باستخدام الفلاتر
+                      setState(() => isLoadingProperties = true);
+                      propertyModels = await SearchService()
+                          .getFilteredProperties(filterData);
+                      setState(() => isLoadingProperties = false);
+                    }
                   },
                   child: Container(
                     height: 60,
@@ -94,9 +111,9 @@ class _SearchPageState extends State<SearchPage> {
               ],
             ),
             const SizedBox(height: 16),
-
             if (isLoadingProperties)
-              const Center(child: Padding(
+              const Center(
+                  child: Padding(
                 padding: EdgeInsets.only(top: 24),
                 child: CircularProgressIndicator(),
               ))

@@ -1,5 +1,17 @@
 // import 'package:flutter/material.dart';
 
+// class PropertiesDontPushedYetPage extends StatelessWidget {
+//   const PropertiesDontPushedYetPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//    return Scaffold(
+//       body: Center(child: Text('لا يوجد عقارات ليست منشورة  بعد'),),
+//     );
+//   }
+// }
+// import 'package:flutter/material.dart';
+
 // class ExpiredPropertiesToPushPage extends StatelessWidget {
 //   const ExpiredPropertiesToPushPage({super.key});
 
@@ -11,15 +23,15 @@
 //   }
 // }
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/whaiting/rented_page.dart';
-import 'package:property_system/client/screens/whaiting/salled_page.dart';
+import 'package:property_system/client/screens/waiting/to_rent_page.dart';
+import 'package:property_system/client/screens/waiting/to_sall_page.dart';
 
-class ExpiredPropertiesToPushPage extends StatefulWidget {
+class PropertiesDontPushedYetPage extends StatefulWidget {
   @override
   _TwoButtonsPageState createState() => _TwoButtonsPageState();
 }
 
-class _TwoButtonsPageState extends State<ExpiredPropertiesToPushPage> {
+class _TwoButtonsPageState extends State<PropertiesDontPushedYetPage> {
   int selectedPage = 1;
 
   @override
@@ -36,7 +48,7 @@ class _TwoButtonsPageState extends State<ExpiredPropertiesToPushPage> {
                 child: TextButton(
                   onPressed: () => setState(() => selectedPage = 1),
                   child: Text(
-                    ' عقارات مباعة',
+                    ' عقارات للبيع',
                     style: TextStyle(
                       fontWeight: selectedPage == 1
                           ? FontWeight.bold
@@ -58,7 +70,7 @@ class _TwoButtonsPageState extends State<ExpiredPropertiesToPushPage> {
                 child: TextButton(
                   onPressed: () => setState(() => selectedPage = 2),
                   child: Text(
-                    ' عقارات مؤجرة',
+                    ' عقارات للإيجار',
                     style: TextStyle(
                       fontWeight: selectedPage == 2
                           ? FontWeight.bold
@@ -82,13 +94,10 @@ class _TwoButtonsPageState extends State<ExpiredPropertiesToPushPage> {
   }
 
   Widget buildFirstPageContent() {
-    return SalledPage();
+    return ToSallPage();
   }
-  
 
   Widget buildSecondPageContent() {
-    return 
-    RentedPage();
-    
+    return ToRentPage();
   }
 }
