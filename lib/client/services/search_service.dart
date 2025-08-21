@@ -73,8 +73,33 @@ class SearchService {
 
     try {
       Response response =
-          await dio.get('http://localhost:3000/api/property?page=1&limit=10');
+          await dio.get('http://localhost:3000/api/property?page=1&limit=20');
       if (response.statusCode == 200) {
+        PropertyPageModel pageModel = PropertyPageModel.fromJson(response.data);
+
+        List<PropertyModel> propertyModels = pageModel.data;
+        return propertyModels;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print('Error response: ${e.response?.data}');
+      }
+      print('Exception: $e');
+      return null;
+    }
+  }
+
+  Future<List<PropertyModel>?> getFilteredProperties(
+      Map<String, dynamic>? filteredData) async {
+    Dio dio = Dio();
+
+    try {
+      Response response = await dio.post(
+          'http://localhost:3000/api/property/filter?page=1&limit=20',
+          data: filteredData);
+      if (response.statusCode == 201) {
         PropertyPageModel pageModel = PropertyPageModel.fromJson(response.data);
 
         List<PropertyModel> propertyModels = pageModel.data;

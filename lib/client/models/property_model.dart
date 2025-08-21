@@ -122,8 +122,7 @@ class PropertyModel {
         licenseDetails: LicenseDetails.fromJson(json["licenseDetails"]),
         propertyAttributes: convertedPropertyAttributes,
         createdAt: DateTime.parse(json["createdAt"]),
-        isFavorite: false
-        );
+        isFavorite: false);
   }
 }
 

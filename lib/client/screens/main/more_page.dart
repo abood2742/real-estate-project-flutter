@@ -14,7 +14,7 @@ import 'package:property_system/client/screens/main/more/complaint/complaient_pa
 import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_profile.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
-import 'package:property_system/client/screens/whaiting/the_properties_in_whaiting_page.dart';
+import 'package:property_system/client/screens/waiting/the_properties_in_whaiting_page.dart';
 import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
