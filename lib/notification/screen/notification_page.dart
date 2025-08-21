@@ -147,9 +147,9 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(60, 49, 26, 131),
+      backgroundColor: const Color.fromARGB(59, 0, 30, 255),
       appBar: AppBar(
-        title: const Text('Notifications'),
+        title: const Text('Notifications',style: TextStyle(color: Colors.white),),
         backgroundColor: const Color.fromARGB(255, 12, 46, 74),
       ),
       body: ListView.builder(

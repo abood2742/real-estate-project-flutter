@@ -292,7 +292,7 @@ class _MorePageState extends State<MorePage> {
               label: localizations.translate('account_blocked'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const BlockPage();
+                  return  BlockPage(blockReason: '', blockDate: '',);
                 }));
               },
             ),
