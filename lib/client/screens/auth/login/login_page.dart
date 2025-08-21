@@ -287,11 +287,12 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     try {
-      final authModel = await LoginService().login(email: email, password: password);
+      final authModel =
+          await LoginService().login(email: email, password: password);
       if (authModel?.accessToken != null) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) =>  MainPage()),
+          MaterialPageRoute(builder: (context) => MainPage()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -425,9 +426,11 @@ class _LoginPageState extends State<LoginPage> {
             const Spacer(flex: 1),
             GestureDetector(
               onTap: () {
+                print(AuthService.getAccessToken());
+
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) =>  MainPage()),
+                  MaterialPageRoute(builder: (context) => MainPage()),
                 );
               },
               child: Container(
@@ -440,6 +443,35 @@ class _LoginPageState extends State<LoginPage> {
                 child: Center(
                   child: Text(
                     localizations.translate('skip'),
+                    style: const TextStyle(
+                      fontFamily: 'Pacifico',
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const Spacer(flex: 1),
+            GestureDetector(
+              onTap: () {
+                print(AuthService.getAccessToken());
+                AuthService.clearAccessToken();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainPage()),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 31, 37, 145),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                height: 50,
+                width: 300,
+                child: Center(
+                  child: Text(
+                    localizations.translate('skip2'),
                     style: const TextStyle(
                       fontFamily: 'Pacifico',
                       color: Colors.white,
@@ -462,7 +494,8 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const RegisterPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterPage()),
                     );
                   },
                   child: Text(
