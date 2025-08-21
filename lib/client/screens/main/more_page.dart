@@ -1,3 +1,4 @@
+// import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:property_system/client/screens/auth/login/login_page.dart';
@@ -8,7 +9,6 @@ import 'package:property_system/client/screens/main/more/client_properties/prope
 import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_reserverd_page.dart';
 import 'package:property_system/client/screens/main/more/property_offer/post_property1.dart';
-
 import 'package:property_system/client/screens/main/more/complaint/one_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/complaient_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
@@ -18,9 +18,10 @@ import 'package:property_system/client/screens/whaiting/the_properties_in_whaiti
 import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
+import 'package:property_system/l10n/app_localizations.dart';
 
 class MorePage extends StatefulWidget {
-  MorePage({super.key});
+  const MorePage({super.key});
 
   @override
   State<MorePage> createState() => _MorePageState();
@@ -36,19 +37,23 @@ class _MorePageState extends State<MorePage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),
       builder: (BuildContext context) {
+        final localizations = AppLocalizations.of(context)!;
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'اختر اللغة',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Text(
+                localizations.translate('choose_language'),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               ListTile(
                 leading: const Text('🇸🇦', style: TextStyle(fontSize: 24)),
-                title: const Text('العربية', style: TextStyle(fontSize: 18)),
+                title: Text(
+                  localizations.translate('arabic'),
+                  style: const TextStyle(fontSize: 18),
+                ),
                 onTap: () {
                   // تغيير اللغة إلى العربية
                   print("تم اختيار العربية");
@@ -57,7 +62,10 @@ class _MorePageState extends State<MorePage> {
               ),
               ListTile(
                 leading: const Text('🇺🇸', style: TextStyle(fontSize: 24)),
-                title: const Text('English', style: TextStyle(fontSize: 18)),
+                title: Text(
+                  localizations.translate('english'),
+                  style: const TextStyle(fontSize: 18),
+                ),
                 onTap: () {
                   // تغيير اللغة إلى الإنجليزية
                   print("English selected");
@@ -73,261 +81,39 @@ class _MorePageState extends State<MorePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl, // لدعم اللغة العربية>
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(100), // 👈 هنا نتحكم بالارتفاع
+    final localizations = AppLocalizations.of(context)!;
 
-          child: AppBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    'المزيد',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontFamily: 'Pacifico'),
-                  ),
-                ),
-                SizedBox(width: 6),
-                SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: Lottie.asset(
-                    'assets/more_amolation.json',
-                    repeat: true,
-                    animate: true,
-                    delegates: LottieDelegates(
-                      values: [
-                        ValueDelegate.color(
-                          const ['**'],
-                          value: Colors.white, // 👈 اللون الجديد
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-           // backgroundColor: const Color.fromARGB(255, 88, 66, 146),
-            backgroundColor: Color.fromARGB(255, 24, 55, 147),
-            centerTitle: false,
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: ListView(
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child: AppBar(
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              buildMenuButton(
-                icon: Icons.person,
-                label: 'ملفي الشخصي',
-                onTap: () {
-                  print("object");
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ClientProfile();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.person,
-                label: 'ادخال  ',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return UserInfoEnterPage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.language,
-                label: 'اللغة',
-                onTap: () {
-                  _showLanguageSheet(context);
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.local_post_office,
-                label: 'إنشاء مكتب',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return CreateOfficePage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.create,
-                label: 'نشر عقار',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return CreateProperty();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.create,
-                label: 'نشر عقار 2',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return PostProperty1();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.report_problem,
-                label: 'تقديم شكوى',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return PushComplaintPage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.map,
-                label: 'الخريطة ',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return MapPage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.report_problem,
-                label: 'الشكاوى',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ComplaientPage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.money,
-                label: 'الإشتراكات',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return SubscriptionsOfficePage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.report_problem,
-                label: 'Authontication1',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ClientPagePropertyInExpiredPropertyPage(
-                      pushedOffice: '',
-                      pushedOfficeAccount: '',
-                      propertyArea: '',
-                      propertyLocation: '',
-                      propertyPrice: '',
-                      propertyType: '',
-                    );
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.report_problem,
-                label: 'تقديم الشكوى ',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ComplaientPage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.book,
-                label: 'العقارات المحجوزة ',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ClientReserverdPage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.report_problem,
-                label: 'معلومات الشكوى ',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return OneComplaintPage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.report_problem,
-                label: ' العقار في حالة انتظار  ',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ThePropertiesInWhaitingPage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.report_problem,
-                label: 'منتهي الصلاحية ',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ClientExpiredPropertyPage();
-                  }));
-                },
-              ),
-                buildMenuButton(
-                icon: Icons.report_problem,
-                label: ' hhhhhhhhhh ',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }));
-                },
-              ),
-              buildMenuButton(
-                icon: Icons.report_problem,
-                label: ' الحساب محظور ',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return BlockPage();
-                  }));
-                },
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return NotificationPage();
-                  }));
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  localizations.translate('more'),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontFamily: 'Pacifico',
                   ),
-                  child: Row(
-                    children: [
-                      Icon(Icons.notifications, color: Colors.blue),
-                      const SizedBox(width: 12),
-                      const Text(
-                        'الإشعارات',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Pacifico',
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
-                        child: Center(
-                          child: Switch(
-                            value: isOn,
-                            onChanged: (bool newValue) {
-                              setState(() {
-                                isOn = newValue; // تحديث الحالة
-                              });
-                            },
-                          ),
-                        ),
+                ),
+              ),
+              const SizedBox(width: 6),
+              SizedBox(
+                height: 40,
+                width: 40,
+                child: Lottie.asset(
+                  'assets/more_Animation.json', // تصحيح اسم الملف
+                  repeat: true,
+                  animate: true,
+                  delegates: LottieDelegates(
+                    values: [
+                      ValueDelegate.color(
+                        const ['**'],
+                        value: Colors.white,
                       ),
                     ],
                   ),
@@ -335,12 +121,229 @@ class _MorePageState extends State<MorePage> {
               ),
             ],
           ),
+          backgroundColor: const Color.fromARGB(255, 24, 55, 147),
+          centerTitle: false,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: ListView(
+          children: [
+            buildMenuButton(
+              icon: Icons.person,
+              label: localizations.translate('profile'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const ClientProfile();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.person,
+              label: localizations.translate('enter_your_data'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const UserInfoEnterPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.language,
+              label: localizations.translate('language'),
+              onTap: () {
+                _showLanguageSheet(context);
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.local_post_office,
+              label: localizations.translate('create_office'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const CreateOfficePage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.create,
+              label: localizations.translate('publish_property'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const CreateProperty();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.create,
+              label: localizations.translate('publish_property_2'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  PostProperty1();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('submit_complaint'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  PushComplaintPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.map,
+              label: localizations.translate('map'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  MapPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('complaints'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ComplaintPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.money,
+              label: localizations.translate('subscriptions'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const SubscriptionsOfficePage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('authentication1'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  ClientPagePropertyInExpiredPropertyPage(
+                    pushedOffice: '',
+                    pushedOfficeAccount: '',
+                    propertyArea: '',
+                    propertyLocation: '',
+                    propertyPrice: '',
+                    propertyType: '',
+                  );
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('submit_complaint'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  ComplaintPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.book,
+              label: localizations.translate('reserved_properties'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientReservedPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('complaint_info'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  OneComplaintPage(complaintName: '', submissionDate: '', complaintReason: '', complaintStatus: '',);
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('properties_in_waiting'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  ThePropertiesInWaitingPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('expired'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  ClientExpiredPropertyPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('temporary_label'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const LoginPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('account_blocked'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const BlockPage();
+                }));
+              },
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const NotificationPage();
+                }));
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.notifications, color: Colors.blue),
+                    const SizedBox(width: 12),
+                    Text(
+                      localizations.translate('notifications'),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Pacifico',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: Center(
+                        child: Switch(
+                          value: isOn,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              isOn = newValue;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  /// دالة لبناء الزر بشكل منسق
   Widget buildMenuButton({
     required IconData icon,
     required String label,
