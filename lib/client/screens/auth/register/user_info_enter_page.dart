@@ -274,10 +274,13 @@ import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/screens/auth/login/login_page.dart';
 import 'package:property_system/client/screens/main/main_page.dart';
 import 'package:property_system/client/services/register_service.dart';
+import 'package:property_system/client/services/user_profile.service.dart';
 import 'package:property_system/l10n/app_localizations.dart';
+import 'package:property_system/notification/socket_service.dart';
 
 class UserInfoEnterPage extends StatefulWidget {
   const UserInfoEnterPage({super.key});
@@ -356,15 +359,11 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
                 ),
               ),
               const SizedBox(height: 30),
-              _buildTextField(
-                  localizations.translate('first_name'),
-                  TextInputType.name,
-                  _firstNameController),
+              _buildTextField(localizations.translate('first_name'),
+                  TextInputType.name, _firstNameController),
               const SizedBox(height: 30),
-              _buildTextField(
-                  localizations.translate('last_name'),
-                  TextInputType.name,
-                  _lastNameController),
+              _buildTextField(localizations.translate('last_name'),
+                  TextInputType.name, _lastNameController),
               const SizedBox(height: 16),
               _buildTextField(localizations.translate('national_id'),
                   TextInputType.text, _nationalNumberController),
@@ -425,16 +424,21 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
                           });
 
                           try {
-                            await enterInfo();
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return const MainPage();
-                            }));
+                            final userId = await enterInfo();
+                            if (userId != null) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const MainPage();
+                              }));
+                              final SocketService socketService =
+                                  SocketService();
+                              socketService.connect(userId);
+                            }
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content: Text(
-                                      localizations.translate('registration_error'))),
+                                  content: Text(localizations
+                                      .translate('registration_error'))),
                             );
                           }
 
@@ -522,7 +526,7 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
     );
   }
 
-  Future<void> enterInfo() async {
+  Future<String?> enterInfo() async {
     dynamic imageData;
 
     if (!kIsWeb && _ProfileImageFile != null) {
@@ -533,7 +537,7 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
       imageData = null;
     }
 
-    await RegisterService().enterInfoPost(
+    final success = await RegisterService().enterInfoPost(
       firstName: _firstNameController.text,
       lastName: _lastNameController.text,
       nationalNumber: _nationalNumberController.text,
@@ -541,5 +545,15 @@ class _UserInfoEnterPageState extends State<UserInfoEnterPage> {
       password: _passwordController.text,
       image: imageData,
     );
+
+    if (success != false) {
+      ProfileModel? user = await ProfileService().getProfile();
+      if (user != null) {
+        return user.id;
+      }
+      return null;
+    } else {
+      return null;
+    }
   }
 }

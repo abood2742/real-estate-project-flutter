@@ -1,13 +1,19 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:property_system/client/models/profile.model.dart';
+import 'package:property_system/client/services/user_profile.service.dart';
 import 'package:provider/provider.dart';
 import 'package:property_system/client/screens/initial_page.dart';
 import 'notification/socket_service.dart';
 import 'l10n/app_localizations.dart';
 
-void main() {
-  runApp(const PropertySystem());
+void main() async {
+  String? id = await PropertySystem().getUser();
+
+  runApp(OverlaySupport.global(
+      // مهم جداً
+      child: PropertySystem(id: id)));
 }
 
 class LocalizationProvider with ChangeNotifier {
@@ -24,13 +30,16 @@ class LocalizationProvider with ChangeNotifier {
 }
 
 class PropertySystem extends StatelessWidget {
-  const PropertySystem({super.key});
+  final String? id;
+  const PropertySystem({super.key, this.id});
 
   @override
   Widget build(BuildContext context) {
-    // إنشاء خدمة الـ Socket وتشغيل الاتصال
-    final SocketService socketService = SocketService();
-    socketService.connect();
+    if (id != null) {
+      // إنشاء خدمة الـ Socket وتشغيل الاتصال
+      final SocketService socketService = SocketService();
+      socketService.connect(id!);
+    }
 
     return ChangeNotifierProvider(
       create: (_) => LocalizationProvider(),
@@ -65,5 +74,13 @@ class PropertySystem extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<String?> getUser() async {
+    ProfileModel? user = await ProfileService().getProfile();
+    if (user == (null)) {
+      return null;
+    }
+    return user.id;
   }
 }
