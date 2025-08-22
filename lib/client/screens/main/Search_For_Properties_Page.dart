@@ -138,6 +138,7 @@ import 'package:property_system/client/components/property_cards/property_card.d
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/filter/filters_page.dart';
 import 'package:property_system/client/screens/search/resault/property/property_detailes_page.dart';
+import 'package:property_system/client/services/notification_service.dart';
 import 'package:property_system/client/services/search_service.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
@@ -163,10 +164,10 @@ class _SearchPageState extends State<SearchPage> {
   Future<void> _loadProperties() async {
     setState(() => isLoadingProperties = true);
 
- 
-      propertyModels = await SearchService().getAllProperties();
-    
+    propertyModels = await SearchService().getAllProperties();
 
+    await NotificationService()
+        .notifyUser(title: 'Welcome', message: "Welcome to property page");
     setState(() => isLoadingProperties = false);
   }
 
@@ -262,7 +263,8 @@ class _SearchPageState extends State<SearchPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 24),
                 child: Center(
-                  child: Text(localizations.translate('no_properties_available')),
+                  child:
+                      Text(localizations.translate('no_properties_available')),
                 ),
               )
             else

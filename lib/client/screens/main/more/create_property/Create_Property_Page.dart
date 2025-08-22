@@ -1,9 +1,13 @@
 import 'dart:io' as io;
-import 'dart:typed_data';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:property_system/client/components/Build_Dynamic_Attributes/Custom_Card.dart';
+import 'package:property_system/client/components/Build_Dynamic_Attributes/Custom_DropDown_List.dart';
+import 'package:property_system/client/components/Build_Dynamic_Attributes/Custom_Input.dart';
+import 'package:property_system/client/components/Build_Dynamic_Attributes/Custom_Select_Button.dart';
+import 'package:property_system/client/components/Build_Dynamic_Attributes/Dynamic_Attributes.dart';
+import 'package:property_system/client/components/Build_Dynamic_Attributes/Types_Of_Property_Types.dart';
 import 'package:property_system/client/models/property_type_model.dart';
 import 'package:property_system/client/services/property_service.dart';
 import 'package:property_system/client/services/propety_Type_service.dart';
@@ -21,25 +25,49 @@ class _CreatePropertyState extends State<CreateProperty> {
   final Color primaryColor = Colors.indigo.shade700;
   final Color backgroundColor = Colors.grey.shade100;
 
-  PropertyTypeModel? selectedPropertyType;
-  List<PropertyTypeModel>? propertyTypes = [];
-  List<AttributesModel> attributes = [];
+  List<String> typesOfPropertyTypes = [
+    "residential",
+    "commercial",
+    "industrial",
+    "agricultural"
+  ];
+  String selectedTypeOfPropertyTypes = 'residential'; // القيمة الافتراضية
 
-  Map<String, bool> boolAttributes = {};
-  Map<String, dynamic> valueAttributes = {};
+  List<PropertyTypeModel>? propertyTypes = [];
+  PropertyTypeModel? selectedPropertyType;
+
+  final Map<String, IconData> propertyTypeIcons = {
+    "Apartment": Icons.apartment,
+    "Hotel": Icons.hotel,
+    "Villa": Icons.villa,
+    "Resturant": Icons.restaurant,
+  };
+
+  String typeOperation = 'selling';
 
   final TextEditingController propertyNumberController =
       TextEditingController();
   final TextEditingController spaceController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController licenseTypeController = TextEditingController();
+
+final List<String> licenseTypes = [
+  "Residential Permit", // سكني
+  "Commercial Permit",  // تجاري
+  "Agricultural Permit",// زراعي
+  "Industrial Permit",  // صناعي
+];
+  String? selectedLicenseType;
+
   final TextEditingController licenseNumberController = TextEditingController();
   final TextEditingController governorateController = TextEditingController();
   final TextEditingController provinceController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController streetController = TextEditingController();
-  String typeOperation = 'selling';
+
+  List<AttributesModel> attributes = [];
+  Map<String, bool> boolAttributes = {};
+  Map<String, dynamic> valueAttributes = {};
 
   List<Uint8List> _propertyImagesBytes = []; // للويب
   List<io.File> _propertyImagesFiles = []; // للهاتف
@@ -49,6 +77,8 @@ class _CreatePropertyState extends State<CreateProperty> {
   void initState() {
     super.initState();
     fetchPropertyTypesInfo();
+    // ✅ اجعل أول نوع مفعل افتراضياً
+    selectedTypeOfPropertyTypes = typesOfPropertyTypes.first;
   }
 
   void fetchPropertyTypesInfo() async {
@@ -59,8 +89,15 @@ class _CreatePropertyState extends State<CreateProperty> {
       propertyTypes = fetchedPropertyTypesInfo;
 
       if (propertyTypes!.isNotEmpty) {
-        selectedPropertyType = propertyTypes!.first;
-        fetchAttributesForType(selectedPropertyType!.id);
+        // ✅ اجعل أول نوع فرعي (propertyType) مختار
+        final filteredProps = propertyTypes!
+            .where((p) => p.type == selectedTypeOfPropertyTypes)
+            .toList();
+
+        if (filteredProps.isNotEmpty) {
+          selectedPropertyType = filteredProps.first;
+          fetchAttributesForType(selectedPropertyType!.id);
+        }
       }
     });
   }
@@ -74,7 +111,7 @@ class _CreatePropertyState extends State<CreateProperty> {
       }
     }
 
-    setState(() {
+setState(() {
       attributes = fetched;
       boolAttributes.clear();
       valueAttributes.clear();
@@ -114,123 +151,156 @@ class _CreatePropertyState extends State<CreateProperty> {
             children: [
               _buildSectionTitle("اختر نوع العقار"),
               const SizedBox(height: 10),
-              Wrap(
-                children: propertyTypes!.map((pt) {
-                  final isSelected = selectedPropertyType?.id == pt.id;
-                  return ChoiceChip(
-                    label: Text(pt.name),
-                    selected: isSelected,
-                    selectedColor: Colors.green.shade300,
-                    backgroundColor: Colors.grey.shade200,
-                    labelStyle: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    onSelected: (_) {
-                      setState(() {
-                        selectedPropertyType = pt;
-                      });
-                      fetchAttributesForType(pt.id);
-                    },
-                  );
-                }).toList(),
+
+              // ------------------ نوع العقار ------------------
+              PropertyTypeSelector(
+                typesOfPropertyTypes: typesOfPropertyTypes,
+                selectedType: selectedTypeOfPropertyTypes,
+                onTypeSelected: (type) {
+                  setState(() {
+                    selectedTypeOfPropertyTypes = type;
+
+                    final filteredProps =
+                        propertyTypes?.where((p) => p.type == type).toList() ??
+                            [];
+
+                    if (filteredProps.isNotEmpty) {
+                      // ✅ اجعل أول نوع فرعي مفعل افتراضياً
+                      selectedPropertyType = filteredProps.first;
+                      fetchAttributesForType(selectedPropertyType!.id);
+                    }
+                  });
+                },
               ),
+              // ------------------ العقارات التابعة للنوع ------------------
+              if (propertyTypes != null &&
+                  propertyTypes!
+                      .any((p) => p.type == selectedTypeOfPropertyTypes)) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: SizedBox(
+                    height: 120,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: propertyTypes!
+                          .where((p) => p.type == selectedTypeOfPropertyTypes)
+                          .length,
+                      itemBuilder: (context, index) {
+                        final props = propertyTypes!
+                            .where((p) => p.type == selectedTypeOfPropertyTypes)
+                            .toList();
+                        return _buildSelectablePropertyType(props[index].name);
+                      },
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(width: 30),
-                  GestureDetector(
-                    onTap: () {
-                      _setTypeOperation(true);
+                  CustomSelectButton(
+                    label: 'بيع',
+                    isSelected: typeOperation == 'selling',
+                    onPressed: () {
+                      setState(() {
+                        _setTypeOperation(true);
+                      });
                     },
-                    child: Container(
-                      height: 60,
-                      width: 195,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 33, 135, 104),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Center(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'sell',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Pacifico',
-                                fontSize: 18,
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Icon(Icons.home, color: Colors.white),
-                          ],
-                        ),
-                      ),
-                    ),
                   ),
-                  const SizedBox(width: 30),
-                  GestureDetector(
-                    onTap: () {
-                      _setTypeOperation(false);
+                  const SizedBox(width: 10),
+                  CustomSelectButton(
+                    label: 'تأجير',
+                    isSelected: typeOperation == 'renting',
+                    onPressed: () {
+                      setState(() {
+                        _setTypeOperation(false);
+                      });
                     },
-                    child: Container(
-                      height: 60,
-                      width: 195,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 33, 135, 104),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Center(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'rent',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Pacifico',
-                                fontSize: 18,
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Icon(Icons.business, color: Colors.white),
-                          ],
-                        ),
-                      ),
-                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               _buildSectionTitle("البيانات الأساسية"),
               const SizedBox(height: 10),
-              _buildCard(
+              CustomCard(
                 children: [
-                  _buildInput("رقم العقار", propertyNumberController,
-                      TextInputType.text),
-                  _buildInput("المساحة", spaceController, TextInputType.number),
-                  _buildInput("السعر", priceController, TextInputType.number),
-                  _buildInput(
-                      "الوصف", descriptionController, TextInputType.text),
-                  _buildInput(
-                      "نوع الرخصة", licenseTypeController, TextInputType.text),
-                  _buildInput("رقم الرخصة", licenseNumberController,
-                      TextInputType.text),
-                  _buildInput(
-                      "المحافظة", governorateController, TextInputType.text),
-                  _buildInput(
-                      "المديرية", provinceController, TextInputType.text),
-                  _buildInput("المدينة", cityController, TextInputType.text),
-                  _buildInput("الشارع", streetController, TextInputType.text),
+                  CustomInput(
+
+label: "رقم العقار",
+                      controller: propertyNumberController,
+                      keyboardType: TextInputType.text),
+                  CustomInput(
+                      label: "المساحة",
+                      controller: spaceController,
+                      keyboardType: TextInputType.number),
+                  CustomInput(
+                      label: "السعر",
+                      controller: priceController,
+                      keyboardType: TextInputType.number),
+                  CustomInput(
+                      label: "الوصف",
+                      controller: descriptionController,
+                      keyboardType: TextInputType.text),
+                  LicenseTypeDropdown(
+                    selectedValue: selectedLicenseType,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedLicenseType = value;
+                      });
+                    },
+                    items: licenseTypes,
+                    hint: 'اختر نوع الرخصة',
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  CustomInput(
+                      label: "رقم الرخصة",
+                      controller: licenseNumberController,
+                      keyboardType: TextInputType.text),
+                  CustomInput(
+                      label: "المحافظة",
+                      controller: governorateController,
+                      keyboardType: TextInputType.text),
+                  CustomInput(
+                      label: "المديرية",
+                      controller: provinceController,
+                      keyboardType: TextInputType.text),
+                  CustomInput(
+                      label: "المدينة",
+                      controller: cityController,
+                      keyboardType: TextInputType.text),
+                  CustomInput(
+                      label: "الشارع",
+                      controller: streetController,
+                      keyboardType: TextInputType.text),
                 ],
               ),
               const SizedBox(height: 20),
               _buildSectionTitle("الصفات الإضافية"),
               const SizedBox(height: 10),
-              _buildCard(children: [_buildDynamicAttributes()]),
-              const SizedBox(height: 30),
+              CustomCard(
+                children: [
+                  DynamicAttributes(
+                    attributes: attributes,
+                    boolAttributes: boolAttributes,
+                    valueAttributes: valueAttributes,
+                    primaryColor: primaryColor,
+                    onChanged: (id, val) {
+                      setState(() {
+                        if (val is bool) {
+                          boolAttributes[id] = val;
+                        } else {
+                          valueAttributes[id] = val;
+                        }
+                      });
+                    },
+                  )
+                ],
+              ),
+
+const SizedBox(height: 30),
               // داخل build، عرض الصور المرفوعة
               _buildSectionTitle("صور العقار"),
               const SizedBox(height: 10),
@@ -293,11 +363,6 @@ class _CreatePropertyState extends State<CreateProperty> {
                       ),
                     );
                   },
-                  // onPressed: () {
-                  //   createProperty();
-                  //   print('bool Attributes = ${boolAttributes}\n');
-                  //   print('\nvalue Attributes = ${valueAttributes}');
-                  // },
                   icon: const Icon(Icons.send),
                   label: const Text('نشر العقار'),
                   style: ElevatedButton.styleFrom(
@@ -317,6 +382,60 @@ class _CreatePropertyState extends State<CreateProperty> {
     );
   }
 
+  Widget _buildSelectablePropertyType(String name) {
+    final isSelected =
+        selectedPropertyType != null && selectedPropertyType!.name == name;
+
+return Container(
+      margin: const EdgeInsets.all(6),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isSelected
+              ? const Color.fromARGB(255, 21, 129, 217)
+              : Colors.grey[300],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          minimumSize: const Size(100, 100),
+          padding: EdgeInsets.zero,
+        ),
+        onPressed: () {
+          setState(() {
+            if (!isSelected) {
+              final selectedProp =
+                  propertyTypes!.firstWhere((p) => p.name == name);
+              selectedPropertyType = selectedProp;
+              fetchAttributesForType(selectedProp.id);
+            }
+            // ❌ منع إلغاء الاختيار
+          });
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              propertyTypeIcons[name] ?? Icons.home,
+              color: isSelected ? Colors.white : Colors.black,
+              size: 30,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.black,
+                fontFamily: 'Pacifico',
+                fontSize: 14,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   // 🟢 Section Title
   Widget _buildSectionTitle(String title) {
     return Text(
@@ -326,115 +445,6 @@ class _CreatePropertyState extends State<CreateProperty> {
         fontSize: 18,
         color: primaryColor,
       ),
-    );
-  }
-
-  // 🟢 Card Wrapper
-  Widget _buildCard({required List<Widget> children}) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(children: children),
-      ),
-    );
-  }
-
-  // 🟢 Input Field
-  Widget _buildInput(
-      String label, TextEditingController controller, TextInputType inputType,
-      {Function(String)? onChanged}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: TextField(
-        controller: controller,
-        keyboardType: inputType,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          labelText: label,
-          filled: true,
-          fillColor: Colors.grey.shade50,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        ),
-      ),
-    );
-  }
-
-  // 🟢 Dynamic Attributes
-  Widget _buildDynamicAttributes() {
-    if (selectedPropertyType == null) {
-      return const Text("اختر نوع العقار لعرض الصفات");
-    }
-    if (attributes.isEmpty) {
-      return const Text("لا يوجد صفات لهذا النوع");
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: attributes.map((attr) {
-        switch (attr.type) {
-          case 'bool':
-            return SwitchListTile(
-              title: Text(attr.name),
-              value: boolAttributes[attr.id] ?? false,
-              activeColor: primaryColor,
-              onChanged: (val) {
-                setState(() {
-                  boolAttributes[attr.id] = val;
-                });
-              },
-            );
-          case 'string':
-            return _buildInput(
-              attr.name,
-              TextEditingController(text: valueAttributes[attr.id] ?? ''),
-              TextInputType.text,
-              onChanged: (val) {
-                valueAttributes[attr.id] = val;
-              },
-            );
-          case 'number':
-            return _buildNumberSlider(attr.name, attr.id);
-          default:
-            return const SizedBox();
-        }
-      }).toList(),
-    );
-  }
-
-  // 🟢 Slider for numbers
-  Widget _buildNumberSlider(String label, String attrId) {
-    double currentValue =
-        valueAttributes[attrId] is double ? valueAttributes[attrId] : 0.0;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        Slider(
-          value: currentValue,
-          min: 0,
-          max: 100,
-          divisions: 100,
-          activeColor: primaryColor,
-          label: currentValue.round().toString(),
-          onChanged: (val) {
-            setState(() {
-              valueAttributes[attrId] = val;
-            });
-          },
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Text(
-            "القيمة: ${currentValue.round()}",
-            style: const TextStyle(fontWeight: FontWeight.w500),
-          ),
-        ),
-        const SizedBox(height: 12),
-      ],
     );
   }
 
@@ -488,7 +498,7 @@ class _CreatePropertyState extends State<CreateProperty> {
       province: provinceController.text,
       city: cityController.text,
       street: streetController.text,
-      licenseType: licenseTypeController.text,
+      licenseType: selectedLicenseType!,
       licenseNumber: licenseNumberController.text,
       attributes: allAttributes,
       propertyPhotos: photos,
@@ -514,7 +524,8 @@ class _CreatePropertyState extends State<CreateProperty> {
       });
     });
 
-    // value attributes
+
+// value attributes
     valueAttributes.forEach((key, value) {
       if (value == (0) || value == ("")) {
         return;
