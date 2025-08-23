@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:property_system/client/screens/search/resault/property/property_detailes_page.dart';
 
 class ReservedPropertComponents extends StatelessWidget {
-  const ReservedPropertComponents({super.key});
-
+   ReservedPropertComponents({super.key,required this.location , required this.forWhat});
+  String location, forWhat;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,12 +24,11 @@ class ReservedPropertComponents extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                
-                  const Column(
+                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        'معرة النعمان',
+                       location,
                         style: TextStyle(
                           color: Colors.blue,
                           fontSize: 18,
@@ -37,7 +36,7 @@ class ReservedPropertComponents extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'للإيجار',
+                        forWhat,
                         style: TextStyle(
                           color: Color.fromARGB(255, 43, 152, 134),
                           fontFamily: 'Pacifico',
@@ -47,7 +46,7 @@ class ReservedPropertComponents extends StatelessWidget {
                       ),
                     ],
                   ),
-                    GestureDetector(
+                  GestureDetector(
                     onTap: () {
                       showDialog(
                         context: context,
@@ -127,7 +126,7 @@ class ReservedPropertComponents extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
- Container(
+              Container(
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(16),
@@ -143,7 +142,6 @@ class ReservedPropertComponents extends StatelessWidget {
                 ),
               ),
               // الزر + النصوص
-             
             ],
           ),
         ),

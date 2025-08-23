@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/property_model.dart';
-import 'package:property_system/client/services/reservation_service.dart';
-
-class ClientReservedPropertyForSellPage extends StatefulWidget {
-  const ClientReservedPropertyForSellPage({super.key});
-
-  @override
-  State<ClientReservedPropertyForSellPage> createState() =>
-      _ClientReservedPropertyForSellPageState();
-}
+import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_sell_page.dart';
+import 'package:property_system/client/services/get_and_delet_reservation_of_client_service.dart';
 
 class _ClientReservedPropertyForSellPageState
     extends State<ClientReservedPropertyForSellPage> {
@@ -23,20 +16,18 @@ class _ClientReservedPropertyForSellPageState
   }
 
   Future<void> fetchReservations() async {
-    final reservations = await ReservationService().getReservations();
+    final data = await GetAndDeletReservationOfClientService()
+        .getClientReservations("1"); // clientId للتجربة
 
     setState(() {
-      if (reservations != null) {
-        // ناخذ العقار من كل حجز
-        reservedProperties = reservations.map((r) => r.property).toList();
-      }
+      reservedProperties = data ?? [];
       isLoading = false;
     });
   }
 
   Future<void> removeReservation(String reservationId) async {
-    final success =
-        await ReservationService().deleteReservation(reservationId);
+    final success = await GetAndDeletReservationOfClientService()
+        .deleteClientReservation(reservationId);
 
     if (success) {
       setState(() {
@@ -60,17 +51,15 @@ class _ClientReservedPropertyForSellPageState
       itemCount: reservedProperties.length,
       itemBuilder: (context, index) {
         final property = reservedProperties[index];
+
         return PropertyCard(
           imageUrl: property.photos.isNotEmpty ? property.photos[0].url : null,
           title: property.propertyType.name,
           location: property.location.city,
           price: property.price,
           area: property.space.toString(),
-          onTap: () {
-            // ممكن تفتح صفحة تفاصيل العقار
-          },
           onRemove: () {
-            removeReservation(property.id); // استدعاء الحذف
+            removeReservation(property.id); // 🗑️ نحذف باستخدام id العقار
           },
         );
       },
