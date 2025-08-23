@@ -1,7 +1,6 @@
-// import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/auth/login/login_page.dart';
+import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
 import 'package:property_system/client/screens/auth/register/user_info_enter_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
@@ -18,15 +17,13 @@ import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/client/screens/search/reservation/Property_reservation.dart';
 import 'package:property_system/client/screens/search/reservation/clent_reservation_status.dart';
 import 'package:property_system/client/screens/waiting/the_properties_in_whaiting_page.dart';
+import 'package:property_system/client/services/user_profile.service.dart';
 import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
-import 'package:property_system/office/reservation/office_reservation_page.dart';
-import 'package:property_system/office/reservation/property_reserved_for_rent_page.dart';
-import 'package:property_system/office/reservation/property_reserved_for_sell_page.dart';
-import 'package:property_system/office/reservation/rented_page_property_reserved_for_rent_page.dart';
-import 'package:property_system/office/reservation/soled_page_property_reserved_for_sell_page.dart';
+import 'package:property_system/notification/socket_service.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -37,6 +34,12 @@ class MorePage extends StatefulWidget {
 
 class _MorePageState extends State<MorePage> {
   bool isOn = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadNotificationState();
+  }
 
   void _showLanguageSheet(BuildContext context) {
     showModalBottomSheet(
@@ -53,7 +56,8 @@ class _MorePageState extends State<MorePage> {
             children: [
               Text(
                 localizations.translate('choose_language'),
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               /////////////////////////////////////////////////
@@ -183,199 +187,11 @@ class _MorePageState extends State<MorePage> {
               },
             ),
             buildMenuButton(
-              icon: Icons.create,
-              label: localizations.translate('publish_property_2'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  PostProperty1();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('submit_complaint'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  PushComplaintPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.map,
-              label: localizations.translate('map'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  MapPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('complaints'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ComplaintPage();
-                }));
-              },
-            ),
-            buildMenuButton(
               icon: Icons.money,
               label: localizations.translate('subscriptions'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const SubscriptionsOfficePage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('authentication1'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  ClientPagePropertyInExpiredPropertyPage(
-                    pushedOffice: '',
-                    pushedOfficeAccount: '',
-                    propertyArea: '',
-                    propertyLocation: '',
-                    propertyPrice: '',
-                    propertyType: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('submit_complaint'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  ComplaintPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.book,
-              label: localizations.translate('reserved_properties'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientReservedPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('complaint_info'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  OneComplaintPage(complaintName: '', submissionDate: '', complaintReason: '', complaintStatus: '',);
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('properties_in_waiting'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  ThePropertiesInWaitingPage();
-                }));
-              },
-            ),
-             buildMenuButton(
-              icon: Icons.report_problem,
-              label:  " ClientCreateReservationPage ", // localizations.translate('properties_in_waiting'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  ClientCreateReservationPage(propertyId: '',);
-                }));
-              },
-            ),
-              buildMenuButton(
-              icon: Icons.report_problem,
-              label:  " المحجوزة ", // localizations.translate('properties_in_waiting'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  OfficeReservationPage();
-                }));
-              },
-            ),
-               buildMenuButton(
-              icon: Icons.report_problem,
-              label:  " PropertyReservedForSellPage ", // localizations.translate('properties_in_waiting'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  PropertyReservedForSellPage(email: '',);
-                }));
-              },
-            ),
-              buildMenuButton(
-              icon: Icons.report_problem,
-              label:  " property_reserved_for_sell_page ", // localizations.translate('properties_in_waiting'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  SoledPagePropertyReservedForSellPage();
-                }));
-              },
-            ),
-
-             buildMenuButton(
-              icon: Icons.report_problem,
-              label:  " PropertyReservedForRentPage ", // localizations.translate('properties_in_waiting'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  PropertyReservedForRentPage(email: '',);
-                }));
-              },
-            ),
-              buildMenuButton(
-              icon: Icons.report_problem,
-              label:  " RentedPagePropertyReservedForRentPage ", // localizations.translate('properties_in_waiting'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  RentedPagePropertyReservedForRentPage();
-                }));
-              },
-            ),
-                buildMenuButton(
-              icon: Icons.report_problem,
-              label:  " PropertyReservation ", // localizations.translate('properties_in_waiting'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  PropertyReservation();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('expired'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  ClientExpiredPropertyPage();
-                }));
-              },
-            ),
-             buildMenuButton(
-              icon: Icons.report_problem,
-              label: 'ClentReservationStatus',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  ClentReservationStatus();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('temporary_label'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const LoginPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('account_blocked'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  BlockPage(blockReason: '', blockDate: '',);
                 }));
               },
             ),
@@ -387,7 +203,8 @@ class _MorePageState extends State<MorePage> {
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 8),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(12),
@@ -407,19 +224,147 @@ class _MorePageState extends State<MorePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 32),
                       child: Center(
-                        child: Switch(
-                          value: isOn,
-                          onChanged: (bool newValue) {
-                            setState(() {
-                              isOn = newValue;
-                            });
-                          },
-                        ),
-                      ),
+                          child: Switch(
+                        value: isOn,
+                        onChanged: (bool newValue) async {
+                          final socketService = SocketService();
+
+                          // حفظ الحالة في SharedPreferences
+                          _saveNotificationState(newValue);
+                          if (!newValue) {
+                            final userId = await enableNotificaions();
+                            if(userId != null){
+                            socketService.disconnect();
+                            }
+                          } else {
+                            final userId = await enableNotificaions();
+                            if (userId != null) {
+                              socketService.connect(userId);
+                            }
+                          }
+                          setState(() {
+                            isOn = newValue;
+                          });
+                        },
+                      )),
                     ),
                   ],
                 ),
               ),
+            ),
+            buildMenuButton(
+              icon: Icons.create,
+              label: localizations.translate('publish_property_2'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PostProperty1();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('submit_complaint'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PushComplaintPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.map,
+              label: localizations.translate('map'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return MapPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('complaints'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ComplaintPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('authentication1'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientPagePropertyInExpiredPropertyPage(
+                    pushedOffice: '',
+                    pushedOfficeAccount: '',
+                    propertyArea: '',
+                    propertyLocation: '',
+                    propertyPrice: '',
+                    propertyType: '',
+                  );
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('submit_complaint'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ComplaintPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.book,
+              label: localizations.translate('reserved_properties'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientReservedPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('complaint_info'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OneComplaintPage(
+                    complaintName: '',
+                    submissionDate: '',
+                    complaintReason: '',
+                    complaintStatus: '',
+                  );
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('properties_in_waiting'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ThePropertiesInWaitingPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('expired'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientExpiredPropertyPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('account_blocked'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return BlockPage(
+                    blockReason: '',
+                    blockDate: '',
+                  );
+                }));
+              },
             ),
           ],
         ),
@@ -457,5 +402,27 @@ class _MorePageState extends State<MorePage> {
         ),
       ),
     );
+  }
+
+  Future<void> _loadNotificationState() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isOn = prefs.getBool('notifications_enabled') ??
+          true; // إذا لم يتم التخزين من قبل ارجعه true
+    });
+  }
+
+  // دالة لحفظ الحالة عند تغييرها
+  Future<void> _saveNotificationState(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('notifications_enabled', value);
+  }
+
+  Future<String?> enableNotificaions() async {
+    ProfileModel? user = await ProfileService().getProfile();
+    if (user != null) {
+      return user.id;
+    }
+    return null;
   }
 }

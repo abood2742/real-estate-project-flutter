@@ -368,10 +368,10 @@ import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/services/user_profile.service.dart';
 import 'package:property_system/common/screens/ching_password_profile_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_edit_information_page.dart';
-import 'package:property_system/client/screens/main/more/notification/client_notification_page.dart';
 import 'package:property_system/client/screens/property_listing_at_an_office_page.dart';
 import 'package:property_system/client/screens/create_blog.dart';
 import 'package:property_system/l10n/app_localizations.dart';
+import 'package:property_system/notification/screen/notification_page.dart';
 
 class ClientProfile extends StatefulWidget {
   const ClientProfile({super.key});
@@ -573,7 +573,7 @@ class _ClientProfileState extends State<ClientProfile> {
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return  ClientNotificationPage();
+                    return  NotificationPage();
                   }));
                 },
                 icon: const Icon(Icons.upload_file),
@@ -646,7 +646,7 @@ class _ClientProfileState extends State<ClientProfile> {
             child: ElevatedButton.icon(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  ClientNotificationPage();
+                  return  NotificationPage();
                 }));
               },
               icon: const Icon(Icons.notifications),

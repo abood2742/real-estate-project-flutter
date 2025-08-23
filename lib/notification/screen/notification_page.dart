@@ -1,93 +1,7 @@
-
-// import 'package:flutter/material.dart';
-// import 'package:socket_io_client/socket_io_client.dart' as IO;
-
-// class NotificationPage extends StatefulWidget {
-//   const NotificationPage({Key? key}) : super(key: key);
-
-//   @override
-//   _NotificationPageState createState() => _NotificationPageState();
-// }
-
-// class _NotificationPageState extends State<NotificationPage> {
-//   late IO.Socket socket;
-//   List<dynamic> notifications = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     // إشعار تجريبي فقط لرؤية الشكل
-//     notifications
-//         .add({'title': 'Test Notification', 'body': 'This is just a UI test'});
-//     notifications
-//         .add({'title': 'Test Notification', 'body': 'This is just a UI test'});
-//     notifications
-//         .add({'title': 'Test Notification', 'body': 'This is just a UI test'});
-//     notifications
-//         .add({'title': 'Test Notification', 'body': 'This is just a UI test'});
-//     notifications
-//         .add({'title': 'Test Notification', 'body': 'This is just a UI test'});
-
-//     _connectToSocket();
-//   }
-
-//   void _connectToSocket() {
-//     socket = IO.io('http://localhost:3000', <String, dynamic>{
-//       'transports': ['websocket'],
-//       'autoConnect': true,
-//     });
-
-//     socket.onConnect((_) {
-//       print('Connected');
-//     });
-
-//     socket.on('newNotification', (data) {
-//       setState(() {
-//         notifications.add(data);
-//       });
-//     });
-
-//     socket.onDisconnect((_) => print('Disconnected'));
-//   }
-
-//   @override
-//   void dispose() {
-//     socket.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: const Color.fromARGB(60, 49, 26, 131),
-//       appBar: AppBar(
-//         title: const Text('Notifications'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: notifications.length,
-//         itemBuilder: (context, index) {
-//           final item = notifications[index];
-//           return Card(
-//             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-//             child: ListTile(
-//               title: Text(
-//                 item['title'].toString(),
-//                 style: const TextStyle(fontWeight: FontWeight.bold),
-//               ),
-//               subtitle: Text(
-//                 item['body'].toString(),
-//                 style: TextStyle(color: Colors.blue),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:property_system/client/models/notification_model.dart';
+import 'package:property_system/client/services/notification_service.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class NotificationPage extends StatefulWidget {
@@ -99,38 +13,19 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationPage> {
   late IO.Socket socket;
-  List<dynamic> notifications = [];
+  List<NotificationModel>? notifications; // nullable لعرض مؤشر التحميل
 
   @override
   void initState() {
     super.initState();
-
-    // إشعارات تجريبية
-    notifications.add({'title': 'إشعار تجريبي', 'body': 'هذا مجرد اختبار واجهة'});
-    notifications.add({'title': 'Test Notification', 'body': 'This is just a UI test'});
-    notifications.add({'title': 'إشعار آخر', 'body': 'اختبار الاتجاه العربي'});
-    notifications.add({'title': 'Another Notification', 'body': 'LTR text example'});
-
-    _connectToSocket();
+    getAllNotification();
   }
 
-  void _connectToSocket() {
-    socket = IO.io('http://localhost:3000', <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': true,
+  Future<void> getAllNotification() async {
+    final data = await NotificationService().getAllNotifications();
+    setState(() {
+      notifications = data;
     });
-
-    socket.onConnect((_) {
-      print('Connected');
-    });
-
-    socket.on('newNotification', (data) {
-      setState(() {
-        notifications.add(data);
-      });
-    });
-
-    socket.onDisconnect((_) => print('Disconnected'));
   }
 
   bool _isArabic(String text) {
@@ -139,44 +34,76 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   @override
-  void dispose() {
-    socket.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(59, 0, 30, 255),
       appBar: AppBar(
-        title: const Text('Notifications',style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'Notifications',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: const Color.fromARGB(255, 12, 46, 74),
       ),
-      body: ListView.builder(
-        itemCount: notifications.length,
-        itemBuilder: (context, index) {
-          final item = notifications[index];
-          bool isArabicTitle = _isArabic(item['title'].toString());
-          bool isArabicBody = _isArabic(item['body'].toString());
+      body: notifications == null
+          ? const Center(child: CircularProgressIndicator()) // حالة التحميل
+          : notifications!.isEmpty
+              ? const Center(
+                  child: Text(
+                    'لا توجد إشعارات',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: notifications!.length,
+                  itemBuilder: (context, index) {
+                    final item = notifications![index];
+                    bool isArabicTitle = _isArabic(item.title);
+                    bool isArabicBody = _isArabic(item.message);
 
-          return Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: ListTile(
-              title: Text(
-                item['title'].toString(),
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                textAlign: isArabicTitle ? TextAlign.right : TextAlign.left,
-              ),
-              subtitle: Text(
-                item['body'].toString(),
-                style: const TextStyle(color: Colors.blue),
-                textAlign: isArabicBody ? TextAlign.right : TextAlign.left,
-              ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
-        },
-      ),
+                    return Card(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.title,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                              textAlign: isArabicTitle
+                                  ? TextAlign.right
+                                  : TextAlign.left,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              item.message,
+                              style: const TextStyle(color: Colors.blue),
+                              textAlign: isArabicBody
+                                  ? TextAlign.right
+                                  : TextAlign.left,
+                            ),
+                            const SizedBox(height: 8),
+                            const SizedBox(height: 4),
+                            Text('Created At:  ${formatDate(item.createdAt)}',
+                                style: const TextStyle(
+                                    fontSize: 12, fontStyle: FontStyle.italic)),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
     );
+  }
+
+  String formatDate(String dateStr) {
+    try {
+      final dateTime = DateTime.parse(dateStr);
+      return DateFormat('dd MMM yyyy, hh:mm a').format(dateTime);
+    } catch (e) {
+      return dateStr;
+    }
   }
 }

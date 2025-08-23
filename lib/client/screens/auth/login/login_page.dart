@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/screens/auth/register/register_page.dart';
 import 'package:property_system/client/services/login_service.dart';
 import 'package:property_system/client/screens/main/main_page.dart';
+import 'package:property_system/client/services/notification_service.dart';
 import 'package:property_system/client/services/token_service.dart';
+import 'package:property_system/client/services/user_profile.service.dart';
+import 'package:property_system/notification/socket_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -108,13 +112,15 @@ class _LoginPageState extends State<LoginPage> {
             ),
             GestureDetector(
               onTap: () async {
-                var success = await login();
-
-if (success == true)
+                var userId = await login();
+                if (userId != null) {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
                     return MainPage();
                   }));
+                  final SocketService socketService = SocketService();
+                  socketService.connect(userId);
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -140,6 +146,8 @@ if (success == true)
                     MaterialPageRoute(builder: (context) {
                   return MainPage();
                 }));
+                await NotificationService().notifyUser(
+                    title: 'Welcome', message: "Welcome to our app");
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -226,16 +234,20 @@ if (success == true)
     );
   }
 
-  Future<bool?> login() async {
+  Future<String?> login() async {
     final email = _emailController.text;
     final password = _passwordController.text;
 
     var authModel =
         await LoginService().login(email: email, password: password);
     if (authModel?.accessToken != null) {
-      return true;
+      ProfileModel? user = await ProfileService().getProfile();
+      if (user != null) {
+        return user.id;
+      }
+      return null;
     } else {
-      return false;
+      return null;
     }
   }
 }

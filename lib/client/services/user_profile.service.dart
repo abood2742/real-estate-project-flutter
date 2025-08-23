@@ -17,10 +17,7 @@ class ProfileService {
               }));
 
       if (response.statusCode == 200) {
-        print('${response.data} + rf');
         ProfileModel profileModel = ProfileModel.fromJson(response.data);
-                print('omar2');
-
         return profileModel;
       } else {
         return null;
