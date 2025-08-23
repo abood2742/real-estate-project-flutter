@@ -35,7 +35,7 @@ class _FavoriteOfficesPageState extends State<FavoriteOfficesPage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : (favoriteOffices == null || favoriteOffices!.isEmpty)
-              ? const Center(child: Text("لا يوجد مكاتب محفوظة"))
+              ? const Center(child: Text("لا يوجد مكاتب محفوظة",style: TextStyle(color: Colors.blue,fontFamily: 'Pacifico'),))
               : ListView.builder(
                   padding: const EdgeInsets.all(12),
                   itemCount: favoriteOffices!.length,

@@ -51,9 +51,8 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/
   fonts:
     - family: Pacifico
       fonts:
-        - asset: assets/ReadexPro-VariableFont_HEXP,wght.ttf
+        - asset: assets/emolation/ReadexPro-VariableFont_HEXP,wght.ttf
 

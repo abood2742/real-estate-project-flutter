@@ -46,6 +46,8 @@ class PropertyCard extends StatelessWidget {
                       Text(
                         title,
                         style: const TextStyle(
+                          color: Colors.green,
+                          fontFamily: 'Pacifico',
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -53,13 +55,19 @@ class PropertyCard extends StatelessWidget {
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          const Icon(Icons.location_on, color: Colors.blue),
+                          const Icon(
+                            Icons.location_on,
+                            color: Colors.grey,
+                          ),
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
                               location,
                               style: const TextStyle(
-                                  fontSize: 15, color: Colors.grey),
+                                fontFamily: 'Pacifico',
+                                color: Colors.blue,
+                                fontSize: 18,
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -68,24 +76,36 @@ class PropertyCard extends StatelessWidget {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Icon(Icons.attach_money, color: Colors.blue),
+                          const Icon(
+                            Icons.attach_money,
+                            color: Colors.grey,
+                          ),
                           const SizedBox(width: 6),
                           Text(
                             price,
                             style: const TextStyle(
-                                fontSize: 15, color: Colors.grey),
+                              fontFamily: 'Pacifico',
+                              color: Colors.blue,
+                                fontSize: 18,
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Icon(Icons.space_bar, color: Colors.blue),
+                          const Icon(
+                            Icons.space_bar,
+                            color: Colors.grey,
+                          ),
                           const SizedBox(width: 6),
                           Text(
                             "$area m²",
                             style: const TextStyle(
-                                fontSize: 15, color: Colors.grey),
+                              
+                                fontFamily: 'Pacifico',
+                                fontSize: 18,
+                                color: Colors.blue),
                           ),
                         ],
                       ),
@@ -97,8 +117,7 @@ class PropertyCard extends StatelessWidget {
                             onPressed: onRemove,
                             elevation: 2.0,
                             fillColor: const Color(0xFF1565C0),
-                            constraints:
-                                const BoxConstraints(minWidth: 0.0),
+                            constraints: const BoxConstraints(minWidth: 0.0),
                             child: const Icon(
                               Icons.delete_outline_sharp,
                               color: Colors.white,

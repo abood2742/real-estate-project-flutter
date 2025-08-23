@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
 import 'package:property_system/client/screens/auth/register/complete_register_page.dart';
@@ -157,6 +158,7 @@ class _MorePageState extends State<MorePage> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
+          
             buildMenuButton(
               icon: Icons.person,
               label: localizations.translate('profile'),
@@ -175,6 +177,7 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
+            
             buildMenuButton(
               icon: Icons.local_post_office,
               label: localizations.translate('create_office'),

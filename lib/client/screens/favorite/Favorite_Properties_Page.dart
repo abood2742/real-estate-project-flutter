@@ -35,7 +35,7 @@ class _FavoritePropertiesPageState extends State<FavoritePropertiesPage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : (favoriteProperties == null || favoriteProperties!.isEmpty)
-              ? const Center(child: Text("لا يوجد عقارات محفوظة"))
+              ? const Center(child: Text("لا يوجد عقارات محفوظة",style:TextStyle(color: Colors.blue,fontFamily: 'Pacifico')))
               : ListView.builder(
                   padding: const EdgeInsets.all(12),
                   itemCount: favoriteProperties!.length,
