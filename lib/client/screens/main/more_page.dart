@@ -7,6 +7,7 @@ import 'package:property_system/client/screens/auth/register/user_info_enter_pag
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/property_details_in_expired_property_page.dart';
 import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/client_create_reservation_page.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_reserverd_page.dart';
 import 'package:property_system/client/screens/main/more/property_offer/post_property1.dart';
 import 'package:property_system/client/screens/main/more/complaint/one_complaint_page.dart';
@@ -14,9 +15,16 @@ import 'package:property_system/client/screens/main/more/complaint/complaient_pa
 import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_profile.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
+import 'package:property_system/client/screens/search/reservation/Property_reservation.dart';
+import 'package:property_system/client/screens/search/reservation/clent_reservation_status.dart';
 import 'package:property_system/client/screens/waiting/the_properties_in_whaiting_page.dart';
 import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
+import 'package:property_system/office/reservation/office_reservation_page.dart';
+import 'package:property_system/office/reservation/property_reserved_for_rent_page.dart';
+import 'package:property_system/office/reservation/property_reserved_for_sell_page.dart';
+import 'package:property_system/office/reservation/rented_page_property_reserved_for_rent_page.dart';
+import 'package:property_system/office/reservation/soled_page_property_reserved_for_sell_page.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
@@ -271,12 +279,85 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
+             buildMenuButton(
+              icon: Icons.report_problem,
+              label:  " ClientCreateReservationPage ", // localizations.translate('properties_in_waiting'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  ClientCreateReservationPage(propertyId: '',);
+                }));
+              },
+            ),
+              buildMenuButton(
+              icon: Icons.report_problem,
+              label:  " المحجوزة ", // localizations.translate('properties_in_waiting'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  OfficeReservationPage();
+                }));
+              },
+            ),
+               buildMenuButton(
+              icon: Icons.report_problem,
+              label:  " PropertyReservedForSellPage ", // localizations.translate('properties_in_waiting'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  PropertyReservedForSellPage(email: '',);
+                }));
+              },
+            ),
+              buildMenuButton(
+              icon: Icons.report_problem,
+              label:  " property_reserved_for_sell_page ", // localizations.translate('properties_in_waiting'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  SoledPagePropertyReservedForSellPage();
+                }));
+              },
+            ),
+
+             buildMenuButton(
+              icon: Icons.report_problem,
+              label:  " PropertyReservedForRentPage ", // localizations.translate('properties_in_waiting'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  PropertyReservedForRentPage(email: '',);
+                }));
+              },
+            ),
+              buildMenuButton(
+              icon: Icons.report_problem,
+              label:  " RentedPagePropertyReservedForRentPage ", // localizations.translate('properties_in_waiting'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  RentedPagePropertyReservedForRentPage();
+                }));
+              },
+            ),
+                buildMenuButton(
+              icon: Icons.report_problem,
+              label:  " PropertyReservation ", // localizations.translate('properties_in_waiting'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  PropertyReservation();
+                }));
+              },
+            ),
             buildMenuButton(
               icon: Icons.report_problem,
               label: localizations.translate('expired'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return  ClientExpiredPropertyPage();
+                }));
+              },
+            ),
+             buildMenuButton(
+              icon: Icons.report_problem,
+              label: 'ClentReservationStatus',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  ClentReservationStatus();
                 }));
               },
             ),
@@ -301,7 +382,7 @@ class _MorePageState extends State<MorePage> {
             GestureDetector(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const NotificationPage();
+                  return  NotificationPage();
                 }));
               },
               child: Container(

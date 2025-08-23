@@ -21,28 +21,33 @@ class ReservedPropertComponents extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                height: 250,
-                width: 300,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    'assets/images/off2.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-
-              // الزر + النصوص
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
+                
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'معرة النعمان',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 18,
+                          fontFamily: 'Pacifico',
+                        ),
+                      ),
+                      Text(
+                        'للإيجار',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 43, 152, 134),
+                          fontFamily: 'Pacifico',
+                          fontSize: 18,
+                          //   fontFamily: 'Pacifico',
+                        ),
+                      ),
+                    ],
+                  ),
+                    GestureDetector(
                     onTap: () {
                       showDialog(
                         context: context,
@@ -102,7 +107,7 @@ class ReservedPropertComponents extends StatelessWidget {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 31, 37, 145),
+                        color: const Color.fromARGB(255, 93, 188, 201),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       height: 40,
@@ -119,29 +124,26 @@ class ReservedPropertComponents extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Damascus',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 18,
-                          fontFamily: 'Pacifico',
-                        ),
-                      ),
-                      Text(
-                        'for rent',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          //   fontFamily: 'Pacifico',
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
-              )
+              ),
+              const SizedBox(height: 10),
+ Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                height: 250,
+                width: 300,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    'assets/images/pic2.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              // الزر + النصوص
+             
             ],
           ),
         ),

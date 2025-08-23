@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/components/reserved_propert_components.dart';
+import 'package:property_system/office/components/reserved_propert_components.dart';
 
 class ClientReservedPropertyForSellPage extends StatelessWidget {
   const ClientReservedPropertyForSellPage({super.key});

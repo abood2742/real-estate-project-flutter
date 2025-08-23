@@ -1,5 +1,6 @@
 flutter run -d chrome
-r يسوي هوت ستارت
+
+يسوي هوت ستارت
 
 
 git add .
