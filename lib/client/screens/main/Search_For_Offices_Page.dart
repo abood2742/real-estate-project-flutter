@@ -130,7 +130,10 @@ class _OfficesSearchPageState extends State<OfficesSearchPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations.translate('offices')),
+        leading: BackButton(
+    color: Colors.white, // تغيير لون السهم إلى الأبيض
+  ),
+        title: Text(localizations.translate('offices'),style: TextStyle(color: const Color.fromARGB(255, 27, 140, 89),fontFamily: 'Pacifico'),),
       ),
       body: RefreshIndicator(
         onRefresh: _loadOffices,
@@ -142,8 +145,8 @@ class _OfficesSearchPageState extends State<OfficesSearchPage> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: localizations.translate('search_office'),
+                      prefixIcon: const Icon(Icons.search,color: Colors.green,),
+                      hintText: localizations.translate('search_office',),hintStyle: TextStyle(color: Colors.blue,fontFamily: "Pacifico",fontSize: 20),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(

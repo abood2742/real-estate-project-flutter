@@ -26,13 +26,16 @@ class OfficeCard extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          color: const Color.fromARGB(255, 164, 187, 237),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           elevation: 2,
-          shadowColor: const Color.fromARGB(255, 53, 145, 133),
+          shadowColor: const Color.fromARGB(255, 58, 145, 133),
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start, // يضمن محاذاة من الأعلى
+              crossAxisAlignment:
+                  CrossAxisAlignment.start, // يضمن محاذاة من الأعلى
               children: [
                 // الصورة على اليمين
                 ClipRRect(
@@ -64,26 +67,31 @@ class OfficeCard extends StatelessWidget {
                       Text(
                         name,
                         style: const TextStyle(
+                          color: Color.fromARGB(255, 41, 67, 183),
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 16),
                       Row(
                         children: [
                           Text(
                             phone,
                             style: const TextStyle(
                               fontSize: 15,
-                              color: Colors.grey,
+                              color: Color.fromARGB(255, 1, 156, 112),
                             ),
                           ),
                           const SizedBox(width: 4),
-                          const Icon(Icons.phone, size: 20, color: Colors.grey),
+                          const Icon(
+                            Icons.phone,
+                            size: 20,
+                            color: Color.fromARGB(255, 1, 156, 112),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       RatingStarsWidget(rating: rating),
 
                       const SizedBox(height: 10), // مسافة قبل الزر

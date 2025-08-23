@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/property_model.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/client_create_reservation_page.dart';
 import 'package:property_system/client/screens/search/resault/office/Office_Detailes_Page.dart';
 import 'package:property_system/client/screens/search/reservation/Property_reservation.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
@@ -297,10 +298,10 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => const PropertyReservation()));
-                  },
+                            builder: (_) =>  ClientCreateReservationPage(propertyId: widget.propertyModel.id,)));
+                  },//getCommentsOnOffice(officeId: widget.officeId);
                   icon: const Icon(Icons.book_online),
-                  label: const Text('حجز العقار'),
+                  label: const Text('حج العقار'),
                 ),
               ),
               const SizedBox(width: 8),

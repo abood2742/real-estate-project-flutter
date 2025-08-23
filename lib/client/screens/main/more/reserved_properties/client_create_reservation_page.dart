@@ -311,18 +311,19 @@ class _ClientCreateReservationPageState
     final expiryParts = _expiryDateController.text.split('/');
 
     final reservationModel = CreateReservationModel(
-      propertyId: widget.propertyId,
+    //  propertyId: widget.propertyId,
       type: _selectedType,
       cardNumber: _cardNumberController.text.replaceAll(' ', ''),
       expiryMonth: int.parse(expiryParts[0]),
       expiryYear: int.parse(expiryParts[1]),
-      cvv: _cvvController.text,
+      cvv: _cvvController.text, amount: 1.2,
     );
 
     print(reservationModel.toJson()); // 👈 عشان تتأكد بالـ console
 
     final isSuccess =
-        await ReservationService().createReservation(reservationModel);
+        await ReservationService().createReservation(reservationModel,propertyId:widget.propertyId);
+        //getCommentsOnOffice(officeId: widget.officeId);
 
     setState(() => _isProcessing = false);
 

@@ -118,7 +118,9 @@ class _MorePageState extends State<MorePage> {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
+      
       appBar: PreferredSize(
+        
         preferredSize: const Size.fromHeight(100),
         child: AppBar(
           title: Row(

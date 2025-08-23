@@ -46,6 +46,12 @@ class PropertySystem extends StatelessWidget {
       child: Consumer<LocalizationProvider>(
         builder: (context, provider, child) {
           return MaterialApp(
+            theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.white), // تغيير لون الأيقونات (بما في ذلك السهم)
+          backgroundColor: Colors.blue, // لون الخلفية للتوافق
+        ),
+      ),
             debugShowCheckedModeBanner: false,
             locale: provider.locale,
             supportedLocales: const [
