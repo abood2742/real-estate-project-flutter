@@ -3,10 +3,17 @@ import 'package:lottie/lottie.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
 import 'package:property_system/client/screens/auth/register/user_info_enter_page.dart';
+import 'package:property_system/client/screens/main/more/client_properties/client_experid_for_rent_page_.dart';
+import 'package:property_system/client/screens/main/more/client_properties/client_expired_for_buy_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/property_details_in_expired_property_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/cloused_compailent_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/existing_compailent_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/send_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_create_reservation_page.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_rent_page.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_sell_page.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_reserverd_page.dart';
 import 'package:property_system/client/screens/main/more/property_offer/post_property1.dart';
 import 'package:property_system/client/screens/main/more/complaint/one_complaint_page.dart';
@@ -16,11 +23,24 @@ import 'package:property_system/client/screens/main/more/profile/client_profile.
 import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/client/screens/search/reservation/Property_reservation.dart';
 import 'package:property_system/client/screens/search/reservation/clent_reservation_status.dart';
+import 'package:property_system/client/screens/waiting/expired_properties_to_push_page.dart';
+import 'package:property_system/client/screens/waiting/properties_dont_pushed_yet_page.dart';
+import 'package:property_system/client/screens/waiting/rented_page.dart';
+import 'package:property_system/client/screens/waiting/salled_page.dart';
 import 'package:property_system/client/screens/waiting/the_properties_in_whaiting_page.dart';
+import 'package:property_system/client/screens/waiting/to_rent_page.dart';
+import 'package:property_system/client/screens/waiting/to_sall_page.dart';
 import 'package:property_system/client/services/user_profile.service.dart';
 import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
 import 'package:property_system/notification/socket_service.dart';
+import 'package:property_system/office/reservation/office_reservation_page.dart';
+import 'package:property_system/office/reservation/property_reserved_for_rent_page.dart';
+import 'package:property_system/office/reservation/property_reserved_for_sell_page.dart';
+import 'package:property_system/office/reservation/rented_page_property_reserved_for_rent_page.dart';
+import 'package:property_system/office/reservation/reservation_rent.dart';
+import 'package:property_system/office/reservation/reservation_sell.dart';
+import 'package:property_system/office/reservation/soled_page_property_reserved_for_sell_page.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -162,13 +182,6 @@ class _MorePageState extends State<MorePage> {
               },
             ),
             buildMenuButton(
-              icon: Icons.language,
-              label: localizations.translate('language'),
-              onTap: () {
-                _showLanguageSheet(context);
-              },
-            ),
-            buildMenuButton(
               icon: Icons.local_post_office,
               label: localizations.translate('create_office'),
               onTap: () {
@@ -198,7 +211,7 @@ class _MorePageState extends State<MorePage> {
             GestureDetector(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  NotificationPage();
+                  return NotificationPage();
                 }));
               },
               child: Container(
@@ -233,8 +246,8 @@ class _MorePageState extends State<MorePage> {
                           _saveNotificationState(newValue);
                           if (!newValue) {
                             final userId = await enableNotificaions();
-                            if(userId != null){
-                            socketService.disconnect();
+                            if (userId != null) {
+                              socketService.disconnect();
                             }
                           } else {
                             final userId = await enableNotificaions();
@@ -252,21 +265,33 @@ class _MorePageState extends State<MorePage> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              "غير منتهية",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuButton(
+              icon: Icons.language,
+              label: localizations.translate('language'),
+              onTap: () {
+                _showLanguageSheet(context);
+              },
+            ),
             buildMenuButton(
               icon: Icons.create,
               label: localizations.translate('publish_property_2'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return PostProperty1();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('submit_complaint'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PushComplaintPage();
                 }));
               },
             ),
@@ -281,32 +306,42 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('complaints'),
+              label: localizations.translate('account_blocked'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ComplaintPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('authentication1'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientPagePropertyInExpiredPropertyPage(
-                    pushedOffice: '',
-                    pushedOfficeAccount: '',
-                    propertyArea: '',
-                    propertyLocation: '',
-                    propertyPrice: '',
-                    propertyType: '',
+                  return BlockPage(
+                    blockReason: '',
+                    blockDate: '',
                   );
                 }));
               },
             ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              "complaints",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('submit_complaint'),
+              label: localizations.translate('ClousedCompailentPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClousedCompailentPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ComplaintPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ComplaintPage();
@@ -314,17 +349,17 @@ class _MorePageState extends State<MorePage> {
               },
             ),
             buildMenuButton(
-              icon: Icons.book,
-              label: localizations.translate('reserved_properties'),
+              icon: Icons.report_problem,
+              label: localizations.translate('ExistingCompailentPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientReservedPage();
+                  return ExistingCompailentPage();
                 }));
               },
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('complaint_info'),
+              label: localizations.translate('OneComplaintPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return OneComplaintPage(
@@ -338,16 +373,39 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('properties_in_waiting'),
+              label: localizations.translate('PushComplaintPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ThePropertiesInWaitingPage();
+                  return PushComplaintPage();
                 }));
               },
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('expired'),
+              label: localizations.translate('SendComplaintPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SendComplaintPage();
+                }));
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              "client_properties",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ClientExpiredPropertyPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ClientExpiredPropertyPage();
@@ -356,13 +414,282 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('account_blocked'),
+              label: localizations.translate('ClientExpiredForBuyPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return BlockPage(
-                    blockReason: '',
-                    blockDate: '',
+                  return ClientExpiredForBuyPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ClientExpiredForRentPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientExpiredForRentPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations
+                  .translate('ClientPagePropertyInExpiredPropertyPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientPagePropertyInExpiredPropertyPage(
+                    pushedOffice: '',
+                    pushedOfficeAccount: '',
+                    propertyArea: '',
+                    propertyLocation: '',
+                    propertyPrice: '',
+                    propertyType: '',
                   );
+                }));
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              "reserved_properties",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuButton(
+              icon: Icons.book,
+              label: localizations.translate('ClientCreateReservationPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientCreateReservationPage(
+                    propertyId: '',
+                  );
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ClientReservedPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientReservedPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label:
+                  localizations.translate('ClientReservedPropertyForRentPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientReservedPropertyForRentPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label:
+                  localizations.translate('ClientReservedPropertyForSellPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientReservedPropertyForSellPage();
+                }));
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              "waiting",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ExpiredPropertiesToPushPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ExpiredPropertiesToPushPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('PropertiesDontPushedYetPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PropertiesDontPushedYetPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('RentedPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return RentedPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('SalledPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SalledPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ThePropertiesInWaitingPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ThePropertiesInWaitingPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ToRentPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ToRentPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ToSallPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ToSallPage();
+                }));
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              "search/reservation",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ClentReservationStatus'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClentReservationStatus();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('PropertyReservation'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PropertyReservation();
+                }));
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              "reservation",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('OfficeReservationPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OfficeReservationPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('PropertyReservedForRentPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PropertyReservedForRentPage(
+                    email: '',
+                  );
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('PropertyReservedForSellPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PropertyReservedForSellPage(
+                    email: '',
+                  );
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations
+                  .translate('RentedPagePropertyReservedForRentPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return RentedPagePropertyReservedForRentPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ReservationRent'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ReservationRent();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ReservationSell'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ReservationSell();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations
+                  .translate('SoledPagePropertyReservedForSellPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SoledPagePropertyReservedForSellPage();
                 }));
               },
             ),

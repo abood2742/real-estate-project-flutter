@@ -61,12 +61,11 @@
 //             children: [
 //               Text(
 //                 "حدث خطأ في تحميل بيانات الملف الشخصي.",
-               
-               
+
 //                 style: TextStyle(fontSize: 18, color: Colors.red),
-                
+
 //               ),
-              
+
 //             ],
 //           ),
 //         ),
@@ -202,11 +201,11 @@
 //             ),
 //               ],
 //             ),
-            
+
 //             const SizedBox(
 //               height: 24,
 //             ),
-             
+
 //             const SizedBox(
 //               height: 15,
 //             ),
@@ -368,7 +367,6 @@ import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/services/user_profile.service.dart';
 import 'package:property_system/common/screens/ching_password_profile_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_edit_information_page.dart';
-import 'package:property_system/client/screens/property_listing_at_an_office_page.dart';
 import 'package:property_system/client/screens/create_blog.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
@@ -444,7 +442,8 @@ class _ClientProfileState extends State<ClientProfile> {
           children: [
             Text(
               localizations.translate('profile'),
-              style: const TextStyle(color: Colors.white, fontFamily: 'Pacifico'),
+              style:
+                  const TextStyle(color: Colors.white, fontFamily: 'Pacifico'),
             ),
             const SizedBox(width: 40),
             const Text('🧾'),
@@ -529,8 +528,8 @@ class _ClientProfileState extends State<ClientProfile> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 41, 47, 100),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -556,8 +555,8 @@ class _ClientProfileState extends State<ClientProfile> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 75, 137, 163),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -573,7 +572,7 @@ class _ClientProfileState extends State<ClientProfile> {
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return  NotificationPage();
+                    return NotificationPage();
                   }));
                 },
                 icon: const Icon(Icons.upload_file),
@@ -584,8 +583,8 @@ class _ClientProfileState extends State<ClientProfile> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 41, 47, 100),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -600,27 +599,6 @@ class _ClientProfileState extends State<ClientProfile> {
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const PropertyListingAtAnOfficePage();
-                  }));
-                },
-                icon: const Icon(Icons.article),
-                label: Text(
-                  localizations.translate('list_property_at_office'),
-                  style: const TextStyle(
-                      color: Colors.white, fontFamily: 'Pacifico'),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 41, 47, 100),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const CreateBlog();
                   }));
                 },
@@ -632,8 +610,8 @@ class _ClientProfileState extends State<ClientProfile> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 41, 47, 100),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -646,7 +624,7 @@ class _ClientProfileState extends State<ClientProfile> {
             child: ElevatedButton.icon(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  NotificationPage();
+                  return NotificationPage();
                 }));
               },
               icon: const Icon(Icons.notifications),
@@ -657,8 +635,8 @@ class _ClientProfileState extends State<ClientProfile> {
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 41, 47, 100),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
