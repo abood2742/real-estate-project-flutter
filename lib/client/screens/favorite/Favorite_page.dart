@@ -16,6 +16,9 @@ class FavoritePage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          leading: BackButton(
+    color: Colors.white, // تغيير لون السهم إلى الأبيض
+  ),
           backgroundColor: const Color.fromARGB(255, 24, 55, 147),
           title: Row(
             mainAxisSize: MainAxisSize.min,

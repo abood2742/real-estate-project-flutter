@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:property_system/client/screens/main/more/client_properties/property_details_in_expired_property_page.dart';
 
 class ExpiredComponents extends StatelessWidget {
   final String nameType;
@@ -18,16 +17,6 @@ class ExpiredComponents extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ClientPagePropertyInExpiredPropertyPage(
-            pushedOffice: 'faisalOffice',
-            pushedOfficeAccount: 'faisal@gmail.com',
-            propertyArea: 'd',
-            propertyLocation: 'd',
-            propertyPrice: 'd',
-            propertyType: 'd',
-          );
-        }));
       },
       child: Card(
         shape: RoundedRectangleBorder(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/profile.model.dart';
-import 'package:property_system/client/screens/auth/register/register_page.dart';
+import 'package:property_system/client/screens/auth/register/start_register_page.dart';
 import 'package:property_system/client/services/login_service.dart';
 import 'package:property_system/client/screens/main/main_page.dart';
 import 'package:property_system/client/services/notification_service.dart';
