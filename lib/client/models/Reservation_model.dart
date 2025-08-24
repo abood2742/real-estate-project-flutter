@@ -22,8 +22,9 @@ class ReservationModel {
   });
 
   factory ReservationModel.fromJson(Map<String, dynamic> json) {
+
     return ReservationModel(
-        user: ProfileModel.fromJson(json["user"]),
+        user:json["user"] != null ? ProfileModel.fromJson(json["user"]) : null,
         id: json["id"],
         reservation_date: json["reservation_date"],
         amount_paid: json["amount_paid"],
