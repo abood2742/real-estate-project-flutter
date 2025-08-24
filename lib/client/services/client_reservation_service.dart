@@ -24,7 +24,6 @@ class ClientReservationService {
     }
   }
 
-
   Future<List<PropertyModel>?> getClientReservedProperties() async {
     var token = await AuthService.getAccessToken();
 
@@ -39,6 +38,19 @@ class ClientReservationService {
       return reservedClientProperty;
     } else {
       return null;
+    }
+  }
+
+  Future  cancelReservedPropertyFromClient( {required String reservationId}) async {
+    Dio dio = Dio();
+                        print('2');
+
+    var token = await AuthService.getAccessToken();
+    Response response = await dio.delete(
+        'http://localhost:3000/api/reservation/$reservationId',
+        options: Options(headers: {"Authorization": "Bearer $token"}));
+    if (response.statusCode == 200 || response.statusCode == 202) {
+      print('success');
     }
   }
 }

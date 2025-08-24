@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/client/screens/search/resault/office/Office_Detailes_Page.dart';
+import 'package:property_system/client/services/client_reservation_service.dart';
 
 class ClientReservedPropertyDetailsPage extends StatefulWidget {
   final PropertyModel propertyModel;
-  const ClientReservedPropertyDetailsPage({super.key, required this.propertyModel});
+  const ClientReservedPropertyDetailsPage(
+      {super.key, required this.propertyModel});
 
   @override
-  State<ClientReservedPropertyDetailsPage> createState() => _ClientReservedPropertyDetailsPageState();
+  State<ClientReservedPropertyDetailsPage> createState() =>
+      _ClientReservedPropertyDetailsPageState();
 }
 
-class _ClientReservedPropertyDetailsPageState extends State<ClientReservedPropertyDetailsPage> {
+class _ClientReservedPropertyDetailsPageState
+    extends State<ClientReservedPropertyDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final property = widget.propertyModel;
@@ -38,19 +42,26 @@ class _ClientReservedPropertyDetailsPageState extends State<ClientReservedProper
           padding: const EdgeInsets.all(12),
           children: [
             PropertyImagesGallery(
-              mainImage: property.photos.isNotEmpty ? property.photos.first.url : 'assets/images/pic3.jpg',
-              extraImages: property.photos.length > 1 ? property.photos.skip(1).map((e) => e.url).toList() : [],
+              mainImage: property.photos.isNotEmpty
+                  ? property.photos.first.url
+                  : 'assets/images/pic3.jpg',
+              extraImages: property.photos.length > 1
+                  ? property.photos.skip(1).map((e) => e.url).toList()
+                  : [],
             ),
             const SizedBox(height: 12),
 
             // السعر والموقع
             Row(
               children: [
-                Text('${property.price} \$', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text('${property.price} \$',
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold)),
                 const Spacer(),
                 const Icon(Icons.location_pin, color: Colors.blue),
                 const SizedBox(width: 4),
-                Text(property.location.city, style: const TextStyle(fontFamily: 'Pacifico')),
+                Text(property.location.city,
+                    style: const TextStyle(fontFamily: 'Pacifico')),
               ],
             ),
             const SizedBox(height: 16),
@@ -61,14 +72,20 @@ class _ClientReservedPropertyDetailsPageState extends State<ClientReservedProper
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
                 ),
                 icon: const Icon(Icons.map, color: Colors.white),
                 label: const Text('عرض على الخريطة',
-                    style: TextStyle(fontSize: 14, color: Colors.white, fontFamily: 'Pacifico')),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                        fontFamily: 'Pacifico')),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => MapPage()));
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => MapPage()));
                 },
               ),
             ),
@@ -76,26 +93,49 @@ class _ClientReservedPropertyDetailsPageState extends State<ClientReservedProper
 
             // وصف العقار
             const Text('الوصف',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent, fontFamily: 'Pacifico')),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                    fontFamily: 'Pacifico')),
             const SizedBox(height: 8),
-            Text(property.description, textAlign: TextAlign.right, style: const TextStyle(height: 1.6)),
+            Text(property.description,
+                textAlign: TextAlign.right,
+                style: const TextStyle(height: 1.6)),
             const SizedBox(height: 24),
 
             // معلومات العقار
             const Text('معلومات العقار',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent, fontFamily: 'Pacifico')),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                    fontFamily: 'Pacifico')),
             const SizedBox(height: 8),
             Card(
               child: Column(
                 children: [
-                  ListTile(leading: const Icon(Icons.numbers), title: const Text('رقم العقار'), subtitle: Text(property.propertyNumber)),
-                  ListTile(leading: const Icon(Icons.category), title: const Text('نوع العقار'), subtitle: Text(property.propertyType.name)),
-                  ListTile(leading: const Icon(Icons.swap_horiz), title: const Text('نوع العملية'), subtitle: Text(property.typeOperation)),
-                  ListTile(leading: const Icon(Icons.straighten), title: const Text('المساحة'), subtitle: Text('${property.space} م²')),
+                  ListTile(
+                      leading: const Icon(Icons.numbers),
+                      title: const Text('رقم العقار'),
+                      subtitle: Text(property.propertyNumber)),
+                  ListTile(
+                      leading: const Icon(Icons.category),
+                      title: const Text('نوع العقار'),
+                      subtitle: Text(property.propertyType.name)),
+                  ListTile(
+                      leading: const Icon(Icons.swap_horiz),
+                      title: const Text('نوع العملية'),
+                      subtitle: Text(property.typeOperation)),
+                  ListTile(
+                      leading: const Icon(Icons.straighten),
+                      title: const Text('المساحة'),
+                      subtitle: Text('${property.space} م²')),
                   ListTile(
                     leading: const Icon(Icons.date_range),
                     title: const Text('تاريخ النشر'),
-                    subtitle: Text('${property.publishDate.toLocal()}'.split(' ')[0]),
+                    subtitle:
+                        Text('${property.publishDate.toLocal()}'.split(' ')[0]),
                   ),
                 ],
               ),
@@ -103,7 +143,11 @@ class _ClientReservedPropertyDetailsPageState extends State<ClientReservedProper
 
             const SizedBox(height: 16),
             const Text('تفاصيل الحجز',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent, fontFamily: 'Pacifico')),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                    fontFamily: 'Pacifico')),
             const SizedBox(height: 8),
 
             // تفاصيل الحجز مع null-safety
@@ -118,11 +162,13 @@ class _ClientReservedPropertyDetailsPageState extends State<ClientReservedProper
                     ListTile(
                         leading: const Icon(Icons.attach_money),
                         title: const Text('المبلغ المدفوع'),
-                        subtitle: Text('${reservation.amount_paid } \$')),
+                        subtitle: Text('${reservation.amount_paid} \$')),
                     ListTile(
                         leading: const Icon(Icons.verified),
                         title: const Text('حالة الحجز'),
-                        subtitle: Text(reservation.reservation_status ? 'مؤكد' : 'قيد الانتظار')),
+                        subtitle: Text(reservation.reservation_status
+                            ? 'مؤكد'
+                            : 'قيد الانتظار')),
                     ListTile(
                         leading: const Icon(Icons.timer_off),
                         title: const Text('تاريخ الانتهاء'),
@@ -135,7 +181,11 @@ class _ClientReservedPropertyDetailsPageState extends State<ClientReservedProper
 
             const SizedBox(height: 16),
             const Text('خصائص العقار',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent, fontFamily: 'Pacifico')),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                    fontFamily: 'Pacifico')),
             const SizedBox(height: 8),
             if (property.propertyAttributes.isNotEmpty)
               Card(
@@ -162,7 +212,8 @@ class _ClientReservedPropertyDetailsPageState extends State<ClientReservedProper
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => OfficeDetailesPage(officeId: property.office.officeId),
+                builder: (_) =>
+                    OfficeDetailesPage(officeId: property.office.officeId),
               ),
             );
           },
@@ -193,11 +244,14 @@ class _ClientReservedPropertyDetailsPageState extends State<ClientReservedProper
               Expanded(
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  onPressed: () {
-                    // استدعاء API لإلغاء الحجز
+                  onPressed: () async  {
+                    print('1');
+                   // ClientReservationService().cancelReservedPropertyFromClient;
+                   await ClientReservationService().cancelReservedPropertyFromClient( reservationId:widget.propertyModel.reservationModel!.id);
                   },
                   icon: const Icon(Icons.cancel, color: Colors.white),
-                  label: const Text('إلغاء الحجز', style: TextStyle(color: Colors.white)),
+                  label: const Text('إلغاء الحجز',
+                      style: TextStyle(color: Colors.white)),
                 ),
               ),
             ],
@@ -212,7 +266,8 @@ class _ClientReservedPropertyDetailsPageState extends State<ClientReservedProper
 class PropertyImagesGallery extends StatelessWidget {
   final String mainImage;
   final List<String> extraImages;
-  const PropertyImagesGallery({super.key, required this.mainImage, required this.extraImages});
+  const PropertyImagesGallery(
+      {super.key, required this.mainImage, required this.extraImages});
 
   @override
   Widget build(BuildContext context) {
@@ -226,7 +281,11 @@ class PropertyImagesGallery extends StatelessWidget {
         itemBuilder: (_, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => FullImageView(imageUrl: allImages[index])));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) =>
+                          FullImageView(imageUrl: allImages[index])));
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -235,7 +294,8 @@ class PropertyImagesGallery extends StatelessWidget {
                 width: 300,
                 height: 220,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Image.asset('assets/images/pic3.jpg', fit: BoxFit.cover),
+                errorBuilder: (_, __, ___) =>
+                    Image.asset('assets/images/pic3.jpg', fit: BoxFit.cover),
               ),
             ),
           );
