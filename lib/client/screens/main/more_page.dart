@@ -10,7 +10,7 @@ import 'package:property_system/client/screens/main/more/complaint/cloused_compa
 import 'package:property_system/client/screens/main/more/complaint/existing_compailent_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/send_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
-import 'package:property_system/client/screens/main/more/reserved_properties/cleint_reservation_status.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/client_reservation_status.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_create_reservation_page.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_rent_page.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_sell_page.dart';
@@ -36,7 +36,7 @@ import 'package:property_system/office/reservation/office_reservation_page.dart'
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:property_system/client/screens/main/more/reserved_properties/client_my_reservation_page.dart';
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
 
@@ -110,9 +110,7 @@ class _MorePageState extends State<MorePage> {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
-      
       appBar: PreferredSize(
-        
         preferredSize: const Size.fromHeight(100),
         child: AppBar(
           title: Row(
@@ -450,11 +448,21 @@ class _MorePageState extends State<MorePage> {
               },
             ),
             buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ClientReservedPage'),
+              icon: Icons.book,
+              label:
+                  localizations.translate('client_my_reservation_page, ClientReservedPropertyForSellPage1'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientReservedPage();
+                  return ClientReservedPropertyForSellPage1();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ClentReservationStatus'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientReservationStatus();
                 }));
               },
             ),
@@ -475,6 +483,15 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ClientReservedPropertyForSellPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ClientReservedPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientReservedPage();
                 }));
               },
             ),
@@ -559,30 +576,6 @@ class _MorePageState extends State<MorePage> {
               height: 40,
             ),
             const Text(
-              "search/reservation",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Pacifico',
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ClentReservationStatus'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return CleintReservationStatus();
-                }));
-              },
-            ),
-
-            const SizedBox(
-              height: 40,
-            ),
-            const Text(
               "reservation",
               style: const TextStyle(
                 fontSize: 16,
@@ -662,4 +655,3 @@ class _MorePageState extends State<MorePage> {
     return null;
   }
 }
-

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/property_model.dart';
-import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_sell_page.dart';
 import 'package:property_system/client/services/get_and_delet_reservation_of_client_service.dart';
 
-class _ClientReservedPropertyForSellPageState
-    extends State<ClientReservedPropertyForSellPage> {
+class ClientReservedPropertyForSellPage1 extends StatefulWidget{
+  @override
+  State<ClientReservedPropertyForSellPage1> createState() => _ClientReservedPropertyForSellPage1State();
+}
+
+
+class _ClientReservedPropertyForSellPage1State
+    extends State<ClientReservedPropertyForSellPage1> {
   List<PropertyModel> reservedProperties = [];
   bool isLoading = true;
 
