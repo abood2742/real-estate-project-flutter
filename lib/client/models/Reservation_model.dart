@@ -1,9 +1,7 @@
 import 'package:property_system/client/models/profile.model.dart';
-import 'package:property_system/client/models/property_model.dart';
 
 class ReservationModel {
-  final PropertyModel propertyModel;
-  final ProfileModel user;
+  ProfileModel? user;
   final String id;
   final String reservation_date;
   final String amount_paid;
@@ -13,7 +11,6 @@ class ReservationModel {
   final String created_at;
 
   ReservationModel({
-    required this.propertyModel,
     required this.user,
     required this.id,
     required this.reservation_date,
@@ -26,14 +23,13 @@ class ReservationModel {
 
   factory ReservationModel.fromJson(Map<String, dynamic> json) {
     return ReservationModel(
-        propertyModel: PropertyModel.fromJson(json["property"]),
-        user: ProfileModel.fromJson(json['reservation']["user"]),
-        id: json['reservation']["id"],
-        reservation_date: json['reservation']["reservation_date"],
-        amount_paid: json['reservation']["amount_paid"],
-        reservation_status: json['reservation']["reservation_status"],
-        expires_at: json['reservation']["expires_at"],
-        is_expired: json['reservation']["is_expired"],
-        created_at: json['reservation']["created_at"]);
+        user: ProfileModel.fromJson(json["user"]),
+        id: json["id"],
+        reservation_date: json["reservation_date"],
+        amount_paid: json["amount_paid"],
+        reservation_status: json["reservation_status"],
+        expires_at: json["expires_at"],
+        is_expired: json["is_expired"],
+        created_at: json["created_at"]);
   }
 }

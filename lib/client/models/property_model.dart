@@ -1,3 +1,4 @@
+import 'package:property_system/client/models/Reservation_model.dart';
 import 'package:property_system/client/models/photo_model.dart';
 import 'package:property_system/client/models/property_type_model.dart';
 
@@ -17,6 +18,7 @@ class PropertyPageModel {
   });
 
   factory PropertyPageModel.fromJson(Map<String, dynamic> json) {
+
     return PropertyPageModel(
       data: List<PropertyModel>.from(
         json["data"].map((x) => PropertyModel.fromJson(x)),
@@ -70,6 +72,7 @@ class PropertyModel {
   List<Photo> photos;
   LicenseDetails licenseDetails;
   List<PropertyAttribute> propertyAttributes;
+  ReservationModel? reservationModel;
   DateTime createdAt;
   bool isFavorite;
 
@@ -89,6 +92,7 @@ class PropertyModel {
       required this.photos,
       required this.licenseDetails,
       required this.propertyAttributes,
+      required this.reservationModel,
       required this.createdAt,
       required this.isFavorite});
 
@@ -121,6 +125,9 @@ class PropertyModel {
         photos: convertedPhotos,
         licenseDetails: LicenseDetails.fromJson(json["licenseDetails"]),
         propertyAttributes: convertedPropertyAttributes,
+        reservationModel: json["reservation"] != null
+            ? ReservationModel.fromJson(json["reservation"])
+            : null,
         createdAt: DateTime.parse(json["createdAt"]),
         isFavorite: false);
   }

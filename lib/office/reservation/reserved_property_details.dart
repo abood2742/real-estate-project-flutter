@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/models/Reservation_model.dart';
+import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/office/reservation/client_reserver_profile_page.dart';
 import 'package:property_system/office/reservation/complete_reservation_transaction.dart';
 // استبدل هذا باستدعاء صفحة البروفايل الخاصة بالمستخدم المحجِز
 
 class ReservedPropertyDetailsPage extends StatefulWidget {
-  final ReservationModel reservationModel;
+  final PropertyModel propertyModel;
   const ReservedPropertyDetailsPage(
-      {super.key, required this.reservationModel});
+      {super.key, required this.propertyModel});
 
   @override
   State<ReservedPropertyDetailsPage> createState() =>
@@ -19,8 +19,8 @@ class _ReservedPropertyDetailsPageState
     extends State<ReservedPropertyDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    final property = widget.reservationModel.propertyModel;
-    final reservation = widget.reservationModel;
+    final property = widget.propertyModel;
+    final reservation = widget.propertyModel.reservationModel;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -160,7 +160,7 @@ class _ReservedPropertyDetailsPageState
                   ListTile(
                       leading: const Icon(Icons.date_range),
                       title: const Text('تاريخ الحجز'),
-                      subtitle: Text(reservation.reservation_date)),
+                      subtitle: Text(reservation!.reservation_date)),
                   ListTile(
                       leading: const Icon(Icons.attach_money),
                       title: const Text('المبلغ المدفوع'),
@@ -214,11 +214,11 @@ class _ReservedPropertyDetailsPageState
                     context,
                     MaterialPageRoute(
                         builder: (_) => ClientReserverProfilePage(
-                            userId: reservation.user.id)));
+                            userId: reservation.user!.id)));
               },
               icon: const Icon(Icons.person, color: Colors.white),
               label: Text(
-                  '${reservation.user.firstName} ${reservation.user.lastName}',
+                  '${reservation.user!.firstName} ${reservation.user!.lastName}',
                   style: const TextStyle(color: Colors.white)),
             ),
             const SizedBox(height: 16),
@@ -241,7 +241,7 @@ class _ReservedPropertyDetailsPageState
                     Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => CompleteReservationTransactionPage(reservationModel: reservation,)));
+                        builder: (_) => CompleteReservationTransactionPage(propertyModel: property,)));
                   },
                   icon: const Icon(Icons.check, color: Colors.white),
                   label: const Text('تأكيد العملية',

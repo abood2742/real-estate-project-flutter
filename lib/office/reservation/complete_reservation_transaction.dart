@@ -2,12 +2,12 @@ import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:property_system/client/models/Reservation_model.dart';
+import 'package:property_system/client/models/property_model.dart';
 
 class CompleteReservationTransactionPage extends StatefulWidget {
-  final ReservationModel reservationModel;
+  final PropertyModel propertyModel;
   const CompleteReservationTransactionPage(
-      {super.key, required this.reservationModel});
+      {super.key, required this.propertyModel});
 
   @override
   State<CompleteReservationTransactionPage> createState() =>
@@ -62,7 +62,7 @@ class _CompleteReservationTransactionPageState
     }
 
     String type =
-        widget.reservationModel.propertyModel.typeOperation == "selling"
+        widget.propertyModel.typeOperation == "selling"
             ? "البيع"
             : "الإيجار";
 
@@ -80,7 +80,7 @@ class _CompleteReservationTransactionPageState
     String ownerTextFieldHint;
     String clientTextFieldHint;
 
-    if (widget.reservationModel.propertyModel.typeOperation == "selling") {
+    if (widget.propertyModel.typeOperation == "selling") {
       typeLabel = "بيع العقار";
       ownerTextFieldHint = "البائع";
       clientTextFieldHint = "المشتري";

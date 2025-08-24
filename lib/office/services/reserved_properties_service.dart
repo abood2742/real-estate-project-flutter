@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:property_system/client/models/Reservation_model.dart';
+import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/services/token_service.dart';
 
 class ReservedPropertiesService {
-  Future<List<ReservationModel>?> getReservedPropertiesForOffice() async {
+  Future<List<PropertyModel>?> getReservedPropertiesForOffice() async {
     Dio dio = new Dio();
 
     var token = await AuthService.getAccessToken();
@@ -18,11 +18,11 @@ class ReservedPropertiesService {
       if (response.statusCode == 200) {
         List<dynamic> list = response.data;
 
-        List<ReservationModel> reservedProperties = [];
+        List<PropertyModel> reservedProperties = [];
 
         var property;
         for (int i = 0; i < list.length; i++) {
-          property = ReservationModel.fromJson(list[i]);
+          property = PropertyModel.fromJson(list[i]['property']);
           reservedProperties.add(property);
         }
 

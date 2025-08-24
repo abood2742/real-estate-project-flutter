@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
-import 'package:property_system/client/models/Reservation_model.dart';
+import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/office/reservation/reserved_property_details.dart';
 import 'package:property_system/office/services/reserved_properties_service.dart';
 
@@ -13,7 +13,7 @@ class OfficeReservationPage extends StatefulWidget {
 }
 
 class _OfficeReservationPageState extends State<OfficeReservationPage> {
-  List<ReservationModel> reservationModels = [];
+  List<PropertyModel> propertyModels = [];
   bool isLoading = true;
 
   @override
@@ -26,7 +26,7 @@ class _OfficeReservationPageState extends State<OfficeReservationPage> {
     final data =
         await ReservedPropertiesService().getReservedPropertiesForOffice();
     setState(() {
-      reservationModels = data!;
+      propertyModels = data!;
       isLoading = false;
     });
   }
@@ -35,14 +35,14 @@ class _OfficeReservationPageState extends State<OfficeReservationPage> {
   Widget build(BuildContext context) {
 
     // تقسيم العقارات حسب نوع العملية
-    final sellReservations = reservationModels
-        .where((res) => res.propertyModel.typeOperation == 'selling')
+    final sellReservations = propertyModels
+        .where((res) => res.typeOperation == 'selling')
         .toList();
-    final rentReservations = reservationModels
-        .where((res) => res.propertyModel.typeOperation == 'renting')
+    final rentReservations = propertyModels
+        .where((res) => res.typeOperation == 'renting')
         .toList();
 
-    Widget buildList(List<ReservationModel> list) {
+    Widget buildList(List<PropertyModel> list) {
       if (isLoading) {
         return const Center(child: CircularProgressIndicator());
       }
@@ -60,7 +60,7 @@ class _OfficeReservationPageState extends State<OfficeReservationPage> {
         itemCount: list.length,
         itemBuilder: (context, index) {
           final res = list[index];
-          final property = res.propertyModel;
+          final property = res;
           return PropertyCard(
             title: property.propertyType.name,
             location:
@@ -73,7 +73,7 @@ class _OfficeReservationPageState extends State<OfficeReservationPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ReservedPropertyDetailsPage(reservationModel: res),
+                  builder: (_) => ReservedPropertyDetailsPage(propertyModel: property,),
                 ),
               );
             },
