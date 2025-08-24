@@ -300,7 +300,7 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
                             builder: (_) =>  ClientCreateReservationPage(propertyId: widget.propertyModel.id,)));
                   },//getCommentsOnOffice(officeId: widget.officeId);
                   icon: const Icon(Icons.book_online),
-                  label: const Text('حج العقار'),
+                  label: const Text('حجز العقار'),
                 ),
               ),
               const SizedBox(width: 8),

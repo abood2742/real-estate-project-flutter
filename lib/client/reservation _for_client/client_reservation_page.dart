@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/property_model.dart';
-import 'package:property_system/office/reservation/reserved_property_details.dart';
+import 'package:property_system/client/reservation%20_for_client/client_reserved_property_page.dart';
 import 'package:property_system/client/services/client_reservation_service.dart';
 
 class ClientReservationPage extends StatefulWidget {
@@ -73,7 +73,7 @@ class _ClientReservationPageState extends State<ClientReservationPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ReservedPropertyDetailsPage(propertyModel: property,),
+                  builder: (_) => ClientReservedPropertyDetailsPage(propertyModel: property,),
                 ),
               );
             },
