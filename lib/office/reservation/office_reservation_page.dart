@@ -1,86 +1,86 @@
-// // 
-// import 'package:flutter/material.dart';
-// import 'package:lottie/lottie.dart';
-// import 'package:property_system/client/screens/favorite/Favorite_Offices_Page.dart';
-// import 'package:property_system/client/screens/favorite/Favorite_Properties_Page.dart';
-// import 'package:property_system/l10n/app_localizations.dart';
-// import 'package:property_system/office/reservation/reservation_rent.dart';
-// import 'package:property_system/office/reservation/reservation_sell.dart';
-
-// class OfficeReservationPage extends StatelessWidget {
-//   const OfficeReservationPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final localizations = AppLocalizations.of(context)!;
-
-//     return DefaultTabController(
-//       length: 2,
-//       child: Scaffold(
-//         appBar: AppBar(
-//           backgroundColor: const Color.fromARGB(255, 79, 142, 147),
-//           title: Row(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Text(
-//                 'حجز عقار',
-//                 style: const TextStyle(fontSize: 20, color: Colors.white),
-//               ),
-//               const SizedBox(width: 6),
-//               SizedBox(
-//                 height: 30,
-//                 width: 30,
-//                 child: Lottie.asset(
-//                   'assets/Reservation.json',height: 40,width: 30,
-                  
-//                   repeat: true,
-//                   animate: true,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           centerTitle: true,
-//           bottom: TabBar(
-//             indicatorColor: Colors.white,
-//             labelColor: Colors.white,
-//             unselectedLabelColor: Colors.white70,
-//             tabs: [
-//               Tab(
-               
-//                 text:'للبيع'
-//               ),
-//               Tab(
-                
-//                 text: 'للشراء'
-//               ),
-//             ],
-//           ),
-//         ),
-//         body: const TabBarView(
-//           children: [
-//             ReservationSell(),
-//             ReservationRent(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/favorite/Favorite_Offices_Page.dart';
-import 'package:property_system/client/screens/favorite/Favorite_Properties_Page.dart';
-import 'package:property_system/l10n/app_localizations.dart';
-import 'package:property_system/office/reservation/reservation_rent.dart';
-import 'package:property_system/office/reservation/reservation_sell.dart';
+import 'package:property_system/client/components/property_cards/property_card.dart';
+import 'package:property_system/client/models/Reservation_model.dart';
+import 'package:property_system/office/reservation/reserved_property_details.dart';
+import 'package:property_system/office/services/reserved_properties_service.dart';
 
-class OfficeReservationPage extends StatelessWidget {
+class OfficeReservationPage extends StatefulWidget {
   const OfficeReservationPage({super.key});
 
   @override
+  State<OfficeReservationPage> createState() => _OfficeReservationPageState();
+}
+
+class _OfficeReservationPageState extends State<OfficeReservationPage> {
+  List<ReservationModel> reservationModels = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getReservedPropertiesForOffice();
+  }
+
+  Future<void> getReservedPropertiesForOffice() async {
+    final data =
+        await ReservedPropertiesService().getReservedPropertiesForOffice();
+    setState(() {
+      reservationModels = data!;
+      isLoading = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+
+    // تقسيم العقارات حسب نوع العملية
+    final sellReservations = reservationModels
+        .where((res) => res.propertyModel.typeOperation == 'selling')
+        .toList();
+    final rentReservations = reservationModels
+        .where((res) => res.propertyModel.typeOperation == 'renting')
+        .toList();
+
+    Widget buildList(List<ReservationModel> list) {
+      if (isLoading) {
+        return const Center(child: CircularProgressIndicator());
+      }
+
+      if (list.isEmpty) {
+        return Center(
+          child: Text(
+            'لا توجد عقارات محجوزة',
+            style: const TextStyle(fontSize: 16),
+          ),
+        );
+      }
+
+      return ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          final res = list[index];
+          final property = res.propertyModel;
+          return PropertyCard(
+            title: property.propertyType.name,
+            location:
+                property.location.city, // Assuming location object has name
+            price: property.price,
+            area: property.space.toString(),
+            imageUrl:
+                property.photos.isNotEmpty ? property.photos[0].url : null,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ReservedPropertyDetailsPage(reservationModel: res),
+                ),
+              );
+            },
+          );
+        },
+      );
+    }
 
     return DefaultTabController(
       length: 2,
@@ -97,7 +97,7 @@ class OfficeReservationPage extends StatelessWidget {
               const SizedBox(width: 16),
               Lottie.asset(
                 'assets/Reservation.json',
-                height: 70, // حجم أكبر
+                height: 70,
                 width: 70,
                 repeat: true,
                 animate: true,
@@ -111,14 +111,14 @@ class OfficeReservationPage extends StatelessWidget {
             unselectedLabelColor: Colors.white70,
             tabs: [
               Tab(text: 'للبيع'),
-              Tab(text: 'للشراء'),
+              Tab(text: 'للإيجار'),
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            ReservationSell(),
-            ReservationRent(),
+            buildList(sellReservations),
+            buildList(rentReservations),
           ],
         ),
       ),

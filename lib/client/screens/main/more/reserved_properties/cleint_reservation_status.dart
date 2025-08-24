@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ClentReservationStatus extends StatelessWidget {
-  const ClentReservationStatus({super.key});
+class CleintReservationStatus extends StatelessWidget {
+  const CleintReservationStatus({super.key});
 
   @override
   Widget build(BuildContext context) {

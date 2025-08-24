@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/main/more/reserved_properties/clent_reservation_status.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/cleint_reservation_status.dart';
 
 
 class PropertyReservation extends StatelessWidget {
@@ -88,7 +88,7 @@ class PropertyReservation extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ClentReservationStatus();
+                    return CleintReservationStatus();
                   }));
                 },
                 child: const Text(

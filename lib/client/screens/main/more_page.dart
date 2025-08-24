@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
-import 'package:property_system/client/screens/auth/register/user_info_enter_page.dart';
+import 'package:property_system/client/screens/auth/register/complete_register_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_experid_for_rent_page_.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_for_buy_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
-import 'package:property_system/client/screens/main/more/client_properties/property_details_in_expired_property_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/cloused_compailent_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/existing_compailent_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/send_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/cleint_reservation_status.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_create_reservation_page.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_rent_page.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_reserved_property_for_sell_page.dart';
@@ -22,8 +21,6 @@ import 'package:property_system/client/screens/main/more/complaint/complaient_pa
 import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_profile.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
-import 'package:property_system/client/screens/main/more/reserved_properties/Property_reservation.dart';
-import 'package:property_system/client/screens/main/more/reserved_properties/clent_reservation_status.dart';
 import 'package:property_system/client/screens/waiting/expired_properties_to_push_page.dart';
 import 'package:property_system/client/screens/waiting/properties_dont_pushed_yet_page.dart';
 import 'package:property_system/client/screens/waiting/rented_page.dart';
@@ -36,12 +33,6 @@ import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
 import 'package:property_system/notification/socket_service.dart';
 import 'package:property_system/office/reservation/office_reservation_page.dart';
-import 'package:property_system/office/reservation/property_reserved_for_rent_page.dart';
-import 'package:property_system/office/reservation/property_reserved_for_sell_page.dart';
-import 'package:property_system/office/reservation/rented_page_property_reserved_for_rent_page.dart';
-import 'package:property_system/office/reservation/reservation_rent.dart';
-import 'package:property_system/office/reservation/reservation_sell.dart';
-import 'package:property_system/office/reservation/soled_page_property_reserved_for_sell_page.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -166,7 +157,6 @@ class _MorePageState extends State<MorePage> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-          
             buildMenuButton(
               icon: Icons.person,
               label: localizations.translate('profile'),
@@ -181,21 +171,10 @@ class _MorePageState extends State<MorePage> {
               label: localizations.translate('enter_your_data'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const UserInfoEnterPage();
+                  return const CompleteRegisterPage();
                 }));
               },
             ),
-
-             buildMenuButton(
-              icon: Icons.person,
-              label: 'قايمة الحجوزات عند العميل ',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  ClientReservedPropertyForSellPage();
-                }));
-              },
-            ),
-            
             buildMenuButton(
               icon: Icons.local_post_office,
               label: localizations.translate('create_office'),
@@ -445,23 +424,6 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations
-                  .translate('ClientPagePropertyInExpiredPropertyPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientPagePropertyInExpiredPropertyPage(
-                    pushedOffice: '',
-                    pushedOfficeAccount: '',
-                    propertyArea: '',
-                    propertyLocation: '',
-                    propertyPrice: '',
-                    propertyType: '',
-                  );
-                }));
-              },
-            ),
             const SizedBox(
               height: 40,
             ),
@@ -612,19 +574,11 @@ class _MorePageState extends State<MorePage> {
               label: localizations.translate('ClentReservationStatus'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClentReservationStatus();
+                  return CleintReservationStatus();
                 }));
               },
             ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('PropertyReservation'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PropertyReservation();
-                }));
-              },
-            ),
+
             const SizedBox(
               height: 40,
             ),
@@ -645,66 +599,6 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return OfficeReservationPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('PropertyReservedForRentPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PropertyReservedForRentPage(
-                    email: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('PropertyReservedForSellPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PropertyReservedForSellPage(
-                    email: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations
-                  .translate('RentedPagePropertyReservedForRentPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return RentedPagePropertyReservedForRentPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ReservationRent'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ReservationRent();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ReservationSell'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ReservationSell();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations
-                  .translate('SoledPagePropertyReservedForSellPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SoledPagePropertyReservedForSellPage();
                 }));
               },
             ),
@@ -768,3 +662,4 @@ class _MorePageState extends State<MorePage> {
     return null;
   }
 }
+

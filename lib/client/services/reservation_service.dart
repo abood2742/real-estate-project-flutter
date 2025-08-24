@@ -64,7 +64,6 @@ class ReservationService {
     try {
       var token = await AuthService.getAccessToken();
       final body = request.toJson();
-      print(body);
       final response = await dio.post(
           "http://localhost:3000/api/reservation/$propertyId",
           options: Options(headers: {"Authorization": "Bearer $token"}),

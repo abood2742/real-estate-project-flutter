@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:property_system/client/screens/auth/register/user_info_enter_page.dart';
+import 'package:property_system/client/screens/auth/register/complete_register_page.dart';
 import 'package:property_system/client/services/register_service.dart';
 
 class VerificationCode extends StatefulWidget {
@@ -103,7 +103,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                     
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return UserInfoEnterPage();
+                        return CompleteRegisterPage();
                       }));
                     
                   }
