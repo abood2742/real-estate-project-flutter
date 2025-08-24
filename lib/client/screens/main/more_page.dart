@@ -22,8 +22,8 @@ import 'package:property_system/client/screens/main/more/complaint/complaient_pa
 import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_profile.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
-import 'package:property_system/client/screens/search/reservation/Property_reservation.dart';
-import 'package:property_system/client/screens/search/reservation/clent_reservation_status.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/Property_reservation.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/clent_reservation_status.dart';
 import 'package:property_system/client/screens/waiting/expired_properties_to_push_page.dart';
 import 'package:property_system/client/screens/waiting/properties_dont_pushed_yet_page.dart';
 import 'package:property_system/client/screens/waiting/rented_page.dart';
@@ -182,6 +182,16 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const UserInfoEnterPage();
+                }));
+              },
+            ),
+
+             buildMenuButton(
+              icon: Icons.person,
+              label: 'قايمة الحجوزات عند العميل ',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  ClientReservedPropertyForSellPage();
                 }));
               },
             ),

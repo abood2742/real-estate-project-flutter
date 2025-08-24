@@ -1,7 +1,76 @@
+
+// import 'package:flutter/material.dart';
+// import 'package:property_system/client/reservation%20_for_client/get_and_delet_reservation_service.dart';
+// import 'package:property_system/client/reservation%20_for_client/get_reservation_client_model.dart';
+// import 'package:property_system/client/reservation%20_for_client/reserved_property_card.dart';
+
+// class ClientReservedPropertyForSellPage extends StatefulWidget {
+//   const ClientReservedPropertyForSellPage({super.key});
+
+//   @override
+//   State<ClientReservedPropertyForSellPage> createState() =>
+//       _ClientReservedPropertyForSellPageState();
+// }
+
+// class _ClientReservedPropertyForSellPageState
+//     extends State<ClientReservedPropertyForSellPage> {
+//   List<GetReservationClientModel> reservations = [];
+//   bool isLoading = true;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchReservations();
+//   }
+
+//   Future<void> fetchReservations() async {
+//     // لو عندك endpoint خاص بـ get all, استعمله هنا
+//     final service = GetOneAndDeletClientReservationService();
+//     // مثال: تجيب ID للحجز وتستدعي getOne
+//     // حالياً رح أخليها فاضية لأن ما عندنا API للكل
+//     setState(() {
+//       isLoading = false;
+//     });
+//   }
+
+//   Future<void> removeReservation(String reservationId) async {
+//     final success =
+//         await GetOneAndDeletClientReservationService().deleteReservation(reservationId);
+
+//     if (success) {
+//       setState(() {
+//         reservations.removeWhere((r) => r.reservationId == reservationId);
+//       });
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     if (isLoading) {
+//       return const Center(child: CircularProgressIndicator());
+//     }
+
+//     if (reservations.isEmpty) {
+//       return const Center(child: Text("لا يوجد عقارات محجوزة"));
+//     }
+
+//     return ListView.builder(
+//       padding: const EdgeInsets.all(12),
+//       itemCount: reservations.length,
+//       itemBuilder: (context, index) {
+//         final reservation = reservations[index];
+//         return ReservedPropertyCard(
+//           reservation: reservation,
+//           onDelete: () => removeReservation(reservation.reservationId),
+//         );
+//       },
+//     );
+//   }
+// }
 import 'package:flutter/material.dart';
-import 'package:property_system/client/components/property_cards/property_card.dart';
-import 'package:property_system/client/models/property_model.dart';
-import 'package:property_system/client/services/reservation_service.dart';
+import 'package:property_system/client/reservation%20_for_client/get_and_delet_reservation_service.dart';
+import 'package:property_system/client/reservation%20_for_client/get_reservation_client_model.dart';
+import 'package:property_system/client/reservation%20_for_client/reserved_property_card.dart';
 
 class ClientReservedPropertyForSellPage extends StatefulWidget {
   const ClientReservedPropertyForSellPage({super.key});
@@ -13,7 +82,7 @@ class ClientReservedPropertyForSellPage extends StatefulWidget {
 
 class _ClientReservedPropertyForSellPageState
     extends State<ClientReservedPropertyForSellPage> {
-  List<PropertyModel> reservedProperties = [];
+  List<GetReservationClientModel> reservations = [];
   bool isLoading = true;
 
   @override
@@ -23,57 +92,53 @@ class _ClientReservedPropertyForSellPageState
   }
 
   Future<void> fetchReservations() async {
-    final reservations = await ReservationService().getReservations();
-
+    final service = GetOneAndDeletClientReservationService();
+    // هنا لازم تجيب كل الحجوزات إذا عندك API جاهز
     setState(() {
-      if (reservations != null) {
-        // ناخذ العقار من كل حجز
-        reservedProperties = reservations.map((r) => r.property).toList();
-      }
       isLoading = false;
     });
   }
 
   Future<void> removeReservation(String reservationId) async {
     final success =
-        await ReservationService().deleteReservation(reservationId);
+        await GetOneAndDeletClientReservationService().deleteReservation(reservationId);
 
     if (success) {
       setState(() {
-        reservedProperties.removeWhere((p) => p.id == reservationId);
+        reservations.removeWhere((r) => r.reservationId == reservationId);
       });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("تم حذف الحجز ✅")),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("فشل حذف الحجز ❌")),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    if (reservedProperties.isEmpty) {
-      return const Center(child: Text("لا يوجد عقارات محجوزة"));
-    }
-
-    return ListView.builder(
-      padding: const EdgeInsets.all(12),
-      itemCount: reservedProperties.length,
-      itemBuilder: (context, index) {
-        final property = reservedProperties[index];
-        return PropertyCard(
-          imageUrl: property.photos.isNotEmpty ? property.photos[0].url : null,
-          title: property.propertyType.name,
-          location: property.location.city,
-          price: property.price,
-          area: property.space.toString(),
-          onTap: () {
-            // ممكن تفتح صفحة تفاصيل العقار
-          },
-          onRemove: () {
-            removeReservation(property.id); // استدعاء الحذف
-          },
-        );
-      },
+    return Scaffold(
+     
+     
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : reservations.isEmpty
+              ? const Center(child: Text("لا يوجد عقارات محجوزة"))
+              : ListView.builder(
+                  padding: const EdgeInsets.all(12),
+                  itemCount: reservations.length,
+                  itemBuilder: (context, index) {
+                    final reservation = reservations[index];
+                    return ReservedPropertyCard(
+                      reservation: reservation,
+                      onDelete: () =>
+                          removeReservation(reservation.reservationId),
+                    );
+                  },
+                ),
     );
   }
 }

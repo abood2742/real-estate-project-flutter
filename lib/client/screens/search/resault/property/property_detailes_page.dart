@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/main/more/reserved_properties/client_create_reservation_page.dart';
 import 'package:property_system/client/screens/search/resault/office/Office_Detailes_Page.dart';
-import 'package:property_system/client/screens/search/reservation/Property_reservation.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/Property_reservation.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/client/screens/search/comments/Add_Comment_And_Rating_Page.dart';
 import 'package:property_system/client/screens/report/report_post_page.dart';

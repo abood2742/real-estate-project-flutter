@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/search/reservation/clent_reservation_status.dart';
+import 'package:property_system/client/screens/main/more/reserved_properties/clent_reservation_status.dart';
 
 
 class PropertyReservation extends StatelessWidget {
