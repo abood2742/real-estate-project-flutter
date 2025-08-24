@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/property_model.dart';
-import 'package:property_system/client/reservation%20_for_client/get_client_reservation_service.dart';
 import 'package:property_system/office/reservation/reserved_property_details.dart';
-import 'package:property_system/office/services/reserved_properties_service.dart';
+import 'package:property_system/client/services/client_reservation_service.dart';
 
-class ClientMyReservationPage extends StatefulWidget {
-  const ClientMyReservationPage({super.key});
+class ClientReservationPage extends StatefulWidget {
+  const ClientReservationPage({super.key});
 
   @override
-  State<ClientMyReservationPage> createState() => _ClientMyReservationPageState();
+  State<ClientReservationPage> createState() => _ClientReservationPageState();
 }
 
-class _ClientMyReservationPageState extends State<ClientMyReservationPage> {
+class _ClientReservationPageState extends State<ClientReservationPage> {
   List<PropertyModel> propertyModels = [];
   bool isLoading = true;
 
@@ -25,7 +24,7 @@ class _ClientMyReservationPageState extends State<ClientMyReservationPage> {
 
   Future<void> getReservedPropertiesForClient() async {
     final data =
-        await GetClientReservationService().getClientReservation();
+        await ClientReservationService().getClientReservedProperties();
     setState(() {
       propertyModels = data!;
       isLoading = false;

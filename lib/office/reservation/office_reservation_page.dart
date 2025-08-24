@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/office/reservation/reserved_property_details.dart';
-import 'package:property_system/office/services/reserved_properties_service.dart';
+import 'package:property_system/office/services/office_reservation_service.dart';
 
 class OfficeReservationPage extends StatefulWidget {
   const OfficeReservationPage({super.key});
@@ -24,7 +24,7 @@ class _OfficeReservationPageState extends State<OfficeReservationPage> {
 
   Future<void> getReservedPropertiesForOffice() async {
     final data =
-        await ReservedPropertiesService().getReservedPropertiesForOffice();
+        await OfficeReservationService().getReservedPropertiesForOffice();
     setState(() {
       propertyModels = data!;
       isLoading = false;

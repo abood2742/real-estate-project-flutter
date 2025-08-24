@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/services/token_service.dart';
 
-class ReservedPropertiesService {
+class OfficeReservationService {
   Future<List<PropertyModel>?> getReservedPropertiesForOffice() async {
     Dio dio = new Dio();
 

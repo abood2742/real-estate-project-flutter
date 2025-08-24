@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:property_system/client/models/profile.model.dart';
+import 'package:property_system/client/reservation%20_for_client/client_reservation_page.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
 import 'package:property_system/client/screens/auth/register/complete_register_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_experid_for_rent_page_.dart';
@@ -12,9 +13,6 @@ import 'package:property_system/client/screens/main/more/complaint/send_complain
 import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reservation_status.dart';
 import 'package:property_system/client/reservation%20_for_client/client_create_reservation_page.dart';
-import 'package:property_system/client/reservation%20_for_client/client_reserved_property_for_rent_page.dart';
-import 'package:property_system/client/reservation%20_for_client/client_reserved_property_for_sell_page.dart';
-import 'package:property_system/client/reservation%20_for_client/client_reserverd_page.dart';
 import 'package:property_system/client/screens/main/more/property_offer/post_property1.dart';
 import 'package:property_system/client/screens/main/more/complaint/one_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/complaient_page.dart';
@@ -36,7 +34,6 @@ import 'package:property_system/office/reservation/office_reservation_page.dart'
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:property_system/client/reservation%20_for_client/client_my_reservation_page.dart';
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
 
@@ -450,10 +447,10 @@ class _MorePageState extends State<MorePage> {
             buildMenuButton(
               icon: Icons.book,
               label:
-                  localizations.translate('ClientMyReservationPage, ClientMyReservationPage'),
+                  localizations.translate('ClientReservationPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientMyReservationPage();
+                  return ClientReservationPage();
                 }));
               },
             ),
@@ -466,35 +463,7 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label:
-                  localizations.translate('ClientReservedPropertyForRentPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientReservedPropertyForRentPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label:
-                  localizations.translate('ClientReservedPropertyForSellPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientReservedPropertyForSellPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ClientReservedPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientReservedPage();
-                }));
-              },
-            ),
+
             const SizedBox(
               height: 40,
             ),
