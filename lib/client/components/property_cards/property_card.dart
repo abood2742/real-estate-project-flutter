@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class PropertyCard extends StatelessWidget {
@@ -29,6 +28,7 @@ class PropertyCard extends StatelessWidget {
         onTap: onTap,
         child: Card(
           shape: RoundedRectangleBorder(
+            
             borderRadius: BorderRadius.circular(16),
           ),
           clipBehavior: Clip.antiAlias, // 👈 مهم عشان الصورة تنقص داخل الكارد
@@ -47,20 +47,24 @@ class PropertyCard extends StatelessWidget {
                       Text(
                         title,
                         style: const TextStyle(
-                          fontSize: 18,
+                          color: Colors.green,
+                          fontSize: 20,
+                          fontFamily: 'Pacifico',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          const Icon(Icons.location_on, color: Colors.blue),
+                          const Icon(Icons.location_on, color: Colors.grey),
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
                               location,
                               style: const TextStyle(
-                                  fontSize: 15, color: Colors.grey),
+                                  fontFamily: 'Pacifico',
+                                  fontSize: 18,
+                                  color: Color.fromARGB(255, 35, 35, 160)),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -69,24 +73,28 @@ class PropertyCard extends StatelessWidget {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Icon(Icons.attach_money, color: Colors.blue),
+                          const Icon(Icons.attach_money, color: Colors.grey,size: 24,),
                           const SizedBox(width: 6),
                           Text(
                             price,
                             style: const TextStyle(
-                                fontSize: 15, color: Colors.grey),
+                                fontFamily: 'Pacifico',
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 35, 35, 160)),
                           ),
                         ],
                       ),
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Icon(Icons.space_bar, color: Colors.blue),
+                          const Icon(Icons.space_dashboard, color: Colors.grey),
                           const SizedBox(width: 6),
                           Text(
                             "$area m²",
                             style: const TextStyle(
-                                fontSize: 15, color: Colors.grey),
+                                fontFamily: 'Pacifico',
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 35, 35, 160)),
                           ),
                         ],
                       ),
@@ -98,8 +106,7 @@ class PropertyCard extends StatelessWidget {
                             onPressed: onRemove,
                             elevation: 2.0,
                             fillColor: const Color(0xFF1565C0),
-                            constraints:
-                                const BoxConstraints(minWidth: 0.0),
+                            constraints: const BoxConstraints(minWidth: 0.0),
                             child: const Icon(
                               Icons.delete_outline_sharp,
                               color: Colors.white,
@@ -107,9 +114,7 @@ class PropertyCard extends StatelessWidget {
                             ),
                             padding: const EdgeInsets.all(12.0),
                             shape: const CircleBorder(),
-
-
-),
+                          ),
                         ),
                     ],
                   ),
