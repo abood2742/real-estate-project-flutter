@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/property_model.dart';
-import 'package:property_system/client/screens/search/resault/property/property_detailes_page.dart';
+import 'package:property_system/client/screens/search/resault/property/Property_Details_Page.dart';
 import 'package:property_system/client/services/favorite_service.dart';
 
 class FavoritePropertiesPage extends StatefulWidget {
@@ -59,7 +59,7 @@ class _FavoritePropertiesPageState extends State<FavoritePropertiesPage> {
             context,
             MaterialPageRoute(
               // i think this page name has to be changed
-              builder: (_) => PropertyDetailesPage(
+              builder: (_) => PropertyDetailsPage(
                 propertyModel: property,
               ),
             )).then((removed) {

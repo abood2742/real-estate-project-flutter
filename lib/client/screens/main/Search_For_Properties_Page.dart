@@ -137,7 +137,7 @@ import 'package:flutter/material.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/filter/filters_page.dart';
-import 'package:property_system/client/screens/search/resault/property/property_detailes_page.dart';
+import 'package:property_system/client/screens/search/resault/property/Property_Details_Page.dart';
 import 'package:property_system/client/services/notification_service.dart';
 import 'package:property_system/client/services/search_service.dart';
 import 'package:property_system/l10n/app_localizations.dart';
@@ -282,7 +282,7 @@ class _SearchPageState extends State<SearchPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => PropertyDetailesPage(propertyModel: property),
+              builder: (_) => PropertyDetailsPage(propertyModel: property),
             ),
           );
         },

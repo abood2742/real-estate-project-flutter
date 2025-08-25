@@ -41,10 +41,8 @@ class ClientReservationService {
     }
   }
 
-  Future  cancelReservedPropertyFromClient( {required String reservationId}) async {
+  Future  cancelReservedPropertyFromClient({required String reservationId}) async {
     Dio dio = Dio();
-                        print('2');
-
     var token = await AuthService.getAccessToken();
     Response response = await dio.delete(
         'http://localhost:3000/api/reservation/$reservationId',

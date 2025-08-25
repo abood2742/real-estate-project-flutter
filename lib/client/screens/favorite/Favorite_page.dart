@@ -100,7 +100,7 @@ class FavoritePage extends StatelessWidget {
                 height: kToolbarHeight, // مناسب لارتفاع AppBar
                 width: kToolbarHeight,
                 child: Lottie.asset(
-                  'assets/emolation/Favour2.json',
+                  'assets/more_Animation.json',
                   fit: BoxFit.contain,
                   repeat: true,
                   animate: true,

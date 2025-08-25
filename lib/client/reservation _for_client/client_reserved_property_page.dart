@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
-import 'package:property_system/client/screens/search/resault/office/Office_Detailes_Page.dart';
+import 'package:property_system/client/screens/search/resault/office/Office_Details_Page.dart';
 import 'package:property_system/client/services/client_reservation_service.dart';
 
 class ClientReservedPropertyDetailsPage extends StatefulWidget {
@@ -213,7 +213,7 @@ class _ClientReservedPropertyDetailsPageState
               context,
               MaterialPageRoute(
                 builder: (_) =>
-                    OfficeDetailesPage(officeId: property.office.officeId),
+                    OfficeDetailsPage(officeId: property.office.officeId),
               ),
             );
           },
@@ -245,8 +245,6 @@ class _ClientReservedPropertyDetailsPageState
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   onPressed: () async  {
-                    print('1');
-                   // ClientReservationService().cancelReservedPropertyFromClient;
                    await ClientReservationService().cancelReservedPropertyFromClient( reservationId:widget.propertyModel.reservationModel!.id);
                   },
                   icon: const Icon(Icons.cancel, color: Colors.white),

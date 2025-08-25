@@ -7,17 +7,17 @@ import 'package:property_system/client/services/favorite_service.dart';
 import 'package:property_system/client/services/search_service.dart';
 import 'package:property_system/utils/Office_Page_State_enum.dart';
 
-class OfficeDetailesPage extends StatefulWidget {
+class OfficeDetailsPage extends StatefulWidget {
   final String officeId;
-  const OfficeDetailesPage({super.key, required this.officeId});
+  const OfficeDetailsPage({super.key, required this.officeId});
 
   @override
-  State<OfficeDetailesPage> createState() =>
-      _OfficeDetailesPageState();
+  State<OfficeDetailsPage> createState() =>
+      _OfficeDetailsPageState();
 }
 
-class _OfficeDetailesPageState
-    extends State<OfficeDetailesPage> {
+class _OfficeDetailsPageState
+    extends State<OfficeDetailsPage> {
   PagesState pageState = PagesState.loading;
   OfficeDetailsModel? officeDetailsModel;
 
@@ -110,7 +110,7 @@ class _OfficeDetailesPageState
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Image.network(
-              officeDetailsModel!.officePhoto.url,
+              officeDetailsModel!.officePhoto!.url,
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -127,7 +127,7 @@ class _OfficeDetailesPageState
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
-          RatingStarsWidget(rating: officeDetailsModel!.ratings),
+          RatingStarsWidget(rating: officeDetailsModel!.ratings ?? 0),
           const SizedBox(height: 16),
           _buildInfoCard(
               Icons.web, 'البريد الإلكتروني', officeDetailsModel!.officeEmail),
@@ -143,7 +143,7 @@ class _OfficeDetailesPageState
               showDialog(
                 context: context,
                 builder: (_) => Dialog(
-                  child: Image.network(officeDetailsModel!.licensePhoto.url),
+                  child: Image.network(officeDetailsModel!.licensePhoto!.url),
                 ),
               );
             },

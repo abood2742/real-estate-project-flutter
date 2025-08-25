@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/office_cards/office_card.dart';
 import 'package:property_system/client/models/office_details_model.dart';
-import 'package:property_system/client/screens/search/resault/office/Office_Detailes_Page.dart';
+import 'package:property_system/client/screens/search/resault/office/Office_Details_Page.dart';
 import 'package:property_system/client/services/favorite_service.dart';
 
 class FavoriteOfficesPage extends StatefulWidget {
@@ -51,14 +51,14 @@ class _FavoriteOfficesPageState extends State<FavoriteOfficesPage> {
     return OfficeCard(
       name: office.name,
       phone: office.officePhone,
-      imageUrl: office.officePhoto.url,
-      rating: office.ratings,
+      imageUrl: office.officePhoto != null ? office.officePhoto!.url : 'null',
+      rating: office.ratings ?? 0,
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
               // i think this page name has to be changed
-              builder: (_) => OfficeDetailesPage(officeId: office.id),
+              builder: (_) => OfficeDetailsPage(officeId: office.id),
             )).then((removed) {
           if (removed == true) {
             getFavoriteOffices();

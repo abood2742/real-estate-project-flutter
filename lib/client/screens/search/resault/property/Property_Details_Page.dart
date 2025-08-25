@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/reservation%20_for_client/client_create_reservation_page.dart';
-import 'package:property_system/client/screens/search/resault/office/Office_Detailes_Page.dart';
+import 'package:property_system/client/screens/search/resault/office/Office_Details_Page.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/client/screens/search/comments/Add_Comment_And_Rating_Page.dart';
 import 'package:property_system/client/screens/report/report_post_page.dart';
 import 'package:property_system/client/services/favorite_service.dart';
 // import 'package:property_system/client/screens/office/office_profile_page.dart'; // <-- صفحة المكتب
 
-class PropertyDetailesPage extends StatefulWidget {
+class PropertyDetailsPage extends StatefulWidget {
   final PropertyModel propertyModel;
-  const PropertyDetailesPage({super.key, required this.propertyModel});
+  const PropertyDetailsPage({super.key, required this.propertyModel});
 
   @override
-  State<PropertyDetailesPage> createState() => _PropertyDetailesPageState();
+  State<PropertyDetailsPage> createState() => _PropertyDetailsPageState();
 }
 
-class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
+class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
 
   @override
   void initState() {
@@ -340,7 +340,7 @@ class _PropertyDetailesPageState extends State<PropertyDetailesPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => OfficeDetailesPage(
+                builder: (_) => OfficeDetailsPage(
                   officeId: property.office.officeId,
                 ),
               ),

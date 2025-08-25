@@ -1,11 +1,33 @@
-// import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:property_system/client/components/blog_model.dart';
+import 'package:property_system/client/components/blog_card.dart';
 import 'package:property_system/client/components/spechial_offer.dart';
+import 'package:property_system/client/models/blog_model.dart';
+import 'package:property_system/client/screens/main/Blog/All_Blogs_Page.dart';
+import 'package:property_system/client/services/Blog_service.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<BlogModel> blogs = [];
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBlogs();
+  }
+
+  Future<void> _loadBlogs() async {
+    setState(() => isLoading = true);
+    blogs = await BlogService().getAllBlogs() ?? [];
+    setState(() => isLoading = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +41,11 @@ class HomePage extends StatelessWidget {
               expandedHeight: 120,
               pinned: true,
               flexibleSpace: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  final bool isCollapsed = constraints.maxHeight <=
+                builder: (context, constraints) {
+                  final isCollapsed = constraints.maxHeight <=
                       kToolbarHeight + MediaQuery.of(context).padding.top;
-
                   return FlexibleSpaceBar(
-                    background: Image.asset(
-                      'assets/images/sliver2.png',
-                      fit: BoxFit.cover,
-                    ),
+                    background: Image.asset('assets/images/sliver2.png', fit: BoxFit.cover),
                     title: Text(
                       isCollapsed
                           ? localizations.translate('home_page')
@@ -39,63 +57,16 @@ class HomePage extends StatelessWidget {
                         fontFamily: 'Pacifico',
                       ),
                     ),
-                    titlePadding:
-                        const EdgeInsetsDirectional.only(start: 14, bottom: 18),
+                    titlePadding: const EdgeInsetsDirectional.only(start: 14, bottom: 18),
                   );
                 },
               ),
             ),
+
+            // عنوان المدونات
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.only(top: 20, right: 16),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    children: [
-                      const Spacer(flex: 2),
-                      const Icon(Icons.location_on, size: 20, color: Colors.grey),
-                      Text(
-                        localizations.translate('location'),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Pacifico',
-                          color: Color.fromARGB(255, 155, 156, 175),
-                          fontSize: 18,
-                        ),
-                      ),
-                      const Spacer(flex: 22),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Spacer(flex: 1),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        localizations.translate('syria_damascus'),
-                        style: const TextStyle(
-                          color: Colors.blue,
-                          fontFamily: 'Pacifico',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Spacer(flex: 10),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20, right: 16, left: 16),
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -110,7 +81,11 @@ class HomePage extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        // TODO: الانتقال إلى صفحة المدونة
+                        // الانتقال لصفحة جميع المدونات
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => AllBlogsPage(blogs: blogs)),
+                        );
                       },
                       child: Text(
                         localizations.translate('view_all'),
@@ -125,21 +100,30 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+
+            // عرض أول 5 مدونات فقط بشكل أفقي مع تقليل ارتفاع البطاقة
             SliverToBoxAdapter(
               child: SizedBox(
-                height: 400,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return const SizedBox(
-                      width: 320,
-                      child: BlogModel(),
-                    );
-                  },
-                ),
+                height: 250, // تصغير طول البطاقة
+                child: isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : blogs.isEmpty
+                        ? const Center(child: Text('لا توجد مدونات حالياً'))
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: blogs.length > 5 ? 5 : blogs.length,
+                            itemBuilder: (context, index) {
+                              final blog = blogs[index];
+                              return SizedBox(
+                                width: 280,
+                                child: BlogCard(blog: blog),
+                              );
+                            },
+                          ),
               ),
             ),
+
+            // باقي الصفحة (العروض الخاصة)
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(top: 20, right: 16),
@@ -177,15 +161,12 @@ class HomePage extends StatelessWidget {
                 child: Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: الانتقال إلى صفحة كل العروض
+                      // الانتقال إلى صفحة كل العروض
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
                     child: Text(
                       localizations.translate('show_more'),

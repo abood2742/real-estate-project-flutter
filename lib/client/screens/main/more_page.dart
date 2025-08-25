@@ -4,6 +4,7 @@ import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reservation_page.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
 import 'package:property_system/client/screens/auth/register/complete_register_page.dart';
+import 'package:property_system/client/screens/main/Blog/create_blog.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_experid_for_rent_page_.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_for_buy_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
@@ -561,6 +562,16 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return OfficeReservationPage();
+                }));
+              },
+            ),
+
+             buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('CreateBlogPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CreateBlogPage();
                 }));
               },
             ),

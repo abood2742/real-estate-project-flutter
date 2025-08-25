@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/office_cards/office_card.dart';
 import 'package:property_system/client/models/office_card_model.dart';
-import 'package:property_system/client/screens/search/resault/office/Office_Detailes_Page.dart';
+import 'package:property_system/client/screens/search/resault/office/Office_Details_Page.dart';
 import 'package:property_system/client/services/search_service.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
@@ -98,7 +98,7 @@ class _OfficesSearchPageState extends State<OfficesSearchPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => OfficeDetailesPage(officeId: office.id),
+              builder: (_) => OfficeDetailsPage(officeId: office.id),
             ),
           );
         },

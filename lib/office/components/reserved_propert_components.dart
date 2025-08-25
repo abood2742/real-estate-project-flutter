@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/screens/search/resault/property/property_detailes_page.dart';
+import 'package:property_system/client/screens/search/resault/property/Property_Details_Page.dart';
 
 class ReservedPropertComponents extends StatelessWidget {
    ReservedPropertComponents({super.key,required this.location , required this.forWhat});
