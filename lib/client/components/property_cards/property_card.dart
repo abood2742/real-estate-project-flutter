@@ -27,6 +27,7 @@ class PropertyCard extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Card(
+          shadowColor: Colors.green,
           shape: RoundedRectangleBorder(
             
             borderRadius: BorderRadius.circular(16),

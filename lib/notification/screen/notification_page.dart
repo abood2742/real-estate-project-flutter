@@ -36,13 +36,16 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(59, 0, 30, 255),
+      backgroundColor:  Colors.white,
       appBar: AppBar(
+        centerTitle: true,
+        elevation: 2,
+        shadowColor: Colors.blue,
         title: const Text(
-          'Notifications',
+          'إشعاراتي',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color.fromARGB(255, 12, 46, 74),
+        backgroundColor: const Color.fromARGB(255, 99, 163, 215),
       ),
       body: notifications == null
           ? const Center(child: CircularProgressIndicator()) // حالة التحميل

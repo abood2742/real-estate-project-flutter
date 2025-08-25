@@ -1,489 +1,215 @@
-// import 'package:flutter/material.dart';
 
-
-
-// class PushComplaintPage extends StatefulWidget {
-//   @override
-//   _PushComplaintPageState createState() => _PushComplaintPageState();
-// }
-
-// class _PushComplaintPageState extends State<PushComplaintPage> {
-//   String? selectedReason;
-//   final TextEditingController descriptionController = TextEditingController();
-
-//   final List<String> reasons = [
-//     'تسرب مياه أو مشاكل في السباكة',
-//     'الكهرباء لا تعمل بشكل جيد',
-//     'التكييف أو التدفئة لا تعمل',
-//     'الحشرات أو القوارض',
-//     'الأثاث مكسور أو مفقود',
-//     'أخرى',
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Directionality(
-//       textDirection: TextDirection.rtl, // دعم اللغة العربية
-//       child: Scaffold(
-//         appBar: AppBar(
-//           title: const Text(' تقديم شكوى ',
-//               style: TextStyle(
-//                   color: Colors.white, fontFamily: 'Pacifico', fontSize: 20)),
-//           backgroundColor: Color.fromARGB(255, 83, 54, 155),
-//           centerTitle: true,
-//           elevation: 0,
-//         ),
-//         body: Padding(
-//           padding: const EdgeInsets.all(16.0),
-//           child: ListView(
-//             children: [
-//               Text(
-//                 'معلومات العميل',
-//                 style:
-//                     TextStyle(fontFamily: 'Pacifico', color: Colors.blueAccent),
-//               ),
-//               const SizedBox(
-//                 height: 10,
-//               ),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: " اسم العميل ",
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     //  fillColor: Colors.white,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       //   borderSide: BorderSide.none,
-//                       borderSide: BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(
-//                 height: 10,
-//               ),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: " الإيميل  ",
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     //  fillColor: Colors.white,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       //   borderSide: BorderSide.none,
-//                       borderSide: BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               //
-
-//               const SizedBox(height: 16),
-//               Text(
-//                 'معلومات المكتب',
-//                 style:
-//                     TextStyle(fontFamily: 'Pacifico', color: Colors.blueAccent),
-//               ),
-//               const SizedBox(
-//                 height: 10,
-//               ),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: " إسم المكتب ",
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     //  fillColor: Colors.white,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       //   borderSide: BorderSide.none,
-//                       borderSide: BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(
-//                 height: 10,
-//               ),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: " حساب المكتب  ",
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     //  fillColor: Colors.white,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       //   borderSide: BorderSide.none,
-//                       borderSide: BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 16),
-//               Text(
-//                 'معلومات العقار',
-//                 style:
-//                     TextStyle(fontFamily: 'Pacifico', color: Colors.blueAccent),
-//               ),
-//               const SizedBox(
-//                 height: 10,
-//               ),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: " إسم العقار ",
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     //  fillColor: Colors.white,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       //   borderSide: BorderSide.none,
-//                       borderSide: BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(
-//                 height: 10,
-//               ),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: " الموقع  ",
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     //  fillColor: Colors.white,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       //   borderSide: BorderSide.none,
-//                       borderSide: BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 16),
-//               const Text(
-//                 'سبب الشكوى',
-//                 style: TextStyle(
-//                     fontFamily: 'Pacifico',
-//                     color: Color.fromARGB(255, 83, 54, 155)),
-//               ),
-//               const SizedBox(height: 16),
-//               DropdownButtonFormField<String>(
-//                 value: selectedReason,
-//                 items: reasons.map((reason) {
-//                   return DropdownMenuItem(
-//                     value: reason,
-//                     child: Text(reason),
-//                   );
-//                 }).toList(),
-//                 onChanged: (value) {
-//                   setState(() {
-//                     selectedReason = value;
-//                   });
-//                 },
-//                 decoration: const InputDecoration(
-//                   border: OutlineInputBorder(),
-//                   hintText: 'اختر سبب الشكوى',
-//                 ),
-//               ),
-//               const SizedBox(height: 16),
-//               Text(
-//                 'وصف الشكوى ',
-//                 style:
-//                     TextStyle(fontFamily: 'Pacifico', color: Colors.blueAccent),
-//               ),
-//               const SizedBox(height: 16),
-//               TextField(
-//                 controller: descriptionController,
-//                 maxLines: 4,
-//                 decoration: const InputDecoration(
-//                   border: OutlineInputBorder(),
-//                   hintText: 'اكتب تفاصيل الشكوى هنا...',
-//                 ),
-//               ),
-//               const SizedBox(height: 24),
-//               Row(
-//                 children: [
-//                   Expanded(
-//                     child: ElevatedButton(
-//                       onPressed: () {
-//                         // تنفيذ إلغاء الشكوى
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                           const SnackBar(
-//                               content: Text(
-//                             'تم إلغاء الشكوى',
-//                             style: TextStyle(
-//                                 color: Colors.white, fontFamily: 'Pacifico'),
-//                           )),
-//                         );
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: Colors.grey[400],
-//                         padding: const EdgeInsets.symmetric(vertical: 16),
-//                       ),
-//                       child: const Text(
-//                         'إلغاء الشكوى',
-//                         style: TextStyle(
-//                             color: Colors.white, fontFamily: 'Pacifico'),
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(width: 12),
-//                   Expanded(
-//                     child: ElevatedButton(
-//                       onPressed: () {
-//                         // تنفيذ حظر المكتب
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                           const SnackBar(
-//                               content: Text(
-//                             'تم حظر المكتب',
-//                             style: TextStyle(
-//                                 color: Colors.white, fontFamily: 'Pacifico'),
-//                           )),
-//                         );
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: Colors.red,
-//                         padding: const EdgeInsets.symmetric(vertical: 16),
-//                       ),
-//                       child: const Text(
-//                         'حظر المكتب',
-//                         style: TextStyle(
-//                             color: Colors.white, fontFamily: 'Pacifico'),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 16),
-//               Expanded(
-//                 child: ElevatedButton(
-//                   onPressed: () {
-//                     // تنفيذ إلغاء الشكوى
-//                     ScaffoldMessenger.of(context).showSnackBar(
-//                       const SnackBar(
-//                           content: Text(
-//                         'تم إرسال الشكوى',
-//                         style: TextStyle(
-//                             color: Colors.white, fontFamily: 'Pacifico'),
-//                       )),
-//                     );
-//                   },
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: const Color.fromARGB(255, 104, 115, 214),
-//                     padding: const EdgeInsets.symmetric(vertical: 16),
-//                   ),
-//                   child: const Text(
-//                     'إرسال الشكوى',
-//                     style:
-//                         TextStyle(color: Colors.white, fontFamily: 'Pacifico'),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 24),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class SectionHeader extends StatelessWidget {
-//   final String title;
-
-//   const SectionHeader({super.key, required this.title});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Text(title,
-//         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
-//   }
-// }
-
-// class InfoCard extends StatelessWidget {
-//   final String label;
-//   final String value;
-
-//   const InfoCard({super.key, required this.label, required this.value});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.symmetric(vertical: 4),
-//       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-//       decoration: BoxDecoration(
-//         border: Border.all(color: Colors.grey.shade300),
-//         borderRadius: BorderRadius.circular(8),
-//       ),
-//       child: Row(
-//         children: [
-//           Text('$label: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-//           Expanded(child: Text(value)),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-
-
-
-
+// // import 'dart:io' as io;
+// // import 'dart:typed_data';
+// // import 'package:flutter/foundation.dart';
 // // import 'package:flutter/material.dart';
-// // import 'package:google_fonts/google_fonts.dart';
+// // import 'package:image_picker/image_picker.dart';
+// // import 'package:property_system/client/components/custom_button.dart';
+// // import 'package:property_system/l10n/app_localizations.dart';
 
-// // void main() {
-// //   runApp(const ComplaintApp());
-// // }
-
-// // class ComplaintApp extends StatelessWidget {
-// //   const ComplaintApp({super.key});
-
+// // class PushComplaintPage extends StatefulWidget {
 // //   @override
-// //   Widget build(BuildContext context) {
-// //     return MaterialApp(
-// //       home: ComplaintPage(),
-// //       debugShowCheckedModeBanner: false,
-// //     );
-// //   }
+// //   _PushComplaintPageState createState() => _PushComplaintPageState();
 // // }
 
-// // class ComplaintPage extends StatefulWidget {
-// //   const ComplaintPage({super.key});
-
-// //   @override
-// //   State<ComplaintPage> createState() => _ComplaintPageState();
-// // }
-
-// // class _ComplaintPageState extends State<ComplaintPage> {
+// // class _PushComplaintPageState extends State<PushComplaintPage> {
 // //   String? selectedReason;
 // //   final TextEditingController descriptionController = TextEditingController();
 
-// //   final List<String> reasons = [
-// //     'تسرب مياه أو مشاكل في السباكة',
-// //     'الكهرباء لا تعمل بشكل جيد',
-// //     'التكييف أو التدفئة لا تعمل',
-// //     'الحشرات أو القوارض',
-// //     'الأثاث مكسور أو مفقود',
-// //     'أخرى',
-// //   ];
+ 
+
+// //   final ImagePicker _picker = ImagePicker();
+
+// //   // ✅ دعم الويب والموبايل
+// //   List<Uint8List> _webImages = [];
+// //   List<io.File> _mobileImages = [];
+
+
+// //   Future<void> _pickImages() async {
+// //     final List<XFile>? pickedFiles = await _picker.pickMultiImage();
+// //     if (pickedFiles != null && pickedFiles.isNotEmpty) {
+// //       for (var pickedFile in pickedFiles) {
+// //         if (kIsWeb) {
+// //           final bytes = await pickedFile.readAsBytes();
+// //           setState(() {
+// //             _webImages.add(bytes);
+// //           });
+// //         } else {
+// //           setState(() {
+// //             _mobileImages.add(io.File(pickedFile.path));
+// //           });
+// //         }
+// //       }
+// //     }
+// //   }
+
+// //   void _removeImage(int index, {bool isWeb = false}) {
+// //     setState(() {
+// //       if (isWeb) {
+// //         _webImages.removeAt(index);
+// //       } else {
+// //         _mobileImages.removeAt(index);
+// //       }
+// //     });
+// //   }
 
 // //   @override
 // //   Widget build(BuildContext context) {
+// //     final localizations = AppLocalizations.of(context)!;
+// //     final theme = Theme.of(context);
+
 // //     return Directionality(
-// //       textDirection: TextDirection.rtl, // دعم العربية
+// //       textDirection: TextDirection.rtl,
 // //       child: Scaffold(
 // //         appBar: AppBar(
+// //           shadowColor: Color.fromARGB(255, 121, 255, 224),
 // //           title: Text(
-// //             'تقديم شكوى',
-// //             style: GoogleFonts.cairo(
-// //               color: Colors.white,
-// //               fontSize: 20,
-// //               fontWeight: FontWeight.bold,
-// //             ),
+// //             localizations.translate('submit_complaint'),
+// //             style: const TextStyle(
+// //                 color: Colors.white, fontFamily: 'Pacifico', fontSize: 20),
 // //           ),
-// //           backgroundColor: const Color.fromARGB(255, 83, 54, 155),
+// //           backgroundColor: const Color.fromARGB(255, 121, 255, 224),
 // //           centerTitle: true,
+// //           elevation: 2,
 // //         ),
 // //         body: Padding(
 // //           padding: const EdgeInsets.all(16.0),
 // //           child: ListView(
 // //             children: [
-// //               sectionTitle('معلومات العميل'),
-// //               customTextField('اسم العميل'),
-// //               customTextField('الإيميل'),
-
-// //               sectionTitle('معلومات المكتب'),
-// //               customTextField('اسم المكتب'),
-// //               customTextField('حساب المكتب'),
-
-// //               sectionTitle('معلومات العقار'),
-// //               customTextField('اسم العقار'),
-// //               customTextField('الموقع'),
-
-// //               sectionTitle('سبب الشكوى'),
-// //               DropdownButtonFormField<String>(
-// //                 value: selectedReason,
-// //                 items: reasons.map((reason) {
-// //                   return DropdownMenuItem(
-// //                     value: reason,
-// //                     child: Text(reason, style: GoogleFonts.cairo()),
-// //                   );
-// //                 }).toList(),
-// //                 onChanged: (value) {
-// //                   setState(() {
-// //                     selectedReason = value;
-// //                   });
-// //                 },
+            
+// //               const SizedBox(height: 16),
+// //               Text(
+// //                 localizations.translate('complaint_reason'),
+// //                 style: const TextStyle(
+// //                     fontFamily: 'Pacifico',
+// //                     fontSize: 20,
+// //                     color: Color.fromARGB(255, 83, 54, 155)),
+// //               ),
+// //               const SizedBox(height: 24),
+// //             TextField(
+// //                 style: const TextStyle(color: Colors.white),
 // //                 decoration: InputDecoration(
-// //                   hintText: 'اختر سبب الشكوى',
-// //                   hintStyle: GoogleFonts.cairo(),
+// //                   hintText:'أدخل سبب الشكوى',
+// //                   hintStyle: const TextStyle(color: Colors.white),
+// //                   filled: true,
 // //                   border: OutlineInputBorder(
 // //                     borderRadius: BorderRadius.circular(12),
 // //                   ),
 // //                 ),
 // //               ),
 // //               const SizedBox(height: 16),
-
-// //               sectionTitle('وصف الشكوى'),
+// //               Text(
+// //                 localizations.translate('complaint_description'),
+// //                 style: const TextStyle(
+// //                     fontFamily: 'Pacifico', color: Colors.blueAccent),
+// //               ),
+// //               const SizedBox(height: 16),
 // //               TextField(
 // //                 controller: descriptionController,
 // //                 maxLines: 4,
-// //                 style: GoogleFonts.cairo(),
 // //                 decoration: InputDecoration(
-// //                   hintText: 'اكتب تفاصيل الشكوى هنا...',
-// //                   hintStyle: GoogleFonts.cairo(),
-// //                   border: OutlineInputBorder(
-// //                     borderRadius: BorderRadius.circular(12),
-// //                   ),
+// //                   border: const OutlineInputBorder(),
+// //                   hintText: localizations.translate('write_complaint_details'),
 // //                 ),
 // //               ),
-
 // //               const SizedBox(height: 24),
-// //               Row(
+
+// //               // ✅ عرض الوسائط المرفقة (ويب + موبايل)
+// //               Wrap(
+// //                 spacing: 12,
+// //                 runSpacing: 12,
 // //                 children: [
-// //                   Expanded(
-// //                     child: ElevatedButton(
-// //                       onPressed: () {
-// //                         ScaffoldMessenger.of(context).showSnackBar(
-// //                           const SnackBar(content: Text('تم إلغاء الشكوى')),
-// //                         );
-// //                       },
-// //                       style: ElevatedButton.styleFrom(
-// //                         backgroundColor: Colors.grey[400],
-// //                         padding: const EdgeInsets.symmetric(vertical: 16),
-// //                       ),
-// //                       child: Text('إلغاء الشكوى', style: GoogleFonts.cairo()),
+// //                   // صور الويب
+// //                   for (int i = 0; i < _webImages.length; i++)
+// //                     Stack(
+// //                       children: [
+// //                         ClipRRect(
+// //                           borderRadius: BorderRadius.circular(16),
+// //                           child: Image.memory(
+// //                             _webImages[i],
+// //                             height: 110,
+// //                             width: 110,
+// //                             fit: BoxFit.cover,
+// //                           ),
+// //                         ),
+// //                         Positioned(
+// //                           top: 4,
+// //                           right: 4,
+// //                           child: GestureDetector(
+// //                             onTap: () => _removeImage(i, isWeb: true),
+// //                             child: _removeButton(),
+// //                           ),
+// //                         ),
+// //                       ],
 // //                     ),
-// //                   ),
-// //                   const SizedBox(width: 12),
-// //                   Expanded(
-// //                     child: ElevatedButton(
-// //                       onPressed: () {
-// //                         ScaffoldMessenger.of(context).showSnackBar(
-// //                           const SnackBar(content: Text('تم حظر المكتب')),
-// //                         );
-// //                       },
-// //                       style: ElevatedButton.styleFrom(
-// //                         backgroundColor: Colors.red,
-// //                         padding: const EdgeInsets.symmetric(vertical: 16),
+// //                   // صور الموبايل
+// //                   for (int i = 0; i < _mobileImages.length; i++)
+// //                     Stack(
+// //                       children: [
+// //                         ClipRRect(
+// //                           borderRadius: BorderRadius.circular(16),
+// //                           child: Image.file(
+// //                             _mobileImages[i],
+// //                             height: 110,
+// //                             width: 110,
+// //                             fit: BoxFit.cover,
+// //                           ),
+// //                         ),
+// //                         Positioned(
+// //                           top: 4,
+// //                           right: 4,
+// //                           child: GestureDetector(
+// //                             onTap: () => _removeImage(i),
+// //                             child: _removeButton(),
+// //                           ),
+// //                         ),
+// //                       ],
+// //                     ),
+// //                   // زر إضافة الصور
+// //                   GestureDetector(
+// //                     onTap: _pickImages,
+// //                     child: Container(
+// //                       height: 110,
+// //                       width: 110,
+// //                       decoration: BoxDecoration(
+// //                         borderRadius: BorderRadius.circular(16),
+// //                         color: theme.colorScheme.primary.withOpacity(.1),
 // //                       ),
-// //                       child: Text('حظر المكتب', style: GoogleFonts.cairo()),
+// //                       child: const Center(
+// //                         child:
+// //                             Icon(Icons.add_photo_alternate_outlined, size: 32),
+// //                       ),
 // //                     ),
 // //                   ),
 // //                 ],
 // //               ),
+
+// //               const SizedBox(height: 24),
+
+// //               Row(
+// //                 children: [
+                
+// //                   const SizedBox(width: 16),
+// //                   Expanded(
+// //                     child: CustomButon(
+// //                       text: 'إرسال الشكوى',
+// //                       onTap: () {
+// //                         ScaffoldMessenger.of(context).showSnackBar(
+// //                           SnackBar(
+// //                             content: Text(
+// //                               'إرسال الشكوى',
+// //                               style: const TextStyle(
+// //                                   color: Colors.white, fontFamily: 'Pacifico'),
+// //                             ),
+// //                           ),
+// //                         );
+// //                       },
+// //                     ),
+// //                   ),
+// //                 ],
+// //               ),
+
+// //               const SizedBox(height: 24),
 // //             ],
 // //           ),
 // //         ),
@@ -491,656 +217,659 @@
 // //     );
 // //   }
 
-// //   // عناصر مكررة مساعدة
-
-// //   Widget sectionTitle(String title) {
-// //     return Padding(
-// //       padding: const EdgeInsets.symmetric(vertical: 12),
-// //       child: Text(
-// //         title,
-// //         style: GoogleFonts.cairo(
-// //           fontSize: 18,
-// //           fontWeight: FontWeight.bold,
-// //           color: const Color.fromARGB(255, 83, 54, 155),
-// //         ),
+// //   Widget _removeButton() {
+// //     return Container(
+// //       decoration: const BoxDecoration(
+// //         color: Colors.black45,
+// //         shape: BoxShape.circle,
 // //       ),
-// //     );
-// //   }
-
-// //   Widget customTextField(String hint) {
-// //     return Padding(
-// //       padding: const EdgeInsets.only(bottom: 12),
-// //       child: TextField(
-// //         style: GoogleFonts.cairo(),
-// //         decoration: InputDecoration(
-// //           hintText: hint,
-// //           hintStyle: GoogleFonts.cairo(),
-// //           filled: true,
-// //           fillColor: Colors.grey.shade100,
-// //           border: OutlineInputBorder(
-// //             borderRadius: BorderRadius.circular(12),
-// //             borderSide: const BorderSide(color: Colors.black),
-// //           ),
-// //         ),
+// //       padding: const EdgeInsets.all(4),
+// //       child: const Icon(
+// //         Icons.close,
+// //         size: 18,
+// //         color: Colors.white,
 // //       ),
 // //     );
 // //   }
 // // }
-
+// // /*
+// //   Expanded(
+// //                     child: GestureDetector(
+// //                       onTap: () {
+// //                         ScaffoldMessenger.of(context).showSnackBar(
+// //                           SnackBar(
+// //                             content: Text(
+// //                               localizations.translate(' إلغاء الشكوى'),
+// //                               style: const TextStyle(
+// //                                   color: Colors.white, fontFamily: 'Pacifico'),
+// //                             ),
+// //                           ),
+// //                         );
+// //                       },
+// //                       child: Container(
+// //                         decoration: BoxDecoration(
+// //                           color: Colors.grey,
+// //                           borderRadius: BorderRadius.circular(8),
+// //                         ),
+// //                         width: double.infinity,
+// //                         height: 60,
+// //                         child: Center(
+// //                           child: Text(
+// //                             ' إلغاء الشكوى',
+// //                             style: TextStyle(
+// //                               color: Colors.white,
+// //                             ),
+// //                           ),
+// //                         ),
+// //                       ),
+// //                     ),
+// //                   ),
+// // */ 
+// import 'dart:io' as io;
+// import 'dart:typed_data';
+// import 'package:flutter/foundation.dart';
 // import 'package:flutter/material.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:property_system/client/components/custom_button.dart';
 // import 'package:property_system/l10n/app_localizations.dart';
+// import 'package:property_system/client/services/complaint_service.dart';
+// import 'package:property_system/client/models/complaient/create_office_complainet_model.dart';
 
 // class PushComplaintPage extends StatefulWidget {
+//   final String officeId; // إضافة officeId كمعامل
+
+//   const PushComplaintPage({Key? key, required this.officeId}) : super(key: key);
+
 //   @override
 //   _PushComplaintPageState createState() => _PushComplaintPageState();
 // }
 
 // class _PushComplaintPageState extends State<PushComplaintPage> {
-//   String? selectedReason;
+//   final TextEditingController titleController = TextEditingController();
 //   final TextEditingController descriptionController = TextEditingController();
+//   final ImagePicker _picker = ImagePicker();
+//   final CreateOfficeComplainetModel _complaintService = CreateOfficeComplainetModel();
 
-//   final List<String> reasons = [
-//     'water_leakage_or_plumbing_issues',
-//     'electrical_issues',
-//     'ac_or_heating_issues',
-//     'pests_or_rodents',
-//     'broken_or_missing_furniture',
-//     'other',
-//   ];
+//   List<Uint8List> _webImages = [];
+//   List<io.File> _mobileImages = [];
+//   bool _isLoading = false;
+
+//   Future<void> _pickImages() async {
+//     final List<XFile>? pickedFiles = await _picker.pickMultiImage();
+//     if (pickedFiles != null && pickedFiles.isNotEmpty) {
+//       for (var pickedFile in pickedFiles) {
+//         if (kIsWeb) {
+//           final bytes = await pickedFile.readAsBytes();
+//           setState(() {
+//             _webImages.add(bytes);
+//           });
+//         } else {
+//           setState(() {
+//             _mobileImages.add(io.File(pickedFile.path));
+//           });
+//         }
+//       }
+//     }
+//   }
+
+//   void _removeImage(int index, {bool isWeb = false}) {
+//     setState(() {
+//       if (isWeb) {
+//         _webImages.removeAt(index);
+//       } else {
+//         _mobileImages.removeAt(index);
+//       }
+//     });
+//   }
+
+//   Future<void> _submitComplaint() async {
+//     // التحقق من الحقول المطلوبة
+//     if (titleController.text.isEmpty) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text('يرجى إدخال عنوان للشكوى'),
+//           backgroundColor: Colors.red,
+//         ),
+//       );
+//       return;
+//     }
+
+//     if (descriptionController.text.isEmpty) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text('يرجى إدخال محتوى الشكوى'),
+//           backgroundColor: Colors.red,
+//         ),
+//       );
+//       return;
+//     }
+
+//     setState(() {
+//       _isLoading = true;
+//     });
+
+//     try {
+//       // في التطبيق الحقيقي، ستحتاج لرفع الصور إلى الخادم أولاً والحصول على روابطها
+//       List<String> mediaUrls = [];
+//       // TODO: إضافة كود لرفع الصور والحصول على روابطها
+      
+//       // إنشاء نموذج الشكوى
+//       CreateOfficeComplainetModel complaint = CreateOfficeComplainetModel(
+//         officeId: widget.officeId,
+//         title: titleController.text,
+//         content: descriptionController.text,
+//         complaintMedia: mediaUrls,
+//       );
+
+//       // إرسال الشكوى
+//       final response = await _complaintService.createComplaint(complaint);
+      
+//       // نجاح الإرسال
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text('تم إرسال الشكوى بنجاح'),
+//           backgroundColor: Colors.green,
+//         ),
+//       );
+      
+//       // العودة للخلف بعد النجاح
+//       Navigator.pop(context);
+      
+//     } catch (e) {
+//       // معالجة الأخطاء
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text('فشل إرسال الشكوى: $e'),
+//           backgroundColor: Colors.red,
+//         ),
+//       );
+//     } finally {
+//       setState(() {
+//         _isLoading = false;
+//       });
+//     }
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
 //     final localizations = AppLocalizations.of(context)!;
+//     final theme = Theme.of(context);
 
 //     return Directionality(
 //       textDirection: TextDirection.rtl,
 //       child: Scaffold(
 //         appBar: AppBar(
+//           shadowColor: Color.fromARGB(255, 121, 255, 224),
 //           title: Text(
 //             localizations.translate('submit_complaint'),
 //             style: const TextStyle(
 //                 color: Colors.white, fontFamily: 'Pacifico', fontSize: 20),
 //           ),
-//           backgroundColor: const Color.fromARGB(255, 83, 54, 155),
+//           backgroundColor: const Color.fromARGB(255, 121, 255, 224),
 //           centerTitle: true,
-//           elevation: 0,
+//           elevation: 2,
 //         ),
-//         body: Padding(
-//           padding: const EdgeInsets.all(16.0),
-//           child: ListView(
-//             children: [
-//               Text(
-//                 localizations.translate('client_information'),
-//                 style: const TextStyle(
-//                     fontFamily: 'Pacifico', color: Colors.blueAccent),
-//               ),
-//               const SizedBox(height: 10),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: localizations.translate('client_name'),
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: const BorderSide(color: Colors.black, width: 1),
+//         body: _isLoading
+//             ? Center(child: CircularProgressIndicator())
+//             : Padding(
+//                 padding: const EdgeInsets.all(16.0),
+//                 child: ListView(
+//                   children: [
+//                     const SizedBox(height: 16),
+//                     Text(
+//                       localizations.translate('complaint_reason'),
+//                       style: const TextStyle(
+//                           fontFamily: 'Pacifico',
+//                           fontSize: 20,
+//                           color: Color.fromARGB(255, 83, 54, 155)),
 //                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 10),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: localizations.translate('email'),
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: const BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 16),
-//               Text(
-//                 localizations.translate('office_information'),
-//                 style: const TextStyle(
-//                     fontFamily: 'Pacifico', color: Colors.blueAccent),
-//               ),
-//               const SizedBox(height: 10),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: localizations.translate('office_name'),
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: const BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 10),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: localizations.translate('office_account'),
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: const BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 16),
-//               Text(
-//                 localizations.translate('property_information'),
-//                 style: const TextStyle(
-//                     fontFamily: 'Pacifico', color: Colors.blueAccent),
-//               ),
-//               const SizedBox(height: 10),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: localizations.translate('property_name'),
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: const BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 10),
-//               Expanded(
-//                 child: TextField(
-//                   style: const TextStyle(color: Colors.white),
-//                   decoration: InputDecoration(
-//                     hintText: localizations.translate('property_location'),
-//                     hintStyle: const TextStyle(color: Colors.white),
-//                     filled: true,
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: const BorderSide(color: Colors.black, width: 1),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 16),
-//               Text(
-//                 localizations.translate('complaint_reason'),
-//                 style: const TextStyle(
-//                     fontFamily: 'Pacifico',
-//                     color: Color.fromARGB(255, 83, 54, 155)),
-//               ),
-//               const SizedBox(height: 16),
-//               DropdownButtonFormField<String>(
-//                 value: selectedReason,
-//                 items: reasons.map((reason) {
-//                   return DropdownMenuItem(
-//                     value: reason,
-//                     child: Text(localizations.translate(reason)),
-//                   );
-//                 }).toList(),
-//                 onChanged: (value) {
-//                   setState(() {
-//                     selectedReason = value;
-//                   });
-//                 },
-//                 decoration: InputDecoration(
-//                   border: const OutlineInputBorder(),
-//                   hintText: localizations.translate('select_complaint_reason'),
-//                 ),
-//               ),
-//               const SizedBox(height: 16),
-//               Text(
-//                 localizations.translate('complaint_description'),
-//                 style: const TextStyle(
-//                     fontFamily: 'Pacifico', color: Colors.blueAccent),
-//               ),
-//               const SizedBox(height: 16),
-//               TextField(
-//                 controller: descriptionController,
-//                 maxLines: 4,
-//                 decoration: InputDecoration(
-//                   border: const OutlineInputBorder(),
-//                   hintText: localizations.translate('write_complaint_details'),
-//                 ),
-//               ),
-//               const SizedBox(height: 24),
-//               Row(
-//                 children: [
-//                   Expanded(
-//                     child: ElevatedButton(
-//                       onPressed: () {
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                           SnackBar(
-//                             content: Text(
-//                               localizations.translate('complaint_canceled'),
-//                               style: const TextStyle(
-//                                   color: Colors.white, fontFamily: 'Pacifico'),
-//                             ),
-//                           ),
-//                         );
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: Colors.grey[400],
-//                         padding: const EdgeInsets.symmetric(vertical: 16),
-//                       ),
-//                       child: Text(
-//                         localizations.translate('cancel_complaint'),
-//                         style: const TextStyle(
-//                             color: Colors.white, fontFamily: 'Pacifico'),
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(width: 12),
-//                   Expanded(
-//                     child: ElevatedButton(
-//                       onPressed: () {
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                           SnackBar(
-//                             content: Text(
-//                               localizations.translate('office_blocked'),
-//                               style: const TextStyle(
-//                                   color: Colors.white, fontFamily: 'Pacifico'),
-//                             ),
-//                           ),
-//                         );
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: Colors.red,
-//                         padding: const EdgeInsets.symmetric(vertical: 16),
-//                       ),
-//                       child: Text(
-//                         localizations.translate('block_office'),
-//                         style: const TextStyle(
-//                             color: Colors.white, fontFamily: 'Pacifico'),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 16),
-//               Expanded(
-//                 child: ElevatedButton(
-//                   onPressed: () {
-//                     ScaffoldMessenger.of(context).showSnackBar(
-//                       SnackBar(
-//                         content: Text(
-//                           localizations.translate('complaint_submitted'),
-//                           style: const TextStyle(
-//                               color: Colors.white, fontFamily: 'Pacifico'),
+//                     const SizedBox(height: 24),
+//                     TextField(
+//                       controller: titleController,
+//                       style: const TextStyle(color: Colors.black),
+//                       decoration: InputDecoration(
+//                         hintText: 'أدخل سبب الشكوى',
+//                         hintStyle: const TextStyle(color: Colors.grey),
+//                         filled: true,
+//                         fillColor: Colors.grey[200],
+//                         border: OutlineInputBorder(
+//                           borderRadius: BorderRadius.circular(12),
 //                         ),
 //                       ),
-//                     );
-//                   },
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: const Color.fromARGB(255, 104, 115, 214),
-//                     padding: const EdgeInsets.symmetric(vertical: 16),
-//                   ),
-//                   child: Text(
-//                     localizations.translate('submit_complaint'),
-//                     style: const TextStyle(
-//                         color: Colors.white, fontFamily: 'Pacifico'),
-//                   ),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     Text(
+//                       localizations.translate('complaint_description'),
+//                       style: const TextStyle(
+//                           fontFamily: 'Pacifico', color: Colors.blueAccent),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     TextField(
+//                       controller: descriptionController,
+//                       maxLines: 4,
+//                       decoration: InputDecoration(
+//                         border: const OutlineInputBorder(),
+//                         hintText: localizations.translate('write_complaint_details'),
+//                       ),
+//                     ),
+//                     const SizedBox(height: 24),
+
+//                     // عرض الوسائط المرفقة
+//                     Wrap(
+//                       spacing: 12,
+//                       runSpacing: 12,
+//                       children: [
+//                         // صور الويب
+//                         for (int i = 0; i < _webImages.length; i++)
+//                           Stack(
+//                             children: [
+//                               ClipRRect(
+//                                 borderRadius: BorderRadius.circular(16),
+//                                 child: Image.memory(
+//                                   _webImages[i],
+//                                   height: 110,
+//                                   width: 110,
+//                                   fit: BoxFit.cover,
+//                                 ),
+//                               ),
+//                               Positioned(
+//                                 top: 4,
+//                                 right: 4,
+//                                 child: GestureDetector(
+//                                   onTap: () => _removeImage(i, isWeb: true),
+//                                   child: _removeButton(),
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         // صور الموبايل
+//                         for (int i = 0; i < _mobileImages.length; i++)
+//                           Stack(
+//                             children: [
+//                               ClipRRect(
+//                                 borderRadius: BorderRadius.circular(16),
+//                                 child: Image.file(
+//                                   _mobileImages[i],
+//                                   height: 110,
+//                                   width: 110,
+//                                   fit: BoxFit.cover,
+//                                 ),
+//                               ),
+//                               Positioned(
+//                                 top: 4,
+//                                 right: 4,
+//                                 child: GestureDetector(
+//                                   onTap: () => _removeImage(i),
+//                                   child: _removeButton(),
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         // زر إضافة الصور
+//                         GestureDetector(
+//                           onTap: _pickImages,
+//                           child: Container(
+//                             height: 110,
+//                             width: 110,
+//                             decoration: BoxDecoration(
+//                               borderRadius: BorderRadius.circular(16),
+//                               color: theme.colorScheme.primary.withOpacity(.1),
+//                             ),
+//                             child: const Center(
+//                               child:
+//                                   Icon(Icons.add_photo_alternate_outlined, size: 32),
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+
+//                     const SizedBox(height: 24),
+
+//                     Row(
+//                       children: [
+//                         Expanded(
+//                           child: GestureDetector(
+//                             onTap: () {
+//                               Navigator.pop(context);
+//                             },
+//                             child: Container(
+//                               decoration: BoxDecoration(
+//                                 color: Colors.grey,
+//                                 borderRadius: BorderRadius.circular(8),
+//                               ),
+//                               height: 60,
+//                               child: Center(
+//                                 child: Text(
+//                                   'إلغاء الشكوى',
+//                                   style: TextStyle(
+//                                     color: Colors.white,
+//                                     fontWeight: FontWeight.bold,
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                         const SizedBox(width: 16),
+//                         Expanded(
+//                           child: CustomButon(
+//                             text: 'إرسال الشكوى',
+//                             onTap: _submitComplaint,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+
+//                     const SizedBox(height: 24),
+//                   ],
 //                 ),
 //               ),
-//               const SizedBox(height: 24),
-//             ],
-//           ),
-//         ),
 //       ),
 //     );
 //   }
-// }
 
-// class SectionHeader extends StatelessWidget {
-//   final String title;
-
-//   const SectionHeader({super.key, required this.title});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Text(
-//       title,
-//       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//     );
-//   }
-// }
-
-// class InfoCard extends StatelessWidget {
-//   final String label;
-//   final String value;
-
-//   const InfoCard({super.key, required this.label, required this.value});
-
-//   @override
-//   Widget build(BuildContext context) {
+//   Widget _removeButton() {
 //     return Container(
-//       margin: const EdgeInsets.symmetric(vertical: 4),
-//       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-//       decoration: BoxDecoration(
-//         border: Border.all(color: Colors.grey.shade300),
-//         borderRadius: BorderRadius.circular(8),
+//       decoration: const BoxDecoration(
+//         color: Colors.black45,
+//         shape: BoxShape.circle,
 //       ),
-//       child: Row(
-//         children: [
-//           Text('$label: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-//           Expanded(child: Text(value)),
-//         ],
+//       padding: const EdgeInsets.all(4),
+//       child: const Icon(
+//         Icons.close,
+//         size: 18,
+//         color: Colors.white,
 //       ),
 //     );
 //   }
 // }
+import 'dart:io' as io;
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:property_system/client/components/custom_button.dart';
+import 'package:property_system/client/models/complaient/create_office_complainet_model.dart';
+import 'package:property_system/client/services/complainet_office_service.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
 class PushComplaintPage extends StatefulWidget {
+  final String officeId;
+
+  const PushComplaintPage({Key? key, required this.officeId}) : super(key: key);
+
   @override
   _PushComplaintPageState createState() => _PushComplaintPageState();
 }
 
 class _PushComplaintPageState extends State<PushComplaintPage> {
-  String? selectedReason;
+  final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
+  final ComplaintService _complaintService = ComplaintService();
 
-  final List<String> reasons = [
-    'water_leakage_or_plumbing_issues',
-    'electrical_issues',
-    'ac_or_heating_issues',
-    'pests_or_rodents',
-    'broken_or_missing_furniture',
-    'other',
-  ];
+  List<Uint8List> _webImages = [];
+  List<io.File> _mobileImages = [];
+  bool _isLoading = false;
+
+  Future<void> _pickImages() async {
+    final List<XFile>? pickedFiles = await _picker.pickMultiImage();
+    if (pickedFiles != null && pickedFiles.isNotEmpty) {
+      for (var pickedFile in pickedFiles) {
+        if (kIsWeb) {
+          final bytes = await pickedFile.readAsBytes();
+          setState(() {
+            _webImages.add(bytes);
+          });
+        } else {
+          setState(() {
+            _mobileImages.add(io.File(pickedFile.path));
+          });
+        }
+      }
+    }
+  }
+
+  void _removeImage(int index, {bool isWeb = false}) {
+    setState(() {
+      if (isWeb) {
+        _webImages.removeAt(index);
+      } else {
+        _mobileImages.removeAt(index);
+      }
+    });
+  }
+
+  Future<void> _submitComplaint() async {
+    if (titleController.text.isEmpty) {
+      _showSnack('يرجى إدخال عنوان للشكوى', Colors.red);
+      return;
+    }
+
+    if (descriptionController.text.isEmpty) {
+      _showSnack('يرجى إدخال محتوى الشكوى', Colors.red);
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // TODO: رفع الصور للسيرفر أولاً ثم إضافة روابطها هنا
+      List<String> mediaUrls = [];
+
+      final complaint = CreateOfficeComplainetModel(
+        officeId: widget.officeId,
+        title: titleController.text,
+        content: descriptionController.text,
+        complaintMedia: mediaUrls,
+      );
+
+      await _complaintService.createComplaint(complaint);
+
+      _showSnack('تم إرسال الشكوى بنجاح', Colors.green);
+
+      Navigator.pop(context);
+    } catch (e) {
+      _showSnack('فشل إرسال الشكوى: $e', Colors.red);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _showSnack(String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: color),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
+          shadowColor: Color.fromARGB(255, 121, 255, 224),
           title: Text(
             localizations.translate('submit_complaint'),
             style: const TextStyle(
                 color: Colors.white, fontFamily: 'Pacifico', fontSize: 20),
           ),
-          backgroundColor: const Color.fromARGB(255, 83, 54, 155),
+          backgroundColor: const Color.fromARGB(255, 121, 255, 224),
           centerTitle: true,
-          elevation: 0,
+          elevation: 2,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView(
-            children: [
-              Text(
-                localizations.translate('client_information'),
-                style: const TextStyle(
-                    fontFamily: 'Pacifico', color: Colors.blueAccent),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: localizations.translate('client_name'),
-                  hintStyle: const TextStyle(color: Colors.white),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.black, width: 1),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: localizations.translate('email'),
-                  hintStyle: const TextStyle(color: Colors.white),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.black, width: 1),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                localizations.translate('office_information'),
-                style: const TextStyle(
-                    fontFamily: 'Pacifico', color: Colors.blueAccent),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: localizations.translate('office_name'),
-                  hintStyle: const TextStyle(color: Colors.white),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.black, width: 1),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: localizations.translate('office_account'),
-                  hintStyle: const TextStyle(color: Colors.white),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.black, width: 1),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                localizations.translate('property_information'),
-                style: const TextStyle(
-                    fontFamily: 'Pacifico', color: Colors.blueAccent),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: localizations.translate('property_name'),
-                  hintStyle: const TextStyle(color: Colors.white),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.black, width: 1),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: localizations.translate('property_location'),
-                  hintStyle: const TextStyle(color: Colors.white),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.black, width: 1),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                localizations.translate('complaint_reason'),
-                style: const TextStyle(
-                    fontFamily: 'Pacifico',
-                    color: Color.fromARGB(255, 83, 54, 155)),
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: selectedReason,
-                items: reasons.map((reason) {
-                  return DropdownMenuItem(
-                    value: reason,
-                    child: Text(localizations.translate(reason)),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedReason = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: localizations.translate('select_complaint_reason'),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                localizations.translate('complaint_description'),
-                style: const TextStyle(
-                    fontFamily: 'Pacifico', color: Colors.blueAccent),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: descriptionController,
-                maxLines: 4,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: localizations.translate('write_complaint_details'),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              localizations.translate('complaint_canceled'),
-                              style: const TextStyle(
-                                  color: Colors.white, fontFamily: 'Pacifico'),
+        body: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ListView(
+                  children: [
+                    const SizedBox(height: 16),
+                    Text(
+                      localizations.translate('complaint_reason'),
+                      style: const TextStyle(
+                          fontFamily: 'Pacifico',
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 83, 54, 155)),
+                    ),
+                    const SizedBox(height: 24),
+                    TextField(
+                      controller: titleController,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        hintText: 'أدخل سبب الشكوى',
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      localizations.translate('complaint_description'),
+                      style: const TextStyle(
+                          fontFamily: 'Pacifico', color: Colors.blueAccent),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: descriptionController,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        hintText: localizations
+                            .translate('write_complaint_details'),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: [
+                        for (int i = 0; i < _webImages.length; i++)
+                          Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.memory(
+                                  _webImages[i],
+                                  height: 110,
+                                  width: 110,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                top: 4,
+                                right: 4,
+                                child: GestureDetector(
+                                  onTap: () => _removeImage(i, isWeb: true),
+                                  child: _removeButton(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        for (int i = 0; i < _mobileImages.length; i++)
+                          Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.file(
+                                  _mobileImages[i],
+                                  height: 110,
+                                  width: 110,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                top: 4,
+                                right: 4,
+                                child: GestureDetector(
+                                  onTap: () => _removeImage(i),
+                                  child: _removeButton(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        GestureDetector(
+                          onTap: _pickImages,
+                          child: Container(
+                            height: 110,
+                            width: 110,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: theme.colorScheme.primary.withOpacity(.1),
+                            ),
+                            child: const Center(
+                              child: Icon(Icons.add_photo_alternate_outlined,
+                                  size: 32),
                             ),
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[400],
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      child: Text(
-                        localizations.translate('cancel_complaint'),
-                        style: const TextStyle(
-                            color: Colors.white, fontFamily: 'Pacifico'),
-                      ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              localizations.translate('office_blocked'),
-                              style: const TextStyle(
-                                  color: Colors.white, fontFamily: 'Pacifico'),
+
+                    const SizedBox(height: 24),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              height: 60,
+                              child: const Center(
+                                child: Text(
+                                  'إلغاء الشكوى',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      child: Text(
-                        localizations.translate('block_office'),
-                        style: const TextStyle(
-                            color: Colors.white, fontFamily: 'Pacifico'),
-                      ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: CustomButon(
+                            text: 'إرسال الشكوى',
+                            onTap: _submitComplaint,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        localizations.translate('complaint_submitted'),
-                        style: const TextStyle(
-                            color: Colors.white, fontFamily: 'Pacifico'),
-                      ),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 104, 115, 214),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: Text(
-                  localizations.translate('submit_complaint'),
-                  style: const TextStyle(
-                      color: Colors.white, fontFamily: 'Pacifico'),
+                  ],
                 ),
               ),
-              const SizedBox(height: 24),
-            ],
-          ),
-        ),
       ),
     );
   }
-}
 
-class SectionHeader extends StatelessWidget {
-  final String title;
-
-  const SectionHeader({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    );
-  }
-}
-
-class InfoCard extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const InfoCard({super.key, required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _removeButton() {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(8),
+      decoration: const BoxDecoration(
+        color: Colors.black45,
+        shape: BoxShape.circle,
       ),
-      child: Row(
-        children: [
-          Text('$label: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-          Expanded(child: Text(value)),
-        ],
+      padding: const EdgeInsets.all(4),
+      child: const Icon(
+        Icons.close,
+        size: 18,
+        color: Colors.white,
       ),
     );
   }

@@ -7,9 +7,12 @@ import 'package:property_system/client/screens/auth/register/complete_register_p
 import 'package:property_system/client/screens/main/more/client_properties/client_experid_for_rent_page_.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_for_buy_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/client_user_office_complaint_case_1.dart';
+import 'package:property_system/client/screens/main/more/complaint/client_user_property_complainet_case_2.dart';
 import 'package:property_system/client/screens/main/more/complaint/cloused_compailent_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/existing_compailent_page.dart';
-import 'package:property_system/client/screens/main/more/complaint/send_complaint_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/office_manager_user_office_complainet_case_3.dart';
+import 'package:property_system/client/screens/main/more/complaint/office_manager_user_property_complainet_case_4.dart';
 import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reservation_status.dart';
 import 'package:property_system/client/reservation%20_for_client/client_create_reservation_page.dart';
@@ -34,6 +37,7 @@ import 'package:property_system/office/reservation/office_reservation_page.dart'
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
 
@@ -65,16 +69,23 @@ class _MorePageState extends State<MorePage> {
             children: [
               Text(
                 localizations.translate('choose_language'),
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Pacifico',
+                    color: Color.fromARGB(255, 47, 88, 0)),
               ),
               const SizedBox(height: 20),
               /////////////////////////////////////////////////
+              ///
               ListTile(
                 leading: const Text('🇸🇦', style: TextStyle(fontSize: 24)),
                 title: Text(
                   localizations.translate('arabic'),
-                  style: const TextStyle(fontSize: 18),
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Pacifico',
+                      color: Color.fromARGB(255, 0, 85, 125)),
                 ),
                 onTap: () {
                   // تغيير اللغة إلى العربية
@@ -87,7 +98,10 @@ class _MorePageState extends State<MorePage> {
                 leading: const Text('🇺🇸', style: TextStyle(fontSize: 24)),
                 title: Text(
                   localizations.translate('english'),
-                  style: const TextStyle(fontSize: 18),
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Pacifico',
+                      color: Color.fromARGB(255, 0, 85, 125)),
                 ),
                 onTap: () {
                   // تغيير اللغة إلى الإنجليزية
@@ -110,8 +124,10 @@ class _MorePageState extends State<MorePage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100),
         child: AppBar(
+          elevation: 2,
+          shadowColor: const Color.fromARGB(255, 68, 219, 73),
           title: Row(
-            mainAxisSize: MainAxisSize.min,
+            // mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -152,12 +168,102 @@ class _MorePageState extends State<MorePage> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
+            Text('Complaint'),
             buildMenuButton(
               icon: Icons.person,
-              label: localizations.translate('profile'),
+              label: 'شكاوى العميل',
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const ClientProfile();
+                  return ComplaintPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.person,
+              label: '  ClientUserOfficeComplaintCase1',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientUserOfficeComplaintCase1(
+                    complaint: {},
+                    title: '',
+                    contained: '',
+                    date: '',
+                    name: '',
+                    phone: '',
+                    post: '',
+                  );
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.person,
+              label: '  ClientUserPropertyComplainetCase2',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientUserPropertyComplainetCase2(
+                    complaint: {},
+                    title: '',
+                    contained: '',
+                    date: '',
+                    name: '',
+                    phone: '',
+                    post: '',
+                  );
+                }));
+              },
+            ),
+              buildMenuButton(
+              icon: Icons.person,
+              label: '  OfficeManagerUserOfficeComplainetCase3',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OfficeManagerUserOfficeComplainetCase3(
+                    complaint: {},
+                    title: '',
+                    contained: '',
+                    date: '',
+                    name: '',
+                    phone: '',
+                    phoneClient: '',
+                  );
+                }));
+              },
+            ),
+              buildMenuButton(
+              icon: Icons.person,
+              label: '  OfficeManagerUserPropertyComplainetCase4',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OfficeManagerUserPropertyComplainetCase4(
+                    complaint: {},
+                    title: '',
+                    contained: '',
+                    date: '',
+                    name: '',
+                    phone: '',
+                    clientEmail: '',
+                  );
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.person,
+              label: 'ارسال الشكوى',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PushComplaintPage(officeId: '',);
+                }));
+              },
+            ),
+            SizedBox(
+              height: 100,
+            ),
+            buildMenuButton(
+              icon: Icons.person,
+              label: 'ملف شخصي',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ClientProfile();
                 }));
               },
             ),
@@ -213,18 +319,19 @@ class _MorePageState extends State<MorePage> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.notifications, color: Colors.blue),
-                    const SizedBox(width: 12),
+                    const Icon(Icons.notifications, color: Colors.green),
+                    const SizedBox(width: 24),
                     Text(
                       localizations.translate('notifications'),
                       style: const TextStyle(
                         fontSize: 16,
+                        color: Color.fromARGB(255, 42, 71, 95),
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Pacifico',
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      padding: const EdgeInsets.symmetric(horizontal: 44),
                       child: Center(
                           child: Switch(
                         value: isOn,
@@ -299,8 +406,8 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return BlockPage(
-                    blockReason: '',
-                    blockDate: '',
+                    blockReason: 'كلام غير أخلاقي',
+                    blockDate: '8 / 12 / 2024',
                   );
                 }));
               },
@@ -348,33 +455,10 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('OneComplaintPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return OneComplaintPage(
-                    complaintName: '',
-                    submissionDate: '',
-                    complaintReason: '',
-                    complaintStatus: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
               label: localizations.translate('PushComplaintPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PushComplaintPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('SendComplaintPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SendComplaintPage();
+                  return PushComplaintPage(officeId: '',);
                 }));
               },
             ),
@@ -446,8 +530,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.book,
-              label:
-                  localizations.translate('ClientReservationPage'),
+              label: localizations.translate('ClientReservationPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ClientReservationPage();
@@ -463,7 +546,6 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
-
             const SizedBox(
               height: 40,
             ),
@@ -586,12 +668,13 @@ class _MorePageState extends State<MorePage> {
         ),
         child: Row(
           children: [
-            Icon(icon, color: Colors.blue),
-            const SizedBox(width: 12),
+            Icon(icon, color: Colors.green),
+            const SizedBox(width: 24),
             Text(
               label,
               style: const TextStyle(
                 fontSize: 16,
+                color: Color.fromARGB(255, 42, 71, 95),
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Pacifico',
               ),
