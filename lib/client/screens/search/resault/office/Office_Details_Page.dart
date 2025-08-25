@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:property_system/client/components/custom_button.dart';
 import 'package:property_system/client/components/custom_buttons/build_stars.dart';
 import 'package:property_system/client/models/office_details_model.dart';
 import 'package:property_system/client/screens/search/comments/Add_Comment_And_Rating_Page.dart';
@@ -12,12 +13,10 @@ class OfficeDetailsPage extends StatefulWidget {
   const OfficeDetailsPage({super.key, required this.officeId});
 
   @override
-  State<OfficeDetailsPage> createState() =>
-      _OfficeDetailsPageState();
+  State<OfficeDetailsPage> createState() => _OfficeDetailsPageState();
 }
 
-class _OfficeDetailsPageState
-    extends State<OfficeDetailsPage> {
+class _OfficeDetailsPageState extends State<OfficeDetailsPage> {
   PagesState pageState = PagesState.loading;
   OfficeDetailsModel? officeDetailsModel;
 
@@ -45,7 +44,10 @@ class _OfficeDetailsPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('معلومات المكتب'),
+        title: const Text(
+          'معلومات المكتب',
+          style: TextStyle(color: Colors.white, fontFamily: 'Pacifico'),
+        ),
         actions: [
           if (pageState == PagesState.success)
             IconButton(
@@ -122,7 +124,8 @@ class _OfficeDetailsPageState
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF304266),
+              fontFamily: 'Pacifoco',
+              color: Color.fromARGB(255, 8, 164, 182),
             ),
             textAlign: TextAlign.center,
           ),
@@ -130,7 +133,10 @@ class _OfficeDetailsPageState
           RatingStarsWidget(rating: officeDetailsModel!.ratings ?? 0),
           const SizedBox(height: 16),
           _buildInfoCard(
-              Icons.web, 'البريد الإلكتروني', officeDetailsModel!.officeEmail),
+            Icons.web,
+            'البريد الإلكتروني',
+            officeDetailsModel!.officeEmail,
+          ),
           _buildInfoCard(
               Icons.phone, 'رقم الهاتف', officeDetailsModel!.officePhone),
           _buildInfoCard(Icons.description, 'رقم الرخصة',
@@ -150,33 +156,39 @@ class _OfficeDetailsPageState
             icon: const Icon(Icons.image),
             label: const Text('عرض صورة الترخيص'),
           ),
-          const SizedBox(height: 20),
-          // الزر الجديد - إضافة تقييم
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AddCommentAndRatingPage(officeId: widget.officeId,),
-                ),
-              );
-            },
-            icon: const Icon(Icons.rate_review),
-            label: const Text('إضافة تعليق وتقييم'),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: CustomButon(
+              text: 'إضافة تعليق وتقييم',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AddCommentAndRatingPage(
+                      officeId: widget.officeId,
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
           const SizedBox(height: 10),
-          // الزر الجديد - عرض كل التعليقات
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => CommentsPage(officeId: officeDetailsModel!.id,),
-                ),
-              );
-            },
-            icon: const Icon(Icons.comment),
-            label: const Text('عرض كل التعليقات'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: CustomButon(
+              text: 'عرض كل التعليقات',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CommentsPage(
+                      officeId: officeDetailsModel!.id,
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -188,9 +200,16 @@ class _OfficeDetailsPageState
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        leading: Icon(icon, color: Colors.blueAccent),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
+        leading: Icon(icon, color: Colors.green),
+        title: Text(title,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico,',
+                color: Color.fromARGB(255, 64, 41, 195))),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(color: Colors.grey),
+        ),
       ),
     );
   }

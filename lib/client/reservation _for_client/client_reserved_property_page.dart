@@ -25,7 +25,8 @@ class _ClientReservedPropertyDetailsPageState
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          elevation: 0,
+          shadowColor: Colors.green,
+          elevation: 2,
           backgroundColor: Colors.white,
           centerTitle: true,
           title: const Text(
@@ -34,7 +35,7 @@ class _ClientReservedPropertyDetailsPageState
               fontSize: 20,
               fontWeight: FontWeight.bold,
               fontFamily: 'Pacifico',
-              color: Color.fromARGB(255, 48, 66, 102),
+              color: Color.fromARGB(255, 29, 188, 132),
             ),
           ),
         ),
@@ -56,12 +57,18 @@ class _ClientReservedPropertyDetailsPageState
               children: [
                 Text('${property.price} \$',
                     style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold)),
+                        fontFamily: 'Pacifico',
+                        color: Color.fromARGB(255, 5, 20, 118),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
                 const Spacer(),
-                const Icon(Icons.location_pin, color: Colors.blue),
+                const Icon(Icons.location_pin, color: Colors.grey),
                 const SizedBox(width: 4),
-                Text(property.location.city,
-                    style: const TextStyle(fontFamily: 'Pacifico')),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Text(property.location.city,
+                      style: const TextStyle(fontFamily: 'Pacifico',color: Colors.lightBlue)),
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -89,53 +96,113 @@ class _ClientReservedPropertyDetailsPageState
                 },
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
 
             // وصف العقار
             const Text('الوصف',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
+                    color: Color.fromARGB(255, 29, 188, 132),
                     fontFamily: 'Pacifico')),
             const SizedBox(height: 8),
             Text(property.description,
                 textAlign: TextAlign.right,
-                style: const TextStyle(height: 1.6)),
-            const SizedBox(height: 24),
+                style: const TextStyle(
+                    height: 1.6,
+                    color: Colors.lightBlue,
+                    fontFamily: 'Pacifico')),
+            const SizedBox(height: 40),
 
             // معلومات العقار
             const Text('معلومات العقار',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
+                    color: Color.fromARGB(255, 29, 188, 132),
                     fontFamily: 'Pacifico')),
             const SizedBox(height: 8),
             Card(
+              color: const Color.fromARGB(255, 189, 228, 255),
+              elevation: 1,
+              shadowColor: Colors.green,
               child: Column(
                 children: [
                   ListTile(
-                      leading: const Icon(Icons.numbers),
-                      title: const Text('رقم العقار'),
-                      subtitle: Text(property.propertyNumber)),
+                      leading: const Icon(
+                        Icons.numbers,
+                        color: Color.fromARGB(255, 16, 147, 105),
+                      ),
+                      title: const Text(
+                        'رقم العقار',
+                        style: TextStyle(
+                            fontFamily: 'Pacifico', color: Colors.blue),
+                      ),
+                      subtitle: Text(
+                        property.propertyNumber,
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Pacifico'),
+                      )),
                   ListTile(
-                      leading: const Icon(Icons.category),
-                      title: const Text('نوع العقار'),
-                      subtitle: Text(property.propertyType.name)),
+                      leading: const Icon(
+                        Icons.category,
+                        color: Color.fromARGB(255, 16, 147, 105),
+                      ),
+                      title: const Text(
+                        'نوع العقار',
+                        style: TextStyle(
+                            fontFamily: 'Pacifico', color: Colors.blue),
+                      ),
+                      subtitle: Text(
+                        property.propertyType.name,
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Pacifico'),
+                      )),
                   ListTile(
-                      leading: const Icon(Icons.swap_horiz),
-                      title: const Text('نوع العملية'),
-                      subtitle: Text(property.typeOperation)),
+                      leading: const Icon(
+                        Icons.swap_horiz,
+                        color: Color.fromARGB(255, 16, 147, 105),
+                      ),
+                      title: const Text(
+                        'نوع العملية',
+                        style: TextStyle(
+                            fontFamily: 'Pacifico', color: Colors.blue),
+                      ),
+                      subtitle: Text(
+                        property.typeOperation,
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Pacifico'),
+                      )),
                   ListTile(
-                      leading: const Icon(Icons.straighten),
-                      title: const Text('المساحة'),
-                      subtitle: Text('${property.space} م²')),
+                      leading: const Icon(
+                        Icons.space_dashboard,
+                        color: Color.fromARGB(255, 16, 147, 105),
+                      ),
+                      title: const Text(
+                        'المساحة',
+                        style: TextStyle(
+                            fontFamily: 'Pacifico', color: Colors.blue),
+                      ),
+                      subtitle: Text(
+                        '${property.space} م²',
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Pacifico'),
+                      )),
                   ListTile(
-                    leading: const Icon(Icons.date_range),
-                    title: const Text('تاريخ النشر'),
-                    subtitle:
-                        Text('${property.publishDate.toLocal()}'.split(' ')[0]),
+                    leading: const Icon(
+                      Icons.date_range,
+                      color: Color.fromARGB(255, 16, 147, 105),
+                    ),
+                    title: const Text(
+                      'تاريخ النشر',
+                      style:
+                          TextStyle(fontFamily: 'Pacifico', color: Colors.blue),
+                    ),
+                    subtitle: Text(
+                      '${property.publishDate.toLocal()}'.split(' ')[0],
+                      style: TextStyle(
+                          color: Colors.white, fontFamily: 'Pacifico'),
+                    ),
                   ),
                 ],
               ),
@@ -146,55 +213,122 @@ class _ClientReservedPropertyDetailsPageState
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
+                    color: Color.fromARGB(255, 29, 188, 132),
                     fontFamily: 'Pacifico')),
-            const SizedBox(height: 8),
+            const SizedBox(height: 30),
 
             // تفاصيل الحجز مع null-safety
             if (reservation != null)
               Card(
+                color: const Color.fromARGB(255, 189, 228, 255),
+                elevation: 1,
+                shadowColor: Colors.green,
                 child: Column(
                   children: [
                     ListTile(
-                        leading: const Icon(Icons.date_range),
-                        title: const Text('تاريخ الحجز'),
-                        subtitle: Text(reservation.reservation_date)),
+                        leading: const Icon(
+                          Icons.date_range,
+                          color: Color.fromARGB(255, 16, 147, 105),
+                        ),
+                        title: const Text(
+                          'تاريخ الحجز',
+                          style: TextStyle(
+                              color: Colors.blue, fontFamily: 'Pacifico'),
+                        ),
+                        subtitle: Text(
+                          reservation.reservation_date,
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: 'Pacifico'),
+                        )),
                     ListTile(
-                        leading: const Icon(Icons.attach_money),
-                        title: const Text('المبلغ المدفوع'),
-                        subtitle: Text('${reservation.amount_paid} \$')),
+                        leading: const Icon(
+                          Icons.attach_money,
+                          color: Color.fromARGB(255, 16, 147, 105),
+                        ),
+                        title: const Text(
+                          'المبلغ المدفوع',
+                          style: TextStyle(
+                              color: Colors.blue, fontFamily: 'Pacifico'),
+                        ),
+                        subtitle: Text(
+                          '${reservation.amount_paid} \$',
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: 'Pacifico'),
+                        )),
                     ListTile(
-                        leading: const Icon(Icons.verified),
-                        title: const Text('حالة الحجز'),
-                        subtitle: Text(reservation.reservation_status
-                            ? 'مؤكد'
-                            : 'قيد الانتظار')),
+                        leading: const Icon(
+                          Icons.verified,
+                          color: Color.fromARGB(255, 16, 147, 105),
+                        ),
+                        title: const Text(
+                          'حالة الحجز',
+                          style: TextStyle(
+                              color: Colors.blue, fontFamily: 'Pacifico'),
+                        ),
+                        subtitle: Text(
+                          reservation.reservation_status
+                              ? 'مؤكد'
+                              : 'قيد الانتظار',
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: 'Pacifico'),
+                        )),
                     ListTile(
-                        leading: const Icon(Icons.timer_off),
-                        title: const Text('تاريخ الانتهاء'),
-                        subtitle: Text(reservation.expires_at)),
+                        leading: const Icon(
+                          Icons.timer_off,
+                          color: Color.fromARGB(255, 16, 147, 105),
+                        ),
+                        title: const Text(
+                          'تاريخ الانتهاء',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 16, 147, 105),
+                              fontFamily: 'Pacifico'),
+                        ),
+                        subtitle: Text(
+                          reservation.expires_at,
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: 'Pacifico'),
+                        )),
                   ],
                 ),
               )
             else
-              const Text('لا يوجد حجز مسجل لهذا العقار'),
+              const Text(
+                'لا يوجد حجز مسجل لهذا العقار',
+                style: TextStyle(fontFamily: 'Pacifico'),
+              ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             const Text('خصائص العقار',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
+                    color: Color.fromARGB(255, 16, 147, 105),
                     fontFamily: 'Pacifico')),
             const SizedBox(height: 8),
             if (property.propertyAttributes.isNotEmpty)
               Card(
+                color: const Color.fromARGB(255, 189, 228, 255),
+                elevation: 1,
+                shadowColor: Colors.green,
                 child: Column(
                   children: property.propertyAttributes
                       .map((attr) => ListTile(
-                            leading: const Icon(Icons.check_circle_outline),
-                            title: Text(attr.attribute.name),
-                            subtitle: Text(attr.value.toString()),
+                            leading: const Icon(
+                              Icons.check_circle_outline,
+                              color: Color.fromARGB(255, 16, 147, 105),
+                            ),
+                            title: Text(
+                              attr.attribute.name,
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontFamily: 'Pacifico',
+                              ),
+                            ),
+                            subtitle: Text(
+                              attr.value.toString(),
+                              style: TextStyle(
+                                  color: Colors.white, fontFamily: 'Pacifico'),
+                            ),
                           ))
                       .toList(),
                 ),
@@ -208,6 +342,7 @@ class _ClientReservedPropertyDetailsPageState
 
         // زر ينقل لصفحة المكتب الذي نشر العقار
         floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: const Color.fromARGB(255, 4, 70, 125),
           onPressed: () {
             Navigator.push(
               context,
@@ -222,14 +357,15 @@ class _ClientReservedPropertyDetailsPageState
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
                     property.office.officePhoto!.url,
+                    color: Colors.white,
                     width: 40,
                     height: 40,
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => const Icon(Icons.business),
                   ),
                 )
-              : const Icon(Icons.business),
-          label: Text(property.office.officeName),
+              : const Icon(Icons.business,color: Colors.white,),
+          label: Text(property.office.officeName,style: TextStyle(color: Colors.white,fontFamily: 'Pacifico'),),
         ),
 
         // شريط أزرار أسفل الشاشة
