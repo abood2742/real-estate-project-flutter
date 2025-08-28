@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:property_system/client/components/custom_button.dart';
 import 'package:property_system/client/components/custom_buttons/build_stars.dart';
 import 'package:property_system/client/models/office_details_model.dart';
+import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/search/comments/Comments_Page.dart';
 import 'package:property_system/client/services/Comment_And_Rating_service_done.dart';
 import 'package:property_system/client/services/favorite_service_done.dart';
@@ -250,6 +251,28 @@ class _OfficeDetailsPageState extends State<OfficeDetailsPage> {
                 );
               },
             ),
+          ),
+
+
+           const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: CustomButton(
+              text: ' ارسال شكوى ',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PushComplaintPage(
+                      officeId: officeDetailsModel!.id,
+                    ),
+                  ),
+                );
+              },
+            ),
+
+
+            
           ),
         ],
       ),

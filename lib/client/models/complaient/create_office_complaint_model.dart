@@ -2,13 +2,16 @@ class CreateOfficeComplaintModel {
   final String officeId;
   final String title;
   final String content;
-  final List<String> complaintMedia;
+  //final List<String> complaintMedia;
+
+
+
 
   CreateOfficeComplaintModel({
     required this.officeId,
     required this.title,
     required this.content,
-    required this.complaintMedia,
+    //required this.complaintMedia,
   });
 
   Map<String, dynamic> toJson() {
@@ -16,7 +19,7 @@ class CreateOfficeComplaintModel {
       'officeId': officeId,
       'title': title,
       'content': content,
-      'complaint_media': complaintMedia,
+      //'complaint_media': complaintMedia,
     };
   }
   
