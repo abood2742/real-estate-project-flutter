@@ -152,7 +152,7 @@ class ComplaintService {
   }
 
   // إرسال الشكوى
-  Future<Response> createComplaint(CreateOfficeComplainetModel complaint) async {
+  Future<Response> createComplaint(CreateOfficeComplainetModel complaint, List<dynamic> images) async {
     try {
       final token = await AuthService.getAccessToken();
       final body = complaint.toJson();
@@ -173,7 +173,7 @@ class ComplaintService {
       return response;
     } on DioError catch (e) {
       throw _handleError(e);  
-      
+
     }
   }
 
