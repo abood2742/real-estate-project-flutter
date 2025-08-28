@@ -4,6 +4,7 @@ import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reservation_page.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
 import 'package:property_system/client/screens/auth/register/complete_register_page.dart';
+import 'package:property_system/client/screens/main/Blog/My_BLogs_Page.dart';
 import 'package:property_system/client/screens/main/Blog/create_blog.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_experid_for_rent_page_.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_for_buy_page.dart';
@@ -18,7 +19,6 @@ import 'package:property_system/client/screens/main/more/create_property/Create_
 import 'package:property_system/client/reservation%20_for_client/client_reservation_status.dart';
 import 'package:property_system/client/reservation%20_for_client/client_create_reservation_page.dart';
 import 'package:property_system/client/screens/main/more/property_offer/post_property1.dart';
-import 'package:property_system/client/screens/main/more/complaint/one_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/complaient_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_profile.dart';
@@ -30,7 +30,8 @@ import 'package:property_system/client/screens/waiting/salled_page.dart';
 import 'package:property_system/client/screens/waiting/the_properties_in_whaiting_page.dart';
 import 'package:property_system/client/screens/waiting/to_rent_page.dart';
 import 'package:property_system/client/screens/waiting/to_sall_page.dart';
-import 'package:property_system/client/services/user_profile.service.dart';
+import 'package:property_system/client/services/profile_service_done.dart';
+import 'package:property_system/client/services/token_service.dart';
 import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
 import 'package:property_system/notification/socket_service.dart';
@@ -47,12 +48,22 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
+  String? userRole;
   bool isOn = true;
 
   @override
   void initState() {
     super.initState();
+    _loadUserRole();
     _loadNotificationState();
+  }
+
+  void _loadUserRole() async {
+    final tempUserRole = await AuthService.getUserRole();
+
+    setState(() {
+      userRole = tempUserRole;
+    });
   }
 
   void _showLanguageSheet(BuildContext context) {
@@ -169,95 +180,13 @@ class _MorePageState extends State<MorePage> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            Text('Complaint'),
-            buildMenuButton(
-              icon: Icons.person,
-              label: 'شكاوى العميل',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ComplaintPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: '  ClientUserOfficeComplaintCase1',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientUserOfficeComplaintCase1(
-                    complaint: {},
-                    title: '',
-                    contained: '',
-                    date: '',
-                    name: '',
-                    phone: '',
-                    post: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: '  ClientUserPropertyComplainetCase2',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientUserPropertyComplainetCase2(
-                    complaint: {},
-                    title: '',
-                    contained: '',
-                    date: '',
-                    name: '',
-                    phone: '',
-                    post: '',
-                  );
-                }));
-              },
-            ),
-              buildMenuButton(
-              icon: Icons.person,
-              label: '  OfficeManagerUserOfficeComplainetCase3',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return OfficeManagerUserOfficeComplainetCase3(
-                    complaint: {},
-                    title: '',
-                    contained: '',
-                    date: '',
-                    name: '',
-                    phone: '',
-                    phoneClient: '',
-                  );
-                }));
-              },
-            ),
-              buildMenuButton(
-              icon: Icons.person,
-              label: '  OfficeManagerUserPropertyComplainetCase4',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return OfficeManagerUserPropertyComplainetCase4(
-                    complaint: {},
-                    title: '',
-                    contained: '',
-                    date: '',
-                    name: '',
-                    phone: '',
-                    clientEmail: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: 'ارسال الشكوى',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PushComplaintPage(officeId: '',);
-                }));
-              },
-            ),
-            SizedBox(
-              height: 100,
+            const Text(
+              "مشترك",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
             ),
             buildMenuButton(
               icon: Icons.person,
@@ -265,42 +194,6 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ClientProfile();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: localizations.translate('enter_your_data'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const CompleteRegisterPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.local_post_office,
-              label: localizations.translate('create_office'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const CreateOfficePage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.create,
-              label: localizations.translate('publish_property'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const CreateProperty();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.money,
-              label: localizations.translate('subscriptions'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const SubscriptionsOfficePage();
                 }));
               },
             ),
@@ -362,6 +255,267 @@ class _MorePageState extends State<MorePage> {
                 ),
               ),
             ),
+            ...[
+              if (userRole == 'officeManager') ...[
+                const SizedBox(
+                  height: 40,
+                ),
+                const Text(
+                  "مكتب",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Pacifico',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                buildMenuButton(
+                  icon: Icons.create,
+                  label: localizations.translate('publish_property'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const CreateProperty();
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.money,
+                  label: localizations.translate('subscriptions'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const SubscriptionsOfficePage();
+                    }));
+                  },
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                const Text(
+                  "reservation",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Pacifico',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                buildMenuButton(
+                  icon: Icons.report_problem,
+                  label: localizations.translate('OfficeReservationPage'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return OfficeReservationPage();
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.report_problem,
+                  label: localizations.translate('CreateBlogPage'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return CreateBlogPage();
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.report_problem,
+                  label: localizations.translate('MyBlogsPage'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return MyBlogsPage();
+                    }));
+                  },
+                ),
+              ]
+            ],
+            ...[
+              if (userRole == 'user') ...[
+                const SizedBox(
+                  height: 40,
+                ),
+                const Text(
+                  "عميل",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Pacifico',
+                  ),
+                ),
+                Text('Complaint'),
+                buildMenuButton(
+                  icon: Icons.person,
+                  label: 'شكاوى العميل',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ComplaintPage();
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.person,
+                  label: '  ClientUserOfficeComplaintCase1',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ClientUserOfficeComplaintCase1(
+                        complaint: {},
+                        title: '',
+                        contained: '',
+                        date: '',
+                        name: '',
+                        phone: '',
+                        post: '',
+                      );
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.person,
+                  label: '  ClientUserPropertyComplainetCase2',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ClientUserPropertyComplainetCase2(
+                        complaint: {},
+                        title: '',
+                        contained: '',
+                        date: '',
+                        name: '',
+                        phone: '',
+                        post: '',
+                      );
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.person,
+                  label: '  OfficeManagerUserOfficeComplainetCase3',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return OfficeManagerUserOfficeComplainetCase3(
+                        complaint: {},
+                        title: '',
+                        contained: '',
+                        date: '',
+                        name: '',
+                        phone: '',
+                        phoneClient: '',
+                      );
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.person,
+                  label: '  OfficeManagerUserPropertyComplainetCase4',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return OfficeManagerUserPropertyComplainetCase4(
+                        complaint: {},
+                        title: '',
+                        contained: '',
+                        date: '',
+                        name: '',
+                        phone: '',
+                        clientEmail: '',
+                      );
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.person,
+                  label: 'ارسال الشكوى',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PushComplaintPage(
+                        officeId: '',
+                      );
+                    }));
+                  },
+                ),
+                SizedBox(
+                  height: 100,
+                ),
+                buildMenuButton(
+                  icon: Icons.person,
+                  label: localizations.translate('enter_your_data'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const CompleteRegisterPage();
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.local_post_office,
+                  label: localizations.translate('create_office'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const CreateOfficePage();
+                    }));
+                  },
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                const Text(
+                  "reserved_properties",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Pacifico',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                buildMenuButton(
+                  icon: Icons.book,
+                  label: localizations.translate('ClientCreateReservationPage'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ClientCreateReservationPage(
+                        propertyId: '',
+                      );
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.book,
+                  label: localizations.translate('ClientReservationPage'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ClientReservationPage();
+                    }));
+                  },
+                ),
+                buildMenuButton(
+                  icon: Icons.report_problem,
+                  label: localizations.translate('ClentReservationStatus'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ClientReservationStatus();
+                    }));
+                  },
+                ),
+              ]
+            ],
             const SizedBox(
               height: 40,
             ),
@@ -459,7 +613,9 @@ class _MorePageState extends State<MorePage> {
               label: localizations.translate('PushComplaintPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PushComplaintPage(officeId: '',);
+                  return PushComplaintPage(
+                    officeId: '',
+                  );
                 }));
               },
             ),
@@ -501,49 +657,6 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ClientExpiredForRentPage();
-                }));
-              },
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            const Text(
-              "reserved_properties",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Pacifico',
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            buildMenuButton(
-              icon: Icons.book,
-              label: localizations.translate('ClientCreateReservationPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientCreateReservationPage(
-                    propertyId: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.book,
-              label: localizations.translate('ClientReservationPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientReservationPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ClentReservationStatus'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientReservationStatus();
                 }));
               },
             ),
@@ -621,39 +734,6 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ToSallPage();
-                }));
-              },
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            const Text(
-              "reservation",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Pacifico',
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('OfficeReservationPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return OfficeReservationPage();
-                }));
-              },
-            ),
-
-             buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('CreateBlogPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return CreateBlogPage();
                 }));
               },
             ),

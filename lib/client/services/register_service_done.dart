@@ -22,9 +22,10 @@ class RegisterService {
 
       if (response.statusCode == 201) {
         AuthModel authModel = AuthModel.fromJson(response.data);
-
         AuthService.saveAccessToken(authModel.accessToken);
         AuthService.saveAccessToken(authModel.refreshToken);
+        AuthService.saveUserRole('user');
+
 
         return authModel;
       } else {
@@ -128,6 +129,7 @@ class RegisterService {
       );
 
       if (response.statusCode == 201) {
+        print(response.data);
         return true;
       } else {
         return false;

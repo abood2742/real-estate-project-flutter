@@ -254,11 +254,11 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/screens/auth/register/start_register_page.dart';
-import 'package:property_system/client/services/login_service.dart';
+import 'package:property_system/client/services/login_service_done.dart';
 import 'package:property_system/client/screens/main/main_page.dart';
-import 'package:property_system/client/services/notification_service.dart';
+import 'package:property_system/client/services/notification_service_done.dart';
 import 'package:property_system/client/services/token_service.dart';
-import 'package:property_system/client/services/user_profile.service.dart';
+import 'package:property_system/client/services/profile_service_done.dart';
 import 'package:property_system/notification/socket_service.dart';
 
 class LoginPage extends StatefulWidget {

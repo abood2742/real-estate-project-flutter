@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/screens/auth/login/login_page.dart';
 import 'package:property_system/client/screens/auth/register/verification_code.dart';
-import 'package:property_system/client/services/register_service.dart';
+import 'package:property_system/client/services/register_service_done.dart';
 
 class RegisterPage extends StatefulWidget {
   //final bool type;

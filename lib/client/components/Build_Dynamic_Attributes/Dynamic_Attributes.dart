@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/client/components/Build_Dynamic_Attributes/Custom_Input.dart';
 import 'package:property_system/client/models/property_type_model.dart';
 
 class DynamicAttributes extends StatelessWidget {
@@ -26,19 +25,11 @@ class DynamicAttributes extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: attributes.map((attr) {
         switch (attr.type) {
-          case 'bool':
+          case 'boolean':
             return SwitchListTile(
               title: Text(attr.name),
               value: boolAttributes[attr.id] ?? false,
               activeColor: primaryColor,
-              onChanged: (val) => onChanged(attr.id, val),
-            );
-          case 'string':
-            return CustomInput(
-              label: attr.name,
-              controller:
-                  TextEditingController(text: valueAttributes[attr.id] ?? ''),
-              keyboardType: TextInputType.text,
               onChanged: (val) => onChanged(attr.id, val),
             );
           case 'number':

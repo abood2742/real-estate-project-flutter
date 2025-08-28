@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:property_system/office/components/list_tile_component.dart';
 
 class MyBlogsPage extends StatelessWidget {
   const MyBlogsPage({super.key});
@@ -16,9 +15,9 @@ class MyBlogsPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ListTileComponent(leading: '8/12/2024', title: 'فرصة عقار فريدة', subtitle: 'ريف دمشق', trailing: 'محمد علي',),
-          ListTileComponent(leading: '1/2/2014', title: ' عقار رخيص', subtitle: ' دمشق', trailing: ' قاسم عباس',),
-          ListTileComponent(leading: '8/2/2020', title: 'فرصة  ', subtitle: ' حمص', trailing: ' علي',),
+          // ListTileComponent(leading: '8/12/2024', title: 'فرصة عقار فريدة', subtitle: 'ريف دمشق', trailing: 'محمد علي',),
+          // ListTileComponent(leading: '1/2/2014', title: ' عقار رخيص', subtitle: ' دمشق', trailing: ' قاسم عباس',),
+          // ListTileComponent(leading: '8/2/2020', title: 'فرصة  ', subtitle: ' حمص', trailing: ' علي',),
         ],
       ),
     );

@@ -18,7 +18,6 @@ class PropertyPageModel {
   });
 
   factory PropertyPageModel.fromJson(Map<String, dynamic> json) {
-
     return PropertyPageModel(
       data: List<PropertyModel>.from(
         json["data"].map((x) => PropertyModel.fromJson(x)),
@@ -97,12 +96,12 @@ class PropertyModel {
       required this.isFavorite});
 
   factory PropertyModel.fromJson(Map<String, dynamic> json) {
-
     var convertedPhotos = <Photo>[];
     if (json['photos'] != null) {
       convertedPhotos =
           List<Photo>.from(json['photos'].map((x) => Photo.fromJson(x)));
     }
+
     var convertedPropertyAttributes = <PropertyAttribute>[];
     if (json['propertyAttributes'] != null) {
       convertedPropertyAttributes = List<PropertyAttribute>.from(
@@ -116,7 +115,7 @@ class PropertyModel {
         space: json["space"],
         price: json["price"],
         description: json["description"],
-        propertyType: PropertyType.fromJson(json["propertyType"]),
+        propertyType: PropertyType.fromJson(json["type"]),
         location: Location.fromJson(json["location"]),
         publishDate: DateTime.parse(json["publishDate"]),
         status: json["status"],
@@ -146,7 +145,6 @@ class LicenseDetails {
   });
 
   factory LicenseDetails.fromJson(Map<String, dynamic> json) {
-
     return LicenseDetails(
         id: json["id"],
         license: LicenseModel.fromJson(json["license"]),
@@ -199,7 +197,6 @@ class Location {
   });
 
   factory Location.fromJson(Map<String, dynamic> json) {
-
     return Location(
         id: json["id"],
         governorate: json["governorate"],

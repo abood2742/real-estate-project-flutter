@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/comment_and_rating_model.dart';
-import 'package:property_system/client/services/Comment_And_Rating_service.dart';
+import 'package:property_system/client/services/Comment_And_Rating_service_done.dart';
 import 'package:property_system/utils/Office_Page_State_enum.dart';
 
-
 class CommentsPage extends StatefulWidget {
-  final String officeId;
+  final bool type;
+  final String id;
 
-  const CommentsPage({super.key, required this.officeId});
+  const CommentsPage({super.key, required this.id, required this.type});
 
   @override
   State<CommentsPage> createState() => _CommentsPageState();
 }
 
 class _CommentsPageState extends State<CommentsPage> {
-  List<CommentAndRatingModel> commentAndRatingModel = [];
+  List<CommentModel> commentModel = [];
   PagesState pageState = PagesState.loading;
 
   @override
@@ -26,10 +26,16 @@ class _CommentsPageState extends State<CommentsPage> {
   Future<void> getComments() async {
     setState(() => pageState = PagesState.loading);
     try {
-      final result = await CommentAndRatingService()
-          .getCommentsOnOffice(officeId: widget.officeId);
+      var result;
+      if (widget.type) {
+        result = await CommentAndRatingService()
+            .getCommentsOnOffice(officeId: widget.id);
+      } else {
+        result = await CommentAndRatingService()
+            .getCommentsOnProperty(propertyId: widget.id);
+      }
 
-      commentAndRatingModel = result ?? [];
+      commentModel = result ?? [];
       setState(() => pageState = PagesState.success);
     } catch (e) {
       setState(() => pageState = PagesState.error);
@@ -75,7 +81,7 @@ class _CommentsPageState extends State<CommentsPage> {
         );
 
       case PagesState.success:
-        if (commentAndRatingModel.isEmpty) {
+        if (commentModel.isEmpty) {
           return const Center(
             child: Text(
               'لا توجد تقييمات حتى الآن.',
@@ -89,75 +95,63 @@ class _CommentsPageState extends State<CommentsPage> {
         }
 
         return ListView.separated(
-          itemCount: commentAndRatingModel.length,
+          itemCount: commentModel.length,
           separatorBuilder: (_, __) => const SizedBox(height: 12),
           itemBuilder: (context, index) {
-            final review = commentAndRatingModel[index];
+            final review = commentModel[index];
             return _buildReviewCard(review);
           },
         );
     }
   }
 
-  Widget _buildReviewCard(CommentAndRatingModel comment) {
-  return Card(
-    elevation: 3,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    child: Padding(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: const Color(0xFF3D60C6),
-                backgroundImage: comment.user.profilePhoto != null
-                    ? NetworkImage(comment.user.profilePhoto!.url) // رابط الصورة
-                    : const AssetImage('assets/images/default_avatar.png')
-                        as ImageProvider,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  '${comment.user.firstName} ${comment.user.lastName}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Pacifico',
-                    color: Color(0xFF3D60C6),
+  Widget _buildReviewCard(CommentModel comment) {
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: const Color(0xFF3D60C6),
+                  backgroundImage: comment.user.profilePhoto != null
+                      ? NetworkImage(
+                          comment.user.profilePhoto!.url) // رابط الصورة
+                      : const AssetImage('assets/images/default_avatar.png')
+                          as ImageProvider,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${comment.user.firstName} ${comment.user.lastName}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Pacifico',
+                      color: Color(0xFF3D60C6),
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                '${comment.date}',
-                style: const TextStyle(color: Colors.grey),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          _buildStarRow(comment.rate.rating),
-          const SizedBox(height: 6),
-          Text(
-            comment.content,
-            style: const TextStyle(fontSize: 16, color: Colors.black87),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-  
-
-  Widget _buildStarRow(int rating) {
-    return Row(
-      children: List.generate(
-        5,
-        (index) => Icon(
-          index < rating ? Icons.star : Icons.star_border,
-          color: Colors.amber,
-          size: 20,
+                Text(
+                  DateTime.parse(comment.date)
+                      .toLocal()
+                      .toIso8601String()
+                      .split('T')[0],
+                  style: const TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            const SizedBox(height: 6),
+            Text(
+              comment.content,
+              style: const TextStyle(fontSize: 16, color: Colors.black87),
+            ),
+          ],
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:property_system/client/screens/auth/register/complete_register_page.dart';
-import 'package:property_system/client/services/register_service.dart';
+import 'package:property_system/client/services/register_service_done.dart';
 
 class VerificationCode extends StatefulWidget {
   //final bool type;

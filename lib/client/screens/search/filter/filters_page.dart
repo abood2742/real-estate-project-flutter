@@ -4,11 +4,8 @@ import 'package:property_system/client/components/Build_Dynamic_Attributes/Custo
 import 'package:property_system/client/components/Build_Dynamic_Attributes/Custom_Card.dart';
 import 'package:property_system/client/components/Build_Dynamic_Attributes/Dynamic_Attributes.dart';
 import 'package:property_system/client/components/Build_Dynamic_Attributes/Types_Of_Property_Types.dart';
-import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/models/property_type_model.dart';
-import 'package:property_system/client/screens/main/Search_For_Properties_Page.dart';
-import 'package:property_system/client/services/propety_Type_service.dart';
-import 'package:property_system/client/services/search_service.dart';
+import 'package:property_system/client/services/propety_Type_service_done.dart';
 
 class PropertyFilterPage extends StatefulWidget {
   const PropertyFilterPage({super.key});
@@ -43,7 +40,12 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
   String? typeOperation;
 
   RangeValues priceRange = const RangeValues(0, 3000000000);
+  final TextEditingController minController = TextEditingController();
+  final TextEditingController maxController = TextEditingController();
+
   RangeValues spaceRange = const RangeValues(10, 23000000);
+  final TextEditingController minAreaController = TextEditingController();
+  final TextEditingController maxAreaController = TextEditingController();
 
   // Location
   String governorate = "";
@@ -61,6 +63,8 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
   void initState() {
     super.initState();
     fetchPropertyTypesInfo();
+    minController.text = priceRange.start.toStringAsFixed(0);
+    maxController.text = priceRange.end.toStringAsFixed(0);
   }
 
   void fetchPropertyTypesInfo() async {
@@ -68,6 +72,19 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
         await PropertyTypeService().getPropertyTypes();
     setState(() {
       propertyTypes = fetchedPropertyTypesInfo;
+    });
+  }
+
+  void _updateFromTextFields() {
+    final minVal = double.tryParse(minController.text) ?? 0;
+    final maxVal = double.tryParse(maxController.text) ?? 0;
+
+    // تأكد أن القيم صحيحة: الحد الأدنى أقل من الحد الأقصى
+    double newMin = minVal < maxVal ? minVal : priceRange.start;
+    double newMax = maxVal > minVal ? maxVal : priceRange.end;
+
+    setState(() {
+      priceRange = RangeValues(newMin, newMax);
     });
   }
 
@@ -233,45 +250,36 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
             RangeSlider(
               values: priceRange,
               min: 0,
-              max: 3000000000,
-              divisions: 100,
-              labels: RangeLabels(
-                priceRange.start.toInt().toString(),
-                priceRange.end.toInt().toString(),
-              ),
-              onChanged: (values) => setState(() => priceRange = values),
+              max: 3000000000, // أقصى قيمة مسموحة
+              onChanged: (values) {
+                setState(() {
+                  priceRange = values;
+                  minController.text = priceRange.start.toStringAsFixed(0);
+                  maxController.text = priceRange.end.toStringAsFixed(0);
+                });
+              },
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'أقل سعر',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.5),
-                        ),
-                      ),
-                    ),
+                  child: TextField(
+                    controller: minController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(labelText: 'أقل سعر'),
+                    onChanged: (val) => _updateFromTextFields(),
                   ),
-                  SizedBox(width: 10),
-                  Text('إلى', style: TextStyle(fontFamily: 'Pacifico')),
-                  SizedBox(width: 10),
+                ),
+                  const SizedBox(width: 10),
+                  const Text('إلى', style: TextStyle(fontFamily: 'Pacifico')),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'أعلى سعر',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.5),
-                        ),
-                      ),
+                      controller: maxController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(labelText: 'أعلى سعر'),
+                      onChanged: (val) => _updateFromTextFields(),
                     ),
                   ),
                 ],
@@ -285,7 +293,7 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
               values: spaceRange,
               min: 10,
               max: 23000000,
-              divisions: 100,
+              //divisions: 100,
               labels: RangeLabels(
                 spaceRange.start.toInt().toString(),
                 spaceRange.end.toInt().toString(),
@@ -397,10 +405,11 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
                     primaryColor: primaryColor,
                     onChanged: (id, val) {
                       setState(() {
-                        if (val is bool)
+                        if (val is bool) {
                           boolAttributes[id] = val;
-                        else
+                        } else {
                           valueAttributes[id] = val;
+                        }
                       });
                     },
                   )
@@ -475,7 +484,7 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
 
                         // إعادة القيم الرقمية
                         priceRange = const RangeValues(0, 3000000000);
-                        spaceRange = const RangeValues(10, 23000000);
+                        spaceRange = const RangeValues(300, 23000000);
 
                         // إعادة الحقول النصية
                         governorate = "";
@@ -569,7 +578,7 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
 
     // النوع الفرعي والعام
     if (selectedPropertyType != null) {
-      filterData["propertyTypeId"] = selectedPropertyType!.id;
+      filterData["type"] = selectedPropertyType!.name;
     }
     if (selectedTypeOfPropertyTypes != null) {
       filterData["typeOfPropertyType"] = selectedTypeOfPropertyTypes;
@@ -582,23 +591,23 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
 
     // السعر والمساحة فقط إذا تغيرت عن الافتراضي
     if (priceRange.start > 0 || priceRange.end < 3000000000) {
-      filterData["price"] = {
-        "min": priceRange.start.toInt(),
-        "max": priceRange.end.toInt(),
-      };
+      filterData["price"] = [
+        priceRange.start.toInt(),
+        priceRange.end.toInt(),
+      ];
     }
 
     if (spaceRange.start > 10 || spaceRange.end < 23000000) {
-      filterData["space"] = {
-        "min": spaceRange.start.toInt(),
-        "max": spaceRange.end.toInt(),
-      };
+      filterData["space"] = [
+        spaceRange.start.toInt(),
+        spaceRange.end.toInt(),
+      ];
     }
 
     // الفلاتر المتقدمة (attributes)
     final attributeFilters = attributes
         .map((attr) {
-          final val = attr.type == 'bool'
+          final val = attr.type == 'boolean'
               ? boolAttributes[attr.id] == true
                   ? "true"
                   : null
@@ -607,7 +616,7 @@ class _PropertyFilterPage extends State<PropertyFilterPage> {
                   : null;
 
           if (val != null) {
-            return {"attributeId": attr.id, "value": val};
+            return {"attribute": attr.name, "value": val};
           }
           return null;
         })

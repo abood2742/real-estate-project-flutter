@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
+import 'package:property_system/client/components/Cancel_Custom_Button.dart';
 import 'package:property_system/office/reservation/client_reserver_profile_page.dart';
 import 'package:property_system/office/reservation/complete_reservation_transaction.dart';
 // استبدل هذا باستدعاء صفحة البروفايل الخاصة بالمستخدم المحجِز
@@ -249,17 +250,17 @@ class _ReservedPropertyDetailsPageState
                 ),
               ),
               const SizedBox(width: 8),
-              Expanded(
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  onPressed: () {
-                    // استدعاء API لإلغاء الحجز
-                  },
-                  icon: const Icon(Icons.cancel, color: Colors.white),
-                  label: const Text('إلغاء الحجز',
-                      style: TextStyle(color: Colors.white)),
-                ),
-              ),
+               CancelCustomButton(
+                onConfirm: () async {
+                  // await ClientReservationService()
+                  //     .cancelReservedPropertyFromClient(
+                  //   reservationId: widget.propertyModel.reservationModel!.id,
+                  // );
+                },
+                snackBarMessage: 'تم حذف الحجز بنجاح', // نص مخصص للـ SnackBar
+                buttonLabel: 'إلغاء الحجز', // نص الزر
+                title: 'هل تريد بالتأكيد حذف هذا الحجز؟', // نص الديالوج
+              )
             ],
           ),
         ),

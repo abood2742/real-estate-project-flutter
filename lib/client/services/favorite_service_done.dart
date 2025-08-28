@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:property_system/client/models/office_details_model.dart';
+import 'package:property_system/client/models/office_card_model.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/services/token_service.dart';
 
 class FavoriteService {
   Future<bool?> addOfficeToFavorite({required String officeId}) async {
+    //done
     Dio dio = new Dio();
 
     try {
@@ -30,7 +31,8 @@ class FavoriteService {
     }
   }
 
-  Future<List<OfficeDetailsModel>?> getFavoriteOffices() async {
+  Future<List<OfficeCardModel>?> getFavoriteOffices() async {
+    //done
     Dio dio = new Dio();
 
     try {
@@ -43,7 +45,7 @@ class FavoriteService {
       if (response.statusCode == 200) {
         List<dynamic> favoriteOffices = response.data;
 
-        List<OfficeDetailsModel> convertedFavoriteOffices = [];
+        List<OfficeCardModel> convertedFavoriteOffices = [];
 
         if (favoriteOffices == []) {
           return null;
@@ -52,8 +54,7 @@ class FavoriteService {
         var office;
 
         for (var i = 0; i < favoriteOffices.length; i++) {
-          office = OfficeDetailsModel.fromJson(favoriteOffices[i],
-              isFavorite: false);
+          office = OfficeCardModel.fromJson(favoriteOffices[i]['office']);
           convertedFavoriteOffices.add(office);
         }
 
@@ -71,6 +72,7 @@ class FavoriteService {
   }
 
   Future<bool> removeOfficeFromFavorite({required String officeId}) async {
+    //done
     Dio dio = new Dio();
 
     try {
@@ -95,6 +97,7 @@ class FavoriteService {
   }
 
   Future<bool?> addPropertyToFavorite({required String propertyId}) async {
+    //done
     Dio dio = new Dio();
 
     try {

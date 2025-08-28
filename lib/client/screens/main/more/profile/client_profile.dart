@@ -1,12 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:property_system/client/models/profile.model.dart';
-import 'package:property_system/client/services/user_profile.service.dart';
-import 'package:property_system/common/screens/ching_password_profile_page.dart';
+import 'package:property_system/client/services/profile_service_done.dart';
+import 'package:property_system/client/screens/main/more/profile/ching_password_profile_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_edit_information_page.dart';
-import 'package:property_system/client/screens/main/Blog/create_blog.dart';
 import 'package:property_system/l10n/app_localizations.dart';
-import 'package:property_system/notification/screen/notification_page.dart';
 
 class ClientProfile extends StatefulWidget {
   const ClientProfile({super.key});
@@ -202,106 +200,6 @@ class _ClientProfileState extends State<ClientProfile> {
             ],
           ),
           const SizedBox(height: 24),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return NotificationPage();
-                  }));
-                },
-                icon: const Icon(Icons.upload_file),
-                label: Text(
-                  localizations.translate('property_upload_requests'),
-                  style: const TextStyle(
-                      color: Colors.white, fontFamily: 'Pacifico'),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 41, 47, 100),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const CreateBlogPage();
-                  }));
-                },
-                icon: const Icon(Icons.home),
-                label: Text(
-                  localizations.translate('expired_properties'),
-                  style: const TextStyle(
-                      color: Colors.white, fontFamily: 'Pacifico'),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 41, 47, 100),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Center(
-            child: ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return NotificationPage();
-                }));
-              },
-              icon: const Icon(Icons.notifications),
-              label: Text(
-                localizations.translate('notifications'),
-                style: const TextStyle(
-                    color: Colors.white, fontFamily: 'Pacifico'),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 41, 47, 100),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 15),
-          // ElevatedButton.icon(
-          //   onPressed: () {
-          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //       return const ReservedPropertyPage();
-          //     }));
-          //   },
-          //   icon: const Icon(Icons.home_work),
-          //   label: Text(
-          //     localizations.translate('reserved_properties'),
-          //     style: const TextStyle(
-          //         color: Colors.white, fontFamily: 'Pacifico'),
-          //   ),
-          //   style: ElevatedButton.styleFrom(
-          //     backgroundColor: const Color.fromARGB(255, 41, 47, 100),
-          //     padding: const EdgeInsets.symmetric(
-          //         horizontal: 16, vertical: 12),
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(12),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

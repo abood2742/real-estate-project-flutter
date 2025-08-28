@@ -10,7 +10,7 @@ class OfficeReservationService {
 
     try {
       Response response = await dio.get(
-          'http://localhost:3000/api/office/get-reserved/properties',
+          'http://localhost:3000/api/office/reserved-properties',
           options: Options(headers: {
             'Authorization': 'Bearer $token',
           }));

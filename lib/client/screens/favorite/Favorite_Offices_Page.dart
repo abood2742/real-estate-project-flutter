@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/office_cards/office_card.dart';
-import 'package:property_system/client/models/office_details_model.dart';
+import 'package:property_system/client/models/office_card_model.dart';
 import 'package:property_system/client/screens/search/resault/office/Office_Details_Page.dart';
-import 'package:property_system/client/services/favorite_service.dart';
+import 'package:property_system/client/services/favorite_service_done.dart';
 
 class FavoriteOfficesPage extends StatefulWidget {
   const FavoriteOfficesPage({super.key});
@@ -12,7 +12,7 @@ class FavoriteOfficesPage extends StatefulWidget {
 }
 
 class _FavoriteOfficesPageState extends State<FavoriteOfficesPage> {
-  List<OfficeDetailsModel>? favoriteOffices;
+  List<OfficeCardModel>? favoriteOffices;
   bool isLoading = true;
 
   @override
@@ -47,12 +47,12 @@ class _FavoriteOfficesPageState extends State<FavoriteOfficesPage> {
     );
   }
 
-  Widget _buildOfficeWidgets(OfficeDetailsModel office) {
+  Widget _buildOfficeWidgets(OfficeCardModel office) {
     return OfficeCard(
       name: office.name,
       phone: office.officePhone,
-      imageUrl: office.officePhoto != null ? office.officePhoto!.url : 'null',
-      rating: office.ratings ?? 0,
+      imageUrl: office.officePhoto.url,
+      rating: office.ratings ,
       onTap: () {
         Navigator.push(
             context,

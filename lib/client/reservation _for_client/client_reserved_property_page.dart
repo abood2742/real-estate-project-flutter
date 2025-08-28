@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
 import 'package:property_system/client/screens/search/resault/office/Office_Details_Page.dart';
-import 'package:property_system/client/services/client_reservation_service.dart';
+import 'package:property_system/client/services/client_reservation_service_done.dart';
+import 'package:property_system/client/components/Cancel_Custom_Button.dart';
 
 class ClientReservedPropertyDetailsPage extends StatefulWidget {
   final PropertyModel propertyModel;
@@ -67,7 +68,8 @@ class _ClientReservedPropertyDetailsPageState
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Text(property.location.city,
-                      style: const TextStyle(fontFamily: 'Pacifico',color: Colors.lightBlue)),
+                      style: const TextStyle(
+                          fontFamily: 'Pacifico', color: Colors.lightBlue)),
                 ),
               ],
             ),
@@ -364,8 +366,14 @@ class _ClientReservedPropertyDetailsPageState
                     errorBuilder: (_, __, ___) => const Icon(Icons.business),
                   ),
                 )
-              : const Icon(Icons.business,color: Colors.white,),
-          label: Text(property.office.officeName,style: TextStyle(color: Colors.white,fontFamily: 'Pacifico'),),
+              : const Icon(
+                  Icons.business,
+                  color: Colors.white,
+                ),
+          label: Text(
+            property.office.officeName,
+            style: TextStyle(color: Colors.white, fontFamily: 'Pacifico'),
+          ),
         ),
 
         // شريط أزرار أسفل الشاشة
@@ -377,17 +385,17 @@ class _ClientReservedPropertyDetailsPageState
           ),
           child: Row(
             children: [
-              Expanded(
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  onPressed: () async  {
-                   await ClientReservationService().cancelReservedPropertyFromClient( reservationId:widget.propertyModel.reservationModel!.id);
-                  },
-                  icon: const Icon(Icons.cancel, color: Colors.white),
-                  label: const Text('إلغاء الحجز',
-                      style: TextStyle(color: Colors.white)),
-                ),
-              ),
+              CancelCustomButton(
+                onConfirm: () async {
+                  await ClientReservationService()
+                      .cancelReservedPropertyFromClient(
+                    reservationId: widget.propertyModel.reservationModel!.id,
+                  );
+                },
+                snackBarMessage: 'تم حذف الحجز بنجاح', // نص مخصص للـ SnackBar
+                buttonLabel: 'إلغاء الحجز', // نص الزر
+                title: 'هل تريد بالتأكيد حذف هذا الحجز؟', // نص الديالوج
+              )
             ],
           ),
         ),

@@ -3,7 +3,7 @@ import 'package:property_system/client/components/blog_card.dart';
 import 'package:property_system/client/components/spechial_offer.dart';
 import 'package:property_system/client/models/blog_model.dart';
 import 'package:property_system/client/screens/main/Blog/All_Blogs_Page.dart';
-import 'package:property_system/client/services/Blog_service.dart';
+import 'package:property_system/client/services/Blog_service_done.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {

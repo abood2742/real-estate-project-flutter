@@ -1,10 +1,10 @@
-class CreateOfficeComplainetModel {
+class CreateOfficeComplaintModel {
   final String officeId;
   final String title;
   final String content;
   final List<String> complaintMedia;
 
-  CreateOfficeComplainetModel({
+  CreateOfficeComplaintModel({
     required this.officeId,
     required this.title,
     required this.content,

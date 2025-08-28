@@ -17,9 +17,12 @@ class LoginService {
         AuthModel authModel = AuthModel.fromJson(response.data);
 
         await AuthService.saveAccessToken(authModel.accessToken);
-        AuthService.saveAccessToken(authModel.refreshToken);
+        await AuthService.saveAccessToken(authModel.refreshToken);
+        await AuthService.saveUserRole(authModel.role!);
 
         print('accessToken = ${await AuthService.getAccessToken()}');
+        print('accessToken = ${await AuthService.getUserRole()}');
+
         return authModel;
       } else {
         return null;

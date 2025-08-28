@@ -412,7 +412,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:property_system/client/screens/auth/login/login_page.dart';
 import 'package:property_system/client/screens/auth/register/waiting_office_creation_aproval_Page.dart';
-import 'package:property_system/client/services/register_service.dart';
+import 'package:property_system/client/services/register_service_done.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
 class CreateOfficePage extends StatefulWidget {

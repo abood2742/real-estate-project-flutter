@@ -65,7 +65,7 @@ class OfficeCardModel {
   Photo officePhoto;
   double ratings;
 
-  List<dynamic> blogs; /* * */
+  List<dynamic>? blogs; /* * */
 
   OfficeCardModel({
     required this.id,
@@ -77,7 +77,7 @@ class OfficeCardModel {
 
     required this.officePhoto,
     required this.ratings,
-    required this.blogs,
+    this.blogs,
     /* * */
   });
 
@@ -89,8 +89,8 @@ class OfficeCardModel {
       officeEmail: json["office_email"],
       status: json["status"],
       officePhoto: Photo.fromJson(json["office_photo"]),
-      ratings: json["ratings"],
-      blogs: List<dynamic>.from(json["blogs"].map((x) => x)),
+      ratings: json["averageRating"],
+      blogs: json["blogs"] != null ? List<dynamic>.from(json["blogs"].map((x) => x)) : null,
     );
   }
 
@@ -102,11 +102,9 @@ class OfficeCardModel {
       "office_email": officeEmail,
       "status": status,
       "office_photo": officePhoto.toJson(),
-      "ratings": ratings,
-      "blogs": List<dynamic>.from(blogs.map((x) => x)),
+      "averageRating": ratings,
+      "blogs": blogs != null ? List<dynamic>.from(blogs!.map((x) => x)) : null,
     };
   }
 }
-
-
 

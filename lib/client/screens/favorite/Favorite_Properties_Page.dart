@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/resault/property/Property_Details_Page.dart';
-import 'package:property_system/client/services/favorite_service.dart';
+import 'package:property_system/client/services/favorite_service_done.dart';
 
 class FavoritePropertiesPage extends StatefulWidget {
   const FavoritePropertiesPage({super.key});

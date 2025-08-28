@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:property_system/client/models/LicenseType_model.dart';
 
 class LicenseTypeDropdown extends StatelessWidget {
   final String? selectedValue;
-  final List<String> items;
+  final List<LicensetypeModel> items;
   final String hint;
   final ValueChanged<String?> onChanged;
 
@@ -27,8 +28,8 @@ class LicenseTypeDropdown extends StatelessWidget {
       hint: Text(hint), // يظهر لما ما يكون فيه اختيار
       items: items.map((type) {
         return DropdownMenuItem<String>(
-          value: type,
-          child: Text(type),
+          value: type.id,
+          child: Text(type.name),
         );
       }).toList(),
       onChanged: onChanged,

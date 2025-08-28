@@ -37,13 +37,13 @@
 //   }
 // }
 import 'package:dio/dio.dart';
-import 'package:property_system/client/models/complaient/create_office_complainet_model.dart';
+import 'package:property_system/client/models/complaient/create_office_complaint_model.dart';
 import 'package:property_system/client/services/token_service.dart';
 
 class ComplaintService {
   final Dio _dio = Dio();
 
-  Future<Response> createComplaint(CreateOfficeComplainetModel complaint) async {
+  Future<Response> createComplaint(CreateOfficeComplaintModel complaint) async {
     try {
       final token = await AuthService.getAccessToken();
       print('TOKEN = $token');

@@ -6,8 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/screens/auth/login/login_page.dart';
 import 'package:property_system/client/screens/main/main_page.dart';
-import 'package:property_system/client/services/register_service.dart';
-import 'package:property_system/client/services/user_profile.service.dart';
+import 'package:property_system/client/services/register_service_done.dart';
+import 'package:property_system/client/services/profile_service_done.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 import 'package:property_system/notification/socket_service.dart';
 

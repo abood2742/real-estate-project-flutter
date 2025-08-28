@@ -116,7 +116,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/Custom_textField.dart';
 import 'package:property_system/client/components/custom_button.dart';
-import 'package:property_system/client/services/ching_password_service.dart';
+import 'package:property_system/client/services/profile_service_done.dart';
 
 class ChingPasswordProfilePage extends StatefulWidget {
   const ChingPasswordProfilePage({super.key});
@@ -164,7 +164,7 @@ class _ChingPasswordProfilePageState extends State<ChingPasswordProfilePage> {
     }
 
     // 🔹 استدعاء الخدمة
-    final service = ChangePasswordService();
+    final service = ProfileService();
     bool success = await service.changePassword(
       currentPassword: current,
       newPassword: newPass,
@@ -255,7 +255,7 @@ class _ChingPasswordProfilePageState extends State<ChingPasswordProfilePage> {
               ),
             ),
             const SizedBox(height: 24),
-            CustomButon(
+            CustomButton(
               text: 'تأكيد',
               onTap: handleChangePassword,
             ),

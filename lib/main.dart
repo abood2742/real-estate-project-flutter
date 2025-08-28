@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:property_system/client/models/profile.model.dart';
-import 'package:property_system/client/services/user_profile.service.dart';
+import 'package:property_system/client/services/profile_service_done.dart';
 import 'package:provider/provider.dart';
 import 'package:property_system/client/screens/initial_page.dart';
 import 'notification/socket_service.dart';
@@ -47,11 +47,13 @@ class PropertySystem extends StatelessWidget {
         builder: (context, provider, child) {
           return MaterialApp(
             theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          iconTheme: IconThemeData(color: Colors.white), // تغيير لون الأيقونات (بما في ذلك السهم)
-          backgroundColor: Colors.blue, // لون الخلفية للتوافق
-        ),
-      ),
+              appBarTheme: AppBarTheme(
+                iconTheme: IconThemeData(
+                    color:
+                        Colors.white), // تغيير لون الأيقونات (بما في ذلك السهم)
+                backgroundColor: Colors.blue, // لون الخلفية للتوافق
+              ),
+            ),
             debugShowCheckedModeBanner: false,
             locale: provider.locale,
             supportedLocales: const [
@@ -83,6 +85,7 @@ class PropertySystem extends StatelessWidget {
   }
 
   Future<String?> getUser() async {
+    print("object");
     ProfileModel? user = await ProfileService().getProfile();
     if (user == (null)) {
       return null;

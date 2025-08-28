@@ -8,6 +8,7 @@ import 'package:property_system/client/services/token_service.dart';
 class PropertyService {
   Future<bool?> createProperty({
     required String propertyNumber,
+    required String owner,
     required String typeOperation,
     required double space,
     required double price,
@@ -29,11 +30,12 @@ class PropertyService {
     // البيانات الأساسية
     formData.fields.addAll([
       MapEntry('propertyNumber', propertyNumber),
+      MapEntry('owner', owner),
       MapEntry('typeOperation', typeOperation),
       MapEntry('space', space.toString()),
       MapEntry('price', price.toString()),
       MapEntry('description', description),
-      MapEntry('propertyTypeId', propertyTypeId),
+      MapEntry('propertyType', propertyTypeId),
       MapEntry('licenseType', licenseType),
       MapEntry('licenseNumber', licenseNumber),
       MapEntry(
@@ -48,8 +50,7 @@ class PropertyService {
     ]);
 
     // الصفات (attributes) - JSON String
-formData.fields.add(MapEntry("attributes", jsonEncode(attributes)));
-    print(attributes);
+    formData.fields.add(MapEntry("attributes", jsonEncode(attributes)));
     // الصور
     for (var photo in propertyPhotos) {
       if (photo is io.File) {

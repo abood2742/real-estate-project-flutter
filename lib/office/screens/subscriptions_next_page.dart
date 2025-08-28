@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:property_system/client/models/create_subscription_model.dart';
-import 'package:property_system/client/services/create_subscription_service.dart';
+import 'package:property_system/client/services/subscription_service_done.dart';
 
 class SubscriptionsNextPage extends StatefulWidget {
   final String planName;
@@ -118,7 +118,7 @@ class _PaymentDetailsPageState extends State<SubscriptionsNextPage> {
                       print(paymentModel.toJson());
 
                       final isSuccess =
-                          await CreateSubscriptionService().registerSubscription(
+                          await SubscriptionService().registerSubscription(
                         paymentModel,
                       );
 

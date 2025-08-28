@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:property_system/client/components/property_cards/property_card.dart';
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reserved_property_page.dart';
-import 'package:property_system/client/services/client_reservation_service.dart';
+import 'package:property_system/client/services/client_reservation_service_done.dart';
 
 class ClientReservationPage extends StatefulWidget {
   const ClientReservationPage({super.key});
@@ -23,8 +23,8 @@ class _ClientReservationPageState extends State<ClientReservationPage> {
   }
 
   Future<void> getReservedPropertiesForClient() async {
-    final data =
-        await ClientReservationService().getClientReservedProperties();
+    final data = await ClientReservationService().getClientReservedProperties();
+    print("object");
     setState(() {
       propertyModels = data!;
       isLoading = false;
@@ -33,14 +33,11 @@ class _ClientReservationPageState extends State<ClientReservationPage> {
 
   @override
   Widget build(BuildContext context) {
-
     // تقسيم العقارات حسب نوع العملية
-    final sellReservations = propertyModels
-        .where((res) => res.typeOperation == 'selling')
-        .toList();
-    final rentReservations = propertyModels
-        .where((res) => res.typeOperation == 'renting')
-        .toList();
+    final sellReservations =
+        propertyModels.where((res) => res.typeOperation == 'selling').toList();
+    final rentReservations =
+        propertyModels.where((res) => res.typeOperation == 'renting').toList();
 
     Widget buildList(List<PropertyModel> list) {
       if (isLoading) {
@@ -73,7 +70,9 @@ class _ClientReservationPageState extends State<ClientReservationPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ClientReservedPropertyDetailsPage(propertyModel: property,),
+                  builder: (_) => ClientReservedPropertyDetailsPage(
+                    propertyModel: property,
+                  ),
                 ),
               );
             },

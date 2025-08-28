@@ -6,6 +6,7 @@ import 'package:property_system/client/services/token_service.dart';
 
 class SearchService {
   Future<List<OfficeCardModel>?> getAllOffices() async {
+    //done
     Dio dio = Dio();
 
     try {
@@ -15,7 +16,6 @@ class SearchService {
       if (response.statusCode == 200) {
         PageModel pageModel = PageModel.fromJson(response.data);
         List<OfficeCardModel> officeCardModels = pageModel.data;
-
         return officeCardModels;
       } else {
         return null;
@@ -37,7 +37,6 @@ class SearchService {
           await dio.get('http://localhost:3000/api/office/$officeId');
 
       var token = await AuthService.getAccessToken();
-
       if (response.statusCode == 200) {
         OfficeDetailsModel officeDetailsModel;
         if (token == null) {
@@ -51,8 +50,8 @@ class SearchService {
             officeDetailsModel =
                 OfficeDetailsModel.fromJson(response.data, isFavorite: true);
           } else {
-            officeDetailsModel =
-                OfficeDetailsModel.fromJson(response.data, isFavorite: false);
+          officeDetailsModel =
+              OfficeDetailsModel.fromJson(response.data, isFavorite: false);
           }
         }
         return officeDetailsModel;
@@ -69,6 +68,7 @@ class SearchService {
   }
 
   Future<List<PropertyModel>?> getAllProperties() async {
+    //done
     Dio dio = Dio();
 
     try {
@@ -92,6 +92,7 @@ class SearchService {
   }
 
   Future<List<PropertyModel>?> getFilteredProperties(
+      //done
       Map<String, dynamic>? filteredData) async {
     Dio dio = Dio();
 

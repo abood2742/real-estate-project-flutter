@@ -590,7 +590,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:property_system/client/components/custom_button.dart';
-import 'package:property_system/client/models/complaient/create_office_complainet_model.dart';
+import 'package:property_system/client/models/complaient/create_office_complaint_model.dart';
 import 'package:property_system/client/services/complainet_office_service.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
@@ -660,7 +660,7 @@ class _PushComplaintPageState extends State<PushComplaintPage> {
       // TODO: رفع الصور للسيرفر أولاً ثم إضافة روابطها هنا
       List<String> mediaUrls = [];
 
-      final complaint = CreateOfficeComplainetModel(
+      final complaint = CreateOfficeComplaintModel(
         officeId: widget.officeId,
         title: titleController.text,
         content: descriptionController.text,
@@ -845,7 +845,7 @@ class _PushComplaintPageState extends State<PushComplaintPage> {
                         ),
                         const SizedBox(width: 16),
                         Expanded(
-                          child: CustomButon(
+                          child: CustomButton(
                             text: 'إرسال الشكوى',
                             onTap: _submitComplaint,
                           ),

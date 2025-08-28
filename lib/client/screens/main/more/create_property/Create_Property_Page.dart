@@ -8,9 +8,11 @@ import 'package:property_system/client/components/Build_Dynamic_Attributes/Custo
 import 'package:property_system/client/components/Build_Dynamic_Attributes/Custom_Select_Button.dart';
 import 'package:property_system/client/components/Build_Dynamic_Attributes/Dynamic_Attributes.dart';
 import 'package:property_system/client/components/Build_Dynamic_Attributes/Types_Of_Property_Types.dart';
+import 'package:property_system/client/models/LicenseType_model.dart';
 import 'package:property_system/client/models/property_type_model.dart';
-import 'package:property_system/client/services/property_service.dart';
-import 'package:property_system/client/services/propety_Type_service.dart';
+import 'package:property_system/client/services/License_service_done.dart';
+import 'package:property_system/client/services/property_service_done.dart';
+import 'package:property_system/client/services/propety_Type_service_done.dart';
 
 class CreateProperty extends StatefulWidget {
   const CreateProperty({
@@ -47,16 +49,12 @@ class _CreatePropertyState extends State<CreateProperty> {
 
   final TextEditingController propertyNumberController =
       TextEditingController();
+  final TextEditingController ownerController = TextEditingController();
   final TextEditingController spaceController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-final List<String> licenseTypes = [
-  "Residential Permit", // سكني
-  "Commercial Permit",  // تجاري
-  "Agricultural Permit",// زراعي
-  "Industrial Permit",  // صناعي
-];
+  List<LicensetypeModel> licenseTypes = [];
   String? selectedLicenseType;
 
   final TextEditingController licenseNumberController = TextEditingController();
@@ -85,8 +83,12 @@ final List<String> licenseTypes = [
     List<PropertyTypeModel>? fetchedPropertyTypesInfo =
         await PropertyTypeService().getPropertyTypes();
 
+    List<LicensetypeModel>? fetchedLicensceTypesInfo =
+        await LicenseService().getAllLicenseTypes();
+
     setState(() {
       propertyTypes = fetchedPropertyTypesInfo;
+      licenseTypes = fetchedLicensceTypesInfo!;
 
       if (propertyTypes!.isNotEmpty) {
         // ✅ اجعل أول نوع فرعي (propertyType) مختار
@@ -111,12 +113,12 @@ final List<String> licenseTypes = [
       }
     }
 
-setState(() {
+    setState(() {
       attributes = fetched;
       boolAttributes.clear();
       valueAttributes.clear();
       for (var attr in attributes) {
-        if (attr.type == 'bool') {
+        if (attr.type == 'boolean') {
           boolAttributes[attr.id] = false;
         } else {
           valueAttributes[attr.id] = '';
@@ -226,9 +228,12 @@ setState(() {
               CustomCard(
                 children: [
                   CustomInput(
-
-label: "رقم العقار",
+                      label: "رقم العقار",
                       controller: propertyNumberController,
+                      keyboardType: TextInputType.text),
+                  CustomInput(
+                      label: "اسم صاحب العقار",
+                      controller: ownerController,
                       keyboardType: TextInputType.text),
                   CustomInput(
                       label: "المساحة",
@@ -300,7 +305,7 @@ label: "رقم العقار",
                 ],
               ),
 
-const SizedBox(height: 30),
+              const SizedBox(height: 30),
               // داخل build، عرض الصور المرفوعة
               _buildSectionTitle("صور العقار"),
               const SizedBox(height: 10),
@@ -386,7 +391,7 @@ const SizedBox(height: 30),
     final isSelected =
         selectedPropertyType != null && selectedPropertyType!.name == name;
 
-return Container(
+    return Container(
       margin: const EdgeInsets.all(6),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -489,6 +494,7 @@ return Container(
 
     bool? status = await PropertyService().createProperty(
       propertyNumber: propertyNumberController.text,
+      owner: ownerController.text,
       typeOperation: typeOperation,
       space: double.tryParse(spaceController.text) ?? 0.0,
       price: double.tryParse(priceController.text) ?? 0.0,
@@ -507,35 +513,35 @@ return Container(
     return status!;
   }
 
-  List<Map<String, dynamic>> toAttributeList(
-    Map<String, dynamic> boolAttributes,
-    Map<String, dynamic> valueAttributes,
-  ) {
-    List<Map<String, dynamic>> result = [];
+List<Map<String, dynamic>> toAttributeList(
+  Map<String, dynamic> boolAttributes,
+  Map<String, dynamic> valueAttributes,
+) {
+  List<Map<String, dynamic>> result = [];
 
-    // boolean attributes
-    boolAttributes.forEach((key, value) {
-      if (value == (false)) {
-        return;
-      }
-      result.add({
-        "attributeId": key,
-        "value": value.toString(),
-      });
+  // تحويل attributes إلى خريطة تسهل الوصول بالـ id
+  final Map<String, String> idToName = {
+    for (var attr in attributes) attr.id: attr.name,
+  };
+
+  // boolean attributes
+  boolAttributes.forEach((key, value) {
+    if (value == false) return;
+    result.add({
+      "name": idToName[key] ?? key, // إرسال الاسم بدل id
+      "value": value.toString(),
     });
+  });
 
-
-// value attributes
-    valueAttributes.forEach((key, value) {
-      if (value == (0) || value == ("")) {
-        return;
-      }
-      result.add({
-        "attributeId": key,
-        "value": value.toString(),
-      });
+  // value attributes
+  valueAttributes.forEach((key, value) {
+    if (value == 0 || value == "") return;
+    result.add({
+      "name": idToName[key] ?? key, // إرسال الاسم بدل id
+      "value": value.toString(),
     });
+  });
 
-    return result;
-  }
+  return result;
+}
 }

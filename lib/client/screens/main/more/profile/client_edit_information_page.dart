@@ -7,7 +7,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:property_system/client/components/Custom_textField.dart';
 import 'package:property_system/client/components/custom_button.dart';
 import 'package:property_system/client/models/client_info_model.dart';
-import 'package:property_system/client/services/client_update_service.dart';
+import 'package:property_system/client/services/profile_service_done.dart';
 
 class ClientEditInformationPage extends StatefulWidget {
   final ClientInfoModel? clientInfo;
@@ -134,7 +134,7 @@ class _ClientEditInformationPageState extends State<ClientEditInformationPage> {
                 else
                   const Text('لم يتم اختيار صورة'),
                 const SizedBox(height: 50),
-                CustomButon(
+                CustomButton(
                   text: 'تعديل',
                   onTap: () async {
                     if (firstNameController.text.trim().isEmpty &&
@@ -161,7 +161,7 @@ class _ClientEditInformationPageState extends State<ClientEditInformationPage> {
                       }
 
                       final updatedModel =
-                          await UpdateProductService().updateClientInfo(
+                          await ProfileService().updateClientInfo(
                         firstName: firstNameController.text.trim().isEmpty
                             ? widget.clientInfo?.firstName ?? ''
                             : firstNameController.text.trim(),

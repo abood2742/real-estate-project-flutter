@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:property_system/client/models/notification_model.dart';
-import 'package:property_system/client/services/notification_service.dart';
+import 'package:property_system/client/services/notification_service_done.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class NotificationPage extends StatefulWidget {

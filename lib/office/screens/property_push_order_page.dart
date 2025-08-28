@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:property_system/office/components/list_tile_component.dart';
 
 class PropertyPushOrderPage extends StatelessWidget {
   const PropertyPushOrderPage({super.key});
@@ -17,9 +16,9 @@ class PropertyPushOrderPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ListTileComponent(leading: '8/12/2024', title: ' شقة ', subtitle: 'ريف دمشق', trailing: 'محمد علي',),
-          ListTileComponent(leading: '1/2/2014', title: ' بيت ', subtitle: ' دمشق', trailing: ' قاسم عباس',),
-          ListTileComponent(leading: '8/2/2020', title: 'مطعم  ', subtitle: ' حمص', trailing: ' علي',),
+          // ListTileComponent(leading: '8/12/2024', title: ' شقة ', subtitle: 'ريف دمشق', trailing: 'محمد علي',),
+          // ListTileComponent(leading: '1/2/2014', title: ' بيت ', subtitle: ' دمشق', trailing: ' قاسم عباس',),
+          // ListTileComponent(leading: '8/2/2020', title: 'مطعم  ', subtitle: ' حمص', trailing: ' علي',),
         ],
       ),
     );

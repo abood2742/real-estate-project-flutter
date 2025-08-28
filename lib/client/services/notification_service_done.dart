@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:property_system/client/models/notification_model.dart';
 import 'package:property_system/client/services/token_service.dart';
+import 'package:property_system/client/services/profile_service_done.dart';
 //import 'package:property_system/client/services/user_profile.service.dart';
 
 class NotificationService {
@@ -8,14 +9,11 @@ class NotificationService {
       {required String title, required String message}) async {
     Dio dio = new Dio();
 
-    //final userId = await ProfileService().getProfile();
+    final userId = await ProfileService().getProfile();
 
     final accessToken = await AuthService.getAccessToken();
     // if (userId != null) {
-    final body = {
-      //"userId": userId.id,
-      'title': title, 'message': message
-    };
+    final body = {"userId": userId!.id, 'title': title, 'message': message};
     try {
       await dio.post('http://localhost:3000/api/notification/notify-user',
           data: body,
@@ -34,14 +32,14 @@ class NotificationService {
   Future<List<NotificationModel>?> getAllNotifications() async {
     Dio dio = new Dio();
 
-    //final userId = await ProfileService().getProfile();
+    final userId = await ProfileService().getProfile();
 
     final accessToken = await AuthService.getAccessToken();
     // if (userId != null) {
 
     try {
       Response response =
-          await dio.get('http://localhost:3000/api/notification/user',
+          await dio.get('http://localhost:3000/api/notification/user/${userId!.id}',
               options: Options(headers: {
                 'Authorization': 'Bearer $accessToken',
               }));
@@ -66,7 +64,7 @@ class NotificationService {
     }
   }
 
-    Future<List<NotificationModel>?> getUnreadNotifications() async {
+  Future<List<NotificationModel>?> getUnreadNotifications() async {
     Dio dio = new Dio();
 
     //final userId = await ProfileService().getProfile();

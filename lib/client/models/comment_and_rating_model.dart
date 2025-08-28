@@ -1,41 +1,35 @@
-class CommentAndRatingModel {
+class CommentModel {
   String id;
   String content;
   String date;
-  Rating rate;
   CommenterInfo user;
 
-  CommentAndRatingModel({
+  CommentModel({
     required this.id,
     required this.content,
     required this.date,
-    required this.rate,
     required this.user,
   });
 
-  factory CommentAndRatingModel.fromJson(Map<String, dynamic> json) =>
-      CommentAndRatingModel(
-          id: json["id"],
-          content: json["content"],
-          date: json["date"],
-          rate: Rating.fromJson(json["rate"]),
-          user: CommenterInfo.fromJson(json["user"]));
+  factory CommentModel.fromJson(Map<String, dynamic> json) {
+    return CommentModel(
+        id: json["id"],
+        content: json["content"],
+        date: json["createAt"],
+        user: CommenterInfo.fromJson(json["user"]));
+  }
 }
 
 class Rating {
   String? id;
   int rating;
 
-  Rating({
-    required this.rating,
-    this.id
-  });
+  Rating({required this.rating, this.id});
 
-  factory Rating.fromJson(Map<String, dynamic> json) =>
-      Rating(
+  factory Rating.fromJson(Map<String, dynamic> json) => Rating(
         rating: json["rating"],
         id: json["id"],
-    );
+      );
 }
 
 class CommenterInfo {

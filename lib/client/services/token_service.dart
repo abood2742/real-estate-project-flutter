@@ -30,4 +30,19 @@ class AuthService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('refreshToken');
   }
+
+  static Future<void> saveUserRole(String role) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userRole', role);
+  }
+
+  static Future<String?> getUserRole() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userRole');
+  }
+
+  static Future<void> clearUserRole() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userRole');
+  }
 }

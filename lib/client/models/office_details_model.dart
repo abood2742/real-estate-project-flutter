@@ -50,7 +50,7 @@ class OfficeDetailsModel {
       licenseNumber: json["license_number"],
       personalIdentityNumber: json["personal_identity_number"],
       isFavorite: isFavorite,
-      ratings: json["ratings"] != null ? json["ratings"] : null,
+      ratings: json["ratingsCount"] != null ? json["ratingsCount"] : null,
       blogs: json["blogs"] != null
           ? List<dynamic>.from(json["blogs"].map((x) => x))
           : null,

@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/subscripions_card.dart';
+import 'package:property_system/client/services/subscription_service_done.dart';
 import 'package:property_system/office/screens/subscriptions_next_page.dart';
 import 'package:property_system/client/models/all_subscription_model.dart';
-import 'package:property_system/client/services/all_subscriptions_service.dart';
 
 class SubscriptionsOfficePage extends StatefulWidget {
   const SubscriptionsOfficePage({super.key});
@@ -15,7 +15,7 @@ class SubscriptionsOfficePage extends StatefulWidget {
 
 class _SubscriptionsOfficePaeState extends State<SubscriptionsOfficePage> {
   int selectedPlan = -1; // -1 = no plan
-  final AllSubscriptionsService _service = AllSubscriptionsService();
+  final SubscriptionService _service = SubscriptionService();
   List<AllSubscriptionModel> subscriptions = [];
   bool isLoading = true;
 
@@ -27,17 +27,11 @@ class _SubscriptionsOfficePaeState extends State<SubscriptionsOfficePage> {
 
   Future<void> fetchSubscriptions() async {
     final result = await _service.getAllSubscriptions();
-    if (result != null) {
-      setState(() {
-        subscriptions = result;
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
+    setState(() {
+      subscriptions = result;
+      isLoading = false;
+    });
     }
-  }
 
   @override
   Widget build(BuildContext context) {

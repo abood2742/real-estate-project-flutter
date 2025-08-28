@@ -1,14 +1,70 @@
+import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:property_system/client/models/client_info_model.dart';
-import 'package:property_system/client/services/token_service.dart';
 import 'package:http_parser/http_parser.dart';
-import 'dart:io';
+import 'package:property_system/client/models/client_info_model.dart';
+import 'package:property_system/client/models/profile.model.dart';
+import 'package:property_system/client/services/token_service.dart';
 
+class ProfileService {
+  Future<ProfileModel?> getProfile() async {
+    //done
+    Dio dio = Dio();
 
-class UpdateProductService {
-  final Dio _dio = Dio();
+    var token = await AuthService.getAccessToken();
+
+    try {
+      Response response =
+          await dio.get('http://localhost:3000/api/user/get-current',
+              options: Options(headers: {
+                'Authorization': 'Bearer $token',
+                //    'Content-Type': 'multipart/form-data', // مهم جدًا
+              }));
+
+      if (response.statusCode == 200) {
+        ProfileModel profileModel = ProfileModel.fromJson(response.data);
+        return profileModel;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print('Error response: ${e.response?.data}');
+      }
+      print('Exception: $e');
+      return null;
+    }
+  }
+
+  Future<ProfileModel?> getUserById({required String userId}) async {
+    Dio dio = Dio();
+
+    var token = await AuthService.getAccessToken();
+
+    try {
+      Response response =
+          await dio.get('http://localhost:3000/api/user/$userId',
+              options: Options(headers: {
+                'Authorization': 'Bearer $token',
+                //    'Content-Type': 'multipart/form-data', // مهم جدًا
+              }));
+
+      if (response.statusCode == 200) {
+        ProfileModel profileModel = ProfileModel.fromJson(response.data);
+        return profileModel;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print('Error response: ${e.response?.data}');
+      }
+      print('Exception: $e');
+      return null;
+    }
+  }
 
   Future<ClientInfoModel> updateClientInfo({
     required String firstName,
@@ -16,6 +72,7 @@ class UpdateProductService {
     required String receiverIdentifier,
     dynamic profilePhoto, // Uint8List على الويب، File على الجوال أو null
   }) async {
+    Dio dio = new Dio();
     try {
       var token = await AuthService.getAccessToken();
 
@@ -44,7 +101,8 @@ class UpdateProductService {
           String ext = profilePhoto.path.split('.').last;
           MediaType mediaType = getMediaTypeFromExtension(ext);
 
-          formData.files.add( // ifohasifa
+          formData.files.add(
+            // ifohasifa
             MapEntry(
               'profile_photo',
               await MultipartFile.fromFile(
@@ -59,7 +117,7 @@ class UpdateProductService {
         }
       }
 
-      final response = await _dio.put(
+      final response = await dio.put(
         'http://localhost:3000/api/user/update-profile',
         data: formData,
         options: Options(
@@ -108,6 +166,47 @@ class UpdateProductService {
         return MediaType('image', 'avif');
       default:
         return MediaType('application', 'octet-stream');
+    }
+  }
+
+
+  Future<bool> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    Dio dio = Dio();
+
+    final body = {
+      'current_password': currentPassword,
+      'new_password': newPassword,
+      'confirm_password': confirmPassword,
+    };
+
+  var token = await AuthService.getAccessToken();
+    try {
+      Response response = await dio.post(
+        'http://localhost:3000/api/user/edite-password',
+        data: body,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 201) {
+        print('Password changed successfully');
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print('Error response: ${e.response?.data}');
+      }
+      print('Exception: $e');
+      return false;
     }
   }
 }

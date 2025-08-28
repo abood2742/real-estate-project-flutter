@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:property_system/client/models/create_reservation_model.dart';
-import 'package:property_system/client/services/client_reservation_service.dart';
+import 'package:property_system/client/services/client_reservation_service_done.dart';
 
 class ClientCreateReservationPage extends StatefulWidget {
   final String propertyId;
