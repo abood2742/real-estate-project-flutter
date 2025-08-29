@@ -6,8 +6,6 @@ import 'package:property_system/client/screens/auth/register/Create_Office_Page.
 import 'package:property_system/client/screens/auth/register/complete_register_page.dart';
 import 'package:property_system/client/screens/main/Blog/My_BLogs_Page.dart';
 import 'package:property_system/client/screens/main/Blog/create_blog.dart';
-import 'package:property_system/client/screens/main/more/client_properties/client_experid_for_rent_page_.dart';
-import 'package:property_system/client/screens/main/more/client_properties/client_expired_for_buy_page.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
 import 'package:property_system/client/screens/main/more/complaint/client_user_office_complaint_case_1.dart';
 import 'package:property_system/client/screens/main/more/complaint/client_user_property_complainet_case_2.dart';
@@ -639,24 +637,6 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ClientExpiredPropertyPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ClientExpiredForBuyPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientExpiredForBuyPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ClientExpiredForRentPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientExpiredForRentPage();
                 }));
               },
             ),

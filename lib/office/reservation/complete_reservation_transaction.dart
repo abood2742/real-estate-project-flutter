@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:property_system/client/models/property_model.dart';
+import 'package:property_system/client/services/property_request_service.dart';
 
 class CompleteReservationTransactionPage extends StatefulWidget {
   final PropertyModel propertyModel;
@@ -16,11 +17,15 @@ class CompleteReservationTransactionPage extends StatefulWidget {
 
 class _CompleteReservationTransactionPageState
     extends State<CompleteReservationTransactionPage> {
-  final TextEditingController _sellerAccountController =
-      TextEditingController();
-  final TextEditingController _sellerIdController = TextEditingController();
-  final TextEditingController _buyerAccountController = TextEditingController();
-  final TextEditingController _buyerIdController = TextEditingController();
+  // Record DTO controllers
+  final TextEditingController _ownerIdController = TextEditingController();
+  final TextEditingController _ownerNameController = TextEditingController();
+  final TextEditingController _clientIdController = TextEditingController();
+  final TextEditingController _clientNameController = TextEditingController();
+
+  DateTime? _sellDate;
+  DateTime? _rentalStartDate;
+  DateTime? _rentalEndDate;
 
   Uint8List? _uploadedImageBytes; // للويب
   io.File? _uploadedImageFile; // للهاتف
@@ -46,11 +51,34 @@ class _CompleteReservationTransactionPageState
     }
   }
 
-  void _confirmTransaction() {
-    if (_sellerAccountController.text.trim().isEmpty ||
-        _sellerIdController.text.trim().isEmpty ||
-        _buyerAccountController.text.trim().isEmpty ||
-        _buyerIdController.text.trim().isEmpty ||
+  Future<void> _pickDate(BuildContext context, bool isSellDate,
+      {bool isStart = false}) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      setState(() {
+        if (isSellDate) {
+          _sellDate = picked;
+        } else {
+          if (isStart) {
+            _rentalStartDate = picked;
+          } else {
+            _rentalEndDate = picked;
+          }
+        }
+      });
+    }
+  }
+
+  void _confirmTransaction(PropertyModel propertyModel) async {
+    if (_ownerIdController.text.trim().isEmpty ||
+        _ownerNameController.text.trim().isEmpty ||
+        _clientIdController.text.trim().isEmpty ||
+        _clientNameController.text.trim().isEmpty ||
         (_uploadedImageBytes == null && _uploadedImageFile == null)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -62,9 +90,27 @@ class _CompleteReservationTransactionPageState
     }
 
     String type =
-        widget.propertyModel.typeOperation == "selling"
-            ? "البيع"
-            : "الإيجار";
+        widget.propertyModel.typeOperation == "selling" ? "selling" : "renting";
+
+    print(_sellDate);
+    print(_rentalEndDate);
+    print(_rentalStartDate);
+
+    await PropertyRequestService().sendPropertyRequest(
+        property_Number: propertyModel.propertyNumber,
+        propertyType: propertyModel.propertyType.name,
+        typeOfPropertyType: propertyModel.propertyType.type,
+        space: propertyModel.space.toString(),
+        location_Id: propertyModel.location.id,
+        owner_personal_Identity_Number: int.parse(_ownerIdController.text),
+        owner_name: _ownerNameController.text,
+        client_personal_Identity_Number: int.parse(_clientIdController.text),
+        client_name: _clientNameController.text,
+        price: double.parse(propertyModel.price),
+        type: type,
+        sell_Date: _sellDate,
+        rental_End_Date: _rentalEndDate,
+        rental_Start_Date: _rentalStartDate);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -77,18 +123,20 @@ class _CompleteReservationTransactionPageState
   @override
   Widget build(BuildContext context) {
     String typeLabel;
-    String ownerTextFieldHint;
-    String clientTextFieldHint;
+    String ownerLabel;
+    String clientLabel;
 
     if (widget.propertyModel.typeOperation == "selling") {
       typeLabel = "بيع العقار";
-      ownerTextFieldHint = "البائع";
-      clientTextFieldHint = "المشتري";
+      ownerLabel = "البائع";
+      clientLabel = "المشتري";
     } else {
       typeLabel = "الإيجار";
-      ownerTextFieldHint = "المؤجر";
-      clientTextFieldHint = "المستأجر";
+      ownerLabel = "المؤجر";
+      clientLabel = "المستأجر";
     }
+
+    final location = widget.propertyModel.location;
 
     return Scaffold(
       appBar: AppBar(
@@ -103,24 +151,106 @@ class _CompleteReservationTransactionPageState
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTextField("حساب $ownerTextFieldHint", _sellerAccountController),
+            // --- Property Details Card ---
+            Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("تفاصيل العقار",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Divider(),
+                    _buildInfoRow(
+                        "رقم العقار", widget.propertyModel.propertyNumber),
+                    _buildInfoRow(
+                        "نوع العقار", widget.propertyModel.propertyType.name),
+                    _buildInfoRow(
+                        "تفصيل النوع", widget.propertyModel.propertyType.type),
+                    _buildInfoRow(
+                        "المساحة", widget.propertyModel.space.toString()),
+                    _buildInfoRow("السعر", widget.propertyModel.price),
+                  ],
+                ),
+              ),
+            ),
             const SizedBox(height: 16),
-            _buildTextField("رقم هوية $ownerTextFieldHint", _sellerIdController,
-                isNumber: true),
-            const SizedBox(height: 16),
-            _buildTextField("حساب $clientTextFieldHint", _buyerAccountController),
-            const SizedBox(height: 16),
-            _buildTextField("رقم هوية $clientTextFieldHint", _buyerIdController,
-                isNumber: true),
+
+            // --- Location Card ---
+            Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("تفاصيل الموقع",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Divider(),
+                    _buildInfoRow("المحافظة", location.governorate),
+                    _buildInfoRow("المنطقة", location.province),
+                    _buildInfoRow("المدينة", location.city),
+                    _buildInfoRow("الشارع", location.street),
+                  ],
+                ),
+              ),
+            ),
             const SizedBox(height: 24),
 
-            // زر رفع الوثائق مثل صفحة إدخال البيانات
+            // --- Record DTO inputs ---
+            _buildInputField("رقم هوية $ownerLabel", _ownerIdController,
+                isNumber: true),
+            const SizedBox(height: 16),
+            _buildInputField("اسم $ownerLabel", _ownerNameController),
+            const SizedBox(height: 16),
+            _buildInputField("رقم هوية $clientLabel", _clientIdController,
+                isNumber: true),
+            const SizedBox(height: 16),
+            _buildInputField("اسم $clientLabel", _clientNameController),
+            const SizedBox(height: 24),
+
+            // --- Date pickers ---
+            if (widget.propertyModel.typeOperation == "selling")
+              ElevatedButton(
+                onPressed: () => _pickDate(context, true),
+                child: Text(_sellDate == null
+                    ? "تحديد تاريخ البيع"
+                    : "تاريخ البيع: ${_sellDate!.toLocal()}".split(' ')[0]),
+              )
+            else
+              Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () => _pickDate(context, false, isStart: true),
+                    child: Text(_rentalStartDate == null
+                        ? "تحديد تاريخ بداية الإيجار"
+                        : "بداية: ${_rentalStartDate!.toLocal()}"
+                            .split(' ')[0]),
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () => _pickDate(context, false, isStart: false),
+                    child: Text(_rentalEndDate == null
+                        ? "تحديد تاريخ نهاية الإيجار"
+                        : "نهاية: ${_rentalEndDate!.toLocal()}".split(' ')[0]),
+                  ),
+                ],
+              ),
+
+            const SizedBox(height: 24),
+
+            // --- Document Upload ---
             Align(
               alignment: Alignment.centerLeft,
               child: Row(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   FloatingActionButton(
                     mini: true,
@@ -150,6 +280,8 @@ class _CompleteReservationTransactionPageState
               const Text("لم يتم اختيار ملف"),
 
             const SizedBox(height: 30),
+
+            // --- Action Buttons ---
             Row(
               children: [
                 Expanded(
@@ -161,7 +293,9 @@ class _CompleteReservationTransactionPageState
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    onPressed: _confirmTransaction,
+                    onPressed: () {
+                      _confirmTransaction(widget.propertyModel);
+                    },
                     child: Text(
                       "تأكيد $typeLabel",
                       style: const TextStyle(
@@ -195,13 +329,33 @@ class _CompleteReservationTransactionPageState
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller,
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Expanded(
+              flex: 2,
+              child: Text(label,
+                  style: const TextStyle(fontWeight: FontWeight.w600))),
+          Expanded(
+              flex: 3,
+              child:
+                  Text(value, style: const TextStyle(color: Colors.black87))),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInputField(String label, TextEditingController controller,
       {bool isNumber = false}) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
-        border: const OutlineInputBorder(),
+        filled: true,
+        fillColor: Colors.grey.shade100,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
       keyboardType: isNumber ? TextInputType.number : TextInputType.text,
     );

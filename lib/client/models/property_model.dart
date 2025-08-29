@@ -170,14 +170,12 @@ class LicenseModel {
 class PropertyType {
   String id;
   String name;
+  String type;
 
-  PropertyType({
-    required this.id,
-    required this.name,
-  });
+  PropertyType({required this.id, required this.name, required this.type});
 
   factory PropertyType.fromJson(Map<String, dynamic> json) {
-    return PropertyType(id: json["id"], name: json["name"]);
+    return PropertyType(id: json["id"], name: json["name"], type: json["type"]);
   }
 }
 
