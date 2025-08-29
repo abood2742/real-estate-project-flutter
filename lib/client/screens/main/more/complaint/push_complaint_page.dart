@@ -1,4 +1,3 @@
-
 import 'dart:io' as io;
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
@@ -7,13 +6,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:property_system/client/components/custom_button.dart';
 import 'package:property_system/client/models/complaient/create_office_complaint_model.dart';
 import 'package:property_system/client/services/complainet_office_service.dart';
+import 'package:property_system/client/services/complainet_property_service.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
 class PushComplaintPage extends StatefulWidget {
   final String officeId;
+  final bool type;
 
-  const PushComplaintPage({Key? key, required this.officeId}) : super(key: key);
-
+  const PushComplaintPage(
+      {Key? key, required this.officeId, required this.type})
+      : super(key: key);
 
   @override
   _PushComplaintPageState createState() => _PushComplaintPageState();
@@ -59,12 +61,14 @@ class _PushComplaintPageState extends State<PushComplaintPage> {
 
   Future<void> _submitComplaint() async {
     if (titleController.text.isEmpty) {
-      _showSnack('يرجى إدخال عنوان للشكوى', const Color.fromARGB(255, 152, 54, 244));
+      _showSnack(
+          'يرجى إدخال عنوان للشكوى', const Color.fromARGB(255, 152, 54, 244));
       return;
     }
 
     if (descriptionController.text.isEmpty) {
-      _showSnack('يرجى إدخال محتوى الشكوى', const Color.fromARGB(255, 152, 54, 244));
+      _showSnack(
+          'يرجى إدخال محتوى الشكوى', const Color.fromARGB(255, 152, 54, 244));
       return;
     }
 
@@ -73,14 +77,12 @@ class _PushComplaintPageState extends State<PushComplaintPage> {
     });
 
     try {
-      // TODO: رفع الصور للسيرفر أولاً ثم إضافة روابطها هنا
-
-  List<dynamic> photos = [];
-    if (_mobileImages.isNotEmpty) {
-      photos = _mobileImages; // للجوال
-    } else if (_webImages.isNotEmpty) {
-      photos = _webImages; // للويب
-    }
+      List<dynamic> photos = [];
+      if (_mobileImages.isNotEmpty) {
+        photos = _mobileImages; // للجوال
+      } else if (_webImages.isNotEmpty) {
+        photos = _webImages; // للويب
+      }
       final complaint = CreateOfficeComplaintModel(
         officeId: widget.officeId,
         title: titleController.text,
@@ -89,8 +91,11 @@ class _PushComplaintPageState extends State<PushComplaintPage> {
       );
       print('1');
 
-      await _complaintService.createComplaint(complaint, photos);
-
+      if (widget.type == true) {
+        await _complaintService.createComplaint(complaint, photos);
+      } else{
+        await ComplainetPropertyService().createComplaint(complaint, photos);
+    }
       _showSnack('تم إرسال الشكوى بنجاح', Colors.green);
 
       Navigator.pop(context);
@@ -168,12 +173,11 @@ class _PushComplaintPageState extends State<PushComplaintPage> {
                       maxLines: 4,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
-                        hintText: localizations
-                            .translate('write_complaint_details'),
+                        hintText:
+                            localizations.translate('write_complaint_details'),
                       ),
                     ),
                     const SizedBox(height: 24),
-
                     Wrap(
                       spacing: 12,
                       runSpacing: 12,
@@ -239,9 +243,7 @@ class _PushComplaintPageState extends State<PushComplaintPage> {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 24),
-
                     Row(
                       children: [
                         Expanded(

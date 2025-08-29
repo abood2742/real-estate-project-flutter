@@ -264,7 +264,7 @@ class _OfficeDetailsPageState extends State<OfficeDetailsPage> {
                   context,
                   MaterialPageRoute(
                     builder: (_) => PushComplaintPage(
-                      officeId: officeDetailsModel!.id,
+                      officeId: officeDetailsModel!.id, type: true,
                     ),
                   ),
                 );
