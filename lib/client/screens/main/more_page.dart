@@ -7,24 +7,27 @@ import 'package:property_system/client/screens/auth/register/complete_register_p
 import 'package:property_system/client/screens/main/Blog/My_BLogs_Page.dart';
 import 'package:property_system/client/screens/main/Blog/create_blog.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/complaint_page.dart';
 import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reservation_status.dart';
 import 'package:property_system/client/reservation%20_for_client/client_create_reservation_page.dart';
-import 'package:property_system/client/screens/main/more/property_offer/post_property1.dart';
-import 'package:property_system/client/screens/main/more/complaint/complaint_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_profile.dart';
+import 'package:property_system/client/screens/main/more/property_offer/post_property1.dart';
+import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
-import 'package:property_system/office/screens/done_properties.dart';
-import 'package:property_system/office/screens/waiting/my_Properties_Page.dart';
 import 'package:property_system/client/services/profile_service_done.dart';
 import 'package:property_system/client/services/token_service.dart';
 import 'package:property_system/common/screens/block_page.dart';
+import 'package:property_system/main.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
 import 'package:property_system/notification/socket_service.dart';
 import 'package:property_system/office/reservation/office_reservation_page.dart';
 import 'package:property_system/office/screens/complaints/complaint_page.dart';
+import 'package:property_system/office/screens/done_properties.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
+import 'package:property_system/office/screens/waiting/my_Properties_Page.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MorePage extends StatefulWidget {
@@ -47,7 +50,6 @@ class _MorePageState extends State<MorePage> {
 
   void _loadUserRole() async {
     final tempUserRole = await AuthService.getUserRole();
-
     setState(() {
       userRole = tempUserRole;
     });
@@ -75,8 +77,6 @@ class _MorePageState extends State<MorePage> {
                     color: Color.fromARGB(255, 47, 88, 0)),
               ),
               const SizedBox(height: 20),
-              /////////////////////////////////////////////////
-              ///
               ListTile(
                 leading: const Text('🇸🇦', style: TextStyle(fontSize: 24)),
                 title: Text(
@@ -87,12 +87,11 @@ class _MorePageState extends State<MorePage> {
                       color: Color.fromARGB(255, 0, 85, 125)),
                 ),
                 onTap: () {
-                  // تغيير اللغة إلى العربية
-                  print("تم اختيار العربية");
+                  Provider.of<LocalizationProvider>(context, listen: false)
+                      .setLocale(const Locale('ar', ''));
                   Navigator.pop(context);
                 },
               ),
-              ///////////////////////////////////////////
               ListTile(
                 leading: const Text('🇺🇸', style: TextStyle(fontSize: 24)),
                 title: Text(
@@ -103,8 +102,8 @@ class _MorePageState extends State<MorePage> {
                       color: Color.fromARGB(255, 0, 85, 125)),
                 ),
                 onTap: () {
-                  // تغيير اللغة إلى الإنجليزية
-                  print("English selected");
+                  Provider.of<LocalizationProvider>(context, listen: false)
+                      .setLocale(const Locale('en', ''));
                   Navigator.pop(context);
                 },
               ),
@@ -126,7 +125,6 @@ class _MorePageState extends State<MorePage> {
           elevation: 2,
           shadowColor: const Color.fromARGB(255, 68, 219, 73),
           title: Row(
-            // mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -144,7 +142,7 @@ class _MorePageState extends State<MorePage> {
                 height: 40,
                 width: 40,
                 child: Lottie.asset(
-                  'assets/more_Animation.json', // تصحيح اسم الملف
+                  'assets/more_Animation.json',
                   repeat: true,
                   animate: true,
                   delegates: LottieDelegates(
@@ -159,7 +157,7 @@ class _MorePageState extends State<MorePage> {
               ),
             ],
           ),
-          backgroundColor: const Color.fromARGB(255, 24, 55, 147),
+          backgroundColor: const Color.fromARGB(255, 36, 150, 188),
           centerTitle: false,
         ),
       ),
@@ -169,7 +167,7 @@ class _MorePageState extends State<MorePage> {
           children: [
             const Text(
               "منتهية",
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Pacifico',
@@ -225,8 +223,6 @@ class _MorePageState extends State<MorePage> {
                         value: isOn,
                         onChanged: (bool newValue) async {
                           final socketService = SocketService();
-
-                          // حفظ الحالة في SharedPreferences
                           _saveNotificationState(newValue);
                           if (!newValue) {
                             final userId = await enableNotificaions();
@@ -249,6 +245,20 @@ class _MorePageState extends State<MorePage> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              "مكتب",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             buildMenuButton(
               icon: Icons.create,
               label: localizations.translate('publish_property'),
@@ -269,7 +279,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('OfficeReservationPage'),
+              label: localizations.translate("عقارات محجوزة"),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return OfficeReservationPage();
@@ -278,17 +288,57 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('CreateBlogPage'),
+              label: localizations.translate('إنشاء مدونة'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return CreateBlogPage();
                 }));
               },
             ),
-
             buildMenuButton(
               icon: Icons.person,
-              label: localizations.translate('enter_your_data'),
+              label: 'شكاوى المكتب',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OfficeComplaintPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('ThePropertiesInWaitingPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return MyPropertiesPage();
+                }));
+              },
+            ),
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('OfficeDonePropertiesPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OfficeDonePropertiesPage();
+                }));
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Text(
+              "عميل",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildMenuButton(
+              icon: Icons.person,
+              label: localizations.translate('إدخال معلومات'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const CompleteRegisterPage();
@@ -297,7 +347,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.local_post_office,
-              label: localizations.translate('create_office'),
+              label: localizations.translate('إنشاء مكتب'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const CreateOfficePage();
@@ -333,55 +383,29 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
-            // ...[
-            //   if (userRole == 'officeManager') ...[
-
-            // const SizedBox(
-            //   height: 40,
-            // ),
-            // const Text(
-            //   "مكتب",
-            //   style: const TextStyle(
-            //     fontSize: 16,
-            //     fontWeight: FontWeight.bold,
-            //     fontFamily: 'Pacifico',
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-
-            // const SizedBox(
-            //   height: 40,
-            // ),
-            // const Text(
-            //   "reservation",
-            //   style: const TextStyle(
-            //     fontSize: 16,
-            //     fontWeight: FontWeight.bold,
-            //     fontFamily: 'Pacifico',
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-
-            // ]
-            // ],
-            // ...[
-            // if (userRole == 'user') ...[
+            buildMenuButton(
+              icon: Icons.report_problem,
+              label: localizations.translate('PushComplaintPage'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PushComplaintPage(
+                    officeId: '',
+                    type: false,
+                  );
+                }));
+              },
+            ),
             const SizedBox(
               height: 40,
             ),
             const Text(
               "غير منتهية",
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Pacifico',
               ),
             ),
-
             buildMenuButton(
               icon: Icons.report_problem,
               label: localizations.translate('MyBlogsPage'),
@@ -391,41 +415,6 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
-
-            buildMenuButton(
-              icon: Icons.person,
-              label: 'شكاوى العميل',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientComplaintPage();
-                }));
-              },
-            ),
-
-            buildMenuButton(
-              icon: Icons.person,
-              label: 'شكاوى المكتب',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return OfficeComplaintPage();
-                }));
-              },
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            const Text(
-              "reserved_properties",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Pacifico',
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-
             buildMenuButton(
               icon: Icons.report_problem,
               label: localizations.translate('ClentReservationStatus'),
@@ -435,12 +424,6 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
-            //   ]
-            // ],
-            const SizedBox(
-              height: 40,
-            ),
-
             buildMenuButton(
               icon: Icons.create,
               label: localizations.translate('publish_property_2'),
@@ -471,36 +454,12 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
-
-            const SizedBox(
-              height: 40,
-            ),
-            const Text(
-              "waiting",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Pacifico',
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
             buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ThePropertiesInWaitingPage'),
+              icon: Icons.person,
+              label: 'شكاوى العميل',
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return MyPropertiesPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('OfficeDonePropertiesPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return OfficeDonePropertiesPage();
+                  return ClientComplaintPage();
                 }));
               },
             ),
@@ -546,12 +505,10 @@ class _MorePageState extends State<MorePage> {
   Future<void> _loadNotificationState() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      isOn = prefs.getBool('notifications_enabled') ??
-          true; // إذا لم يتم التخزين من قبل ارجعه true
+      isOn = prefs.getBool('notifications_enabled') ?? true;
     });
   }
 
-  // دالة لحفظ الحالة عند تغييرها
   Future<void> _saveNotificationState(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('notifications_enabled', value);

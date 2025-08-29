@@ -36,18 +36,22 @@ class _SubscriptionsOfficePaeState extends State<SubscriptionsOfficePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 54, 36, 88),
+      backgroundColor: const Color.fromARGB(255, 133, 163, 185),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'خطة الدفع',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: const Text(
+                'خطة الدفع',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'Pacifico',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
             const SizedBox(height: 30),
@@ -106,7 +110,7 @@ class _SubscriptionsOfficePaeState extends State<SubscriptionsOfficePage> {
                 ),
                 child: const Text(
                   'إستمرار',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 20,fontFamily: 'Pacifico',color: Color.fromARGB(255, 64, 88, 206)),
                 ),
               ),
             ),

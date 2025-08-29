@@ -192,7 +192,7 @@ void _publish() async {
       appBar: AppBar(
         backgroundColor: primaryColor,
         title:
-            const Text('📝 إنشاء مدونة', style: TextStyle(color: Colors.white)),
+            const Text(' إنشاء مدونة', style: TextStyle(color: Colors.white)),
         centerTitle: true,
         actions: [
           TextButton.icon(
@@ -333,7 +333,7 @@ void _publish() async {
             },
             child: Container(
               decoration: const BoxDecoration(
-                color: Colors.black45,
+                color: Colors.white,
                 shape: BoxShape.circle,
               ),
               padding: const EdgeInsets.all(4),

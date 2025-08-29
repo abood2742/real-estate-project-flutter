@@ -49,11 +49,11 @@ class _SearchPageState extends State<SearchPage> {
             Padding(
               padding: const EdgeInsets.only(top: 6),
               child: Text(
-                localizations.translate('search_property'),
+                localizations.translate('البحث عن عقار'),
                 style: const TextStyle(
                   color: Color.fromARGB(255, 53, 145, 133),
                   fontFamily: 'Pacifico',
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -64,8 +64,8 @@ class _SearchPageState extends State<SearchPage> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: localizations.translate('search_location'),
+                      prefixIcon: const Icon(Icons.search,color: Colors.blue,),
+                      hintText: localizations.translate('أدخل موقع'),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -99,17 +99,26 @@ class _SearchPageState extends State<SearchPage> {
                     height: 60,
                     width: 60,
                     decoration: BoxDecoration(
-                      color: Colors.blue.shade100,
+                      color: const Color.fromARGB(255, 143, 199, 244),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.filter_list),
+                        const Icon(
+                          Icons.filter_list,
+                          size: 24,
+                            color: Color.fromARGB(255, 4, 63, 111),
+                        ),
                         const SizedBox(height: 4),
                         Text(
                           localizations.translate('filter'),
-                          style: const TextStyle(fontSize: 10),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Pacifico',
+                            color: Color.fromARGB(255, 4, 63, 111),
+                          ),
                         ),
                       ],
                     ),

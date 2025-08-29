@@ -86,7 +86,7 @@ class PropertyCard extends StatelessWidget {
                           Text(
                             "$area m²",
                             style: const TextStyle(
-                                fontSize: 15, color: Colors.grey),
+                                fontSize: 15, color: Color.fromARGB(255, 129, 129, 129)),
                           ),
                         ],
                       ),

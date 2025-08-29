@@ -24,8 +24,9 @@ class CustomInput extends StatelessWidget {
         onChanged: onChanged,
         decoration: InputDecoration(
           labelText: label,
+          
           filled: true,
-          fillColor: Colors.grey.shade50,
+          fillColor:  const Color.fromARGB(255, 244, 243, 243),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
       ),

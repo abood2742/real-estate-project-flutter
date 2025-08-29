@@ -62,7 +62,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
-          localizations.translate('enter_your_data'),
+          localizations.translate('إدخال معلومات'),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -76,17 +76,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 30),
-              Center(
-                child: Text(
-                  localizations.translate('enter_your_info'),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.blueGrey,
-                  ),
-                ),
-              ),
+            
               const SizedBox(height: 30),
               _buildTextField(localizations.translate('first_name'),
                   TextInputType.name, _firstNameController),
@@ -117,7 +107,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      localizations.translate('upload_profile_picture'),
+                      localizations.translate('تحميل صورة الملف الشخصي'),
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.blueGrey[800],
@@ -141,7 +131,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                   fit: BoxFit.cover,
                 )
               else
-                Text(localizations.translate('no_picture_selected')),
+                Text(localizations.translate('لا يوجد صورة محملة',),style: TextStyle(color: const Color.fromARGB(255, 74, 154, 219)),),
               const SizedBox(height: 30),
               Center(
                 child: isLoading
@@ -185,7 +175,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                           elevation: 4,
                         ),
                         child: Text(
-                          localizations.translate('signup'),
+                          localizations.translate('تسجيل حساب'),
                           style: const TextStyle(
                             fontSize: 18,
                             color: Colors.white,
