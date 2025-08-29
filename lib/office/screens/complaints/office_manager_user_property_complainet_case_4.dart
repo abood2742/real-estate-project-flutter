@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:property_system/client/models/complaient/get_case_4_complainet_model.dart';
+import 'package:property_system/client/models/profile.model.dart';
+import 'package:property_system/client/screens/search/resault/property/Property_Details_Page.dart';
+import 'package:property_system/office/reservation/client_reserver_profile_page.dart';
 
-class OfficeManagerUserOfficeComplainetCase3 extends StatelessWidget {
-  final Map<String, dynamic> complaint;
+class OfficeUserPropertyComplainetCase4 extends StatelessWidget {
+  final GetCase4ComplainetModel complaint;
 
-  OfficeManagerUserOfficeComplainetCase3(
-      {super.key,
-      required this.complaint,
-      required this.title,
-      required this.contained,
-      required this.date,
-      required this.name,
-      required this.phone,
-      required this.phoneClient});
-  String date, contained, title;
-  String name, phoneClient, phone;
+  const OfficeUserPropertyComplainetCase4({
+    super.key,
+    required this.complaint,
+  });
+
   @override
   Widget build(BuildContext context) {
-    final office = complaint["office"] ?? {};
-    final List photos = complaint["officeComplaintPhotos"] ?? [];
+    ProfileModel user = complaint.user;
+    final property = complaint.propertyModel; // افتراض بيانات العقار
+    final List<PropertyComplaintPhoto> photos =
+        complaint.propertyComplaintPhotos;
 
     return Scaffold(
       appBar: AppBar(
@@ -44,19 +44,21 @@ class OfficeManagerUserOfficeComplainetCase3 extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(" معلومات الشكوى",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(color: Colors.teal[700])),
+                      Text(
+                        "معلومات الشكوى",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: const Color.fromARGB(255, 18, 48, 131)),
+                      ),
                       const SizedBox(height: 12),
-                      Text("العنوان: $title,"),
-                      Text("المحتوى: $contained,"),
-                      Text("التاريخ: $date,"),
+                      Text("العنوان: ${complaint.title}"),
+                      Text("المحتوى: ${complaint.content}"),
+                      Text("التاريخ: ${complaint.date.split('T')[0]}"),
                       const SizedBox(height: 12),
                       if (photos.isNotEmpty) ...[
-                        Text("📷 صور الشكوى",
-                            style: Theme.of(context).textTheme.titleMedium),
+                        Text(
+                          "📷 صور الشكوى",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                         const SizedBox(height: 10),
                         SizedBox(
                           height: 160,
@@ -70,7 +72,7 @@ class OfficeManagerUserOfficeComplainetCase3 extends StatelessWidget {
                               return ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.network(
-                                  photo["url"] ?? "",
+                                  photo.url,
                                   width: 220,
                                   height: 160,
                                   fit: BoxFit.cover,
@@ -85,7 +87,7 @@ class OfficeManagerUserOfficeComplainetCase3 extends StatelessWidget {
                             },
                           ),
                         ),
-                      ]
+                      ],
                     ],
                   ),
                 ),
@@ -106,15 +108,15 @@ class OfficeManagerUserOfficeComplainetCase3 extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("🏢 معلومات العميل الذي اشتكى ",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(color: Colors.teal[700])),
+                      Text(
+                        "🏢 معلومات العميل",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: const Color.fromARGB(255, 25, 61, 130)),
+                      ),
                       const SizedBox(height: 12),
-                      Text("الإسم : $name,"),
-                      Text("البريد: $phoneClient"),
-                      Text("الهاتف: $phone,"),
+                      Text("الإسم: ${user.firstName + user.lastName}"),
+                      Text("الإيميل: ${user.email}"),
+                      Text("الهاتف: ${user.phone},"),
                     ],
                   ),
                 ),
@@ -124,7 +126,7 @@ class OfficeManagerUserOfficeComplainetCase3 extends StatelessWidget {
         ),
       ),
 
-         // 🔘 استخدام Stack لإضافة زرين عائمين
+      // 🔘 استخدام Stack لإضافة زرين عائمين
       floatingActionButton: Stack(
         children: [
           // زر المكتب في الزاوية اليسرى السفلية
@@ -132,18 +134,20 @@ class OfficeManagerUserOfficeComplainetCase3 extends StatelessWidget {
             bottom: 10,
             left: 16, // الزاوية اليسرى
             child: FloatingActionButton.extended(
+              heroTag: "user_button",
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) =>
-                        clientComplinted(officeId: office["id"] ?? "", propertyId: '',),
+                    builder: (_) => ClientReserverProfilePage(
+                      userId: user.id,
+                    ),
                   ),
                 );
               },
-              icon: const Icon(Icons.business, color: Colors.white),
+              icon: const Icon(Icons.home, color: Colors.white),
               label: Text(
-                office["name"] ?? "العميل",
+                "${user.firstName} ${user.lastName}",
                 style: const TextStyle(
                   color: Colors.white,
                   fontFamily: 'Pacifico',
@@ -153,27 +157,37 @@ class OfficeManagerUserOfficeComplainetCase3 extends StatelessWidget {
               backgroundColor: const Color.fromARGB(255, 4, 70, 125),
             ),
           ),
-        ])
-    );
-  }
-}
-
-// صفحة العقار (مع تصحيح اسم المعامل)
-class clientComplinted extends StatelessWidget {
-  final String propertyId; // تصحيح من officeId إلى propertyId
-  const clientComplinted({super.key, required this.propertyId, required officeId});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "عميل $propertyId",
-          style: const TextStyle(color: Colors.white, fontFamily: 'Pacifico'),
-        ),
-        backgroundColor: Colors.teal,
+          // زر العقار في الزاوية اليمنى السفلية
+          Positioned(
+            bottom: 10,
+            right: 28, // الزاوية اليمنى
+            child: FloatingActionButton.extended(
+              heroTag: "property_button",
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PropertyDetailsPage(
+                      propertyModel: property,
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.verified_user,
+                  color: Colors.white), // أيقونة للعقار
+              label: Text(
+                property.propertyType.name,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Pacifico',
+                  fontSize: 16,
+                ),
+              ),
+              backgroundColor: const Color.fromARGB(255, 4, 70, 125),
+            ),
+          ),
+        ],
       ),
-      body: Center(child: Text("تفاصيل العميل برقم: $propertyId")),
     );
   }
 }

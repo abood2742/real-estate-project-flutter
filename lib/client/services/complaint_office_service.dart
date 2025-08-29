@@ -4,19 +4,21 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http_parser/http_parser.dart';
 import 'package:property_system/client/models/complaient/create_office_complaint_model.dart';
+import 'package:property_system/client/models/complaient/get_case_1_complainet_model.dart';
+import 'package:property_system/client/models/complaient/get_case_3_complainet_model.dart';
 import 'package:property_system/client/services/token_service.dart';
 
-class ComplainetPropertyService {
+class OfficeComplaintService {
   final Dio _dio = Dio();
+
   Future<Response> createComplaint(
       CreateOfficeComplaintModel complaint, List<dynamic> images) async {
     try {
       final token = await AuthService.getAccessToken();
-      print('enter to service ');
 
       // تجهيز البيانات النصية
       FormData formData = FormData.fromMap({
-        "propertyId": complaint.officeId,
+        "officeId": complaint.officeId,
         "title": complaint.title,
         "content": complaint.content,
       });
@@ -56,12 +58,10 @@ class ComplainetPropertyService {
           throw Exception('نوع الملف غير مدعوم');
         }
       }
-      print('yes');
 
       // إرسال للـ API
       final response = await _dio.post(
-        'http://localhost:3000/api/property-complaint',
-
+        'http://localhost:3000/api/office-complaint',
         data: formData,
         options: Options(
           headers: {
@@ -70,13 +70,73 @@ class ComplainetPropertyService {
           },
         ),
       );
-            print('no');
-
 
       return response;
     } on DioError catch (e) {
       throw _handleError(e);
     }
+  }
+
+  Future<List<GetCase1ComplainetModel>?> getUserComplaintsOnOffice() async {
+    var token = await AuthService.getAccessToken();
+
+    try {
+      Response response =
+          await _dio.get('http://localhost:3000/api/office-complaint/user',
+              options: Options(headers: {
+                'Authorization': 'Bearer $token',
+                'Content-Type': 'multipart/form-data',
+              }));
+
+      if (response.statusCode == 200) {
+        List<dynamic> list = response.data;
+
+        List<GetCase1ComplainetModel> complaints = [];
+
+        var complaint;
+
+        for (int i = 0; i < list.length; i++) {
+          complaint = GetCase1ComplainetModel.fromJson(list[i]);
+          complaints.add(complaint);
+        }
+
+        return complaints;
+      }
+    } on DioError catch (e) {
+      throw _handleError(e);
+    }
+    return null;
+  }
+
+  Future<List<GetCase3ComplainetModel>?> getComplaintsOnOffice() async {
+    var token = await AuthService.getAccessToken();
+
+    try {
+      Response response =
+          await _dio.get('http://localhost:3000/api/office-complaint',
+              options: Options(headers: {
+                'Authorization': 'Bearer $token',
+                'Content-Type': 'multipart/form-data',
+              }));
+
+      if (response.statusCode == 200) {
+        List<dynamic> list = response.data;
+
+        List<GetCase3ComplainetModel> complaints = [];
+
+        var complaint;
+
+        for (int i = 0; i < list.length; i++) {
+          complaint = GetCase3ComplainetModel.fromJson(list[i]);
+          complaints.add(complaint);
+        }
+
+        return complaints;
+      }
+    } on DioError catch (e) {
+      throw _handleError(e);
+    }
+    return null;
   }
 
   // التعرف على نوع الصورة (للويب)

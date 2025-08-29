@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/components/complaint_card_office.dart';
-import 'package:property_system/client/components/complaint_card_property.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reservation_page.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
@@ -9,32 +7,22 @@ import 'package:property_system/client/screens/auth/register/complete_register_p
 import 'package:property_system/client/screens/main/Blog/My_BLogs_Page.dart';
 import 'package:property_system/client/screens/main/Blog/create_blog.dart';
 import 'package:property_system/client/screens/main/more/client_properties/client_expired_property_page.dart';
-import 'package:property_system/client/screens/main/more/complaint/client_user_property_complainet_case_2.dart';
-import 'package:property_system/client/screens/main/more/complaint/cloused_compailent_page.dart';
-import 'package:property_system/client/screens/main/more/complaint/existing_compailent_page.dart';
-import 'package:property_system/client/screens/main/more/complaint/office_manager_user_office_complainet_case_3.dart';
-import 'package:property_system/client/screens/main/more/complaint/office_manager_user_property_complainet_case_4.dart';
 import 'package:property_system/client/screens/main/more/create_property/Create_Property_Page.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reservation_status.dart';
 import 'package:property_system/client/reservation%20_for_client/client_create_reservation_page.dart';
 import 'package:property_system/client/screens/main/more/property_offer/post_property1.dart';
-import 'package:property_system/client/screens/main/more/complaint/complaient_page.dart';
-import 'package:property_system/client/screens/main/more/complaint/push_complaint_page.dart';
+import 'package:property_system/client/screens/main/more/complaint/complaint_page.dart';
 import 'package:property_system/client/screens/main/more/profile/client_profile.dart';
 import 'package:property_system/client/screens/search/map/map_page.dart';
-import 'package:property_system/client/screens/waiting/expired_properties_to_push_page.dart';
-import 'package:property_system/client/screens/waiting/properties_dont_pushed_yet_page.dart';
-import 'package:property_system/client/screens/waiting/rented_page.dart';
-import 'package:property_system/client/screens/waiting/salled_page.dart';
-import 'package:property_system/client/screens/waiting/the_properties_in_whaiting_page.dart';
-import 'package:property_system/client/screens/waiting/to_rent_page.dart';
-import 'package:property_system/client/screens/waiting/to_sall_page.dart';
+import 'package:property_system/office/screens/done_properties.dart';
+import 'package:property_system/office/screens/waiting/my_Properties_Page.dart';
 import 'package:property_system/client/services/profile_service_done.dart';
 import 'package:property_system/client/services/token_service.dart';
 import 'package:property_system/common/screens/block_page.dart';
 import 'package:property_system/notification/screen/notification_page.dart';
 import 'package:property_system/notification/socket_service.dart';
 import 'package:property_system/office/reservation/office_reservation_page.dart';
+import 'package:property_system/office/screens/complaints/complaint_page.dart';
 import 'package:property_system/office/screens/subscriptions_office_page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -187,7 +175,7 @@ class _MorePageState extends State<MorePage> {
                 fontFamily: 'Pacifico',
               ),
             ),
-              buildMenuButton(
+            buildMenuButton(
               icon: Icons.language,
               label: localizations.translate('language'),
               onTap: () {
@@ -409,100 +397,20 @@ class _MorePageState extends State<MorePage> {
               label: 'شكاوى العميل',
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ComplaintPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: '  ClientUserPropertyComplainetCase2',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClientUserPropertyComplainetCase2(
-                    complaint: {},
-                    title: '',
-                    contained: '',
-                    date: '',
-                    name: '',
-                    phone: '',
-                    post: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: '  OfficeManagerUserOfficeComplainetCase3',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return OfficeManagerUserOfficeComplainetCase3(
-                    complaint: {},
-                    title: '',
-                    contained: '',
-                    date: '',
-                    name: '',
-                    phone: '',
-                    phoneClient: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: '  OfficeManagerUserPropertyComplainetCase4',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return OfficeManagerUserPropertyComplainetCase4(
-                    complaint: {},
-                    title: '',
-                    contained: '',
-                    date: '',
-                    name: '',
-                    phone: '',
-                    clientEmail: '',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: 'ارسال الشكوى',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PushComplaintPage(
-                    officeId: '',
-                    type: false,
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: ' ComplaintCardOffice',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ComplaintCardOffice(
-                    officeName: 'التقى',
-                    complaintTitle: 'أخلاق',
-                    complaintDate: 'صحية ',
-                  );
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.person,
-              label: ' ComplaintCardProperty',
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ComplaintCardProperty(
-                    propertyName: 'شقة',
-                    complaintTitle: 'تسرب المياه',
-                    complaintDate: 'من الماسورة',
-                  );
+                  return ClientComplaintPage();
                 }));
               },
             ),
 
+            buildMenuButton(
+              icon: Icons.person,
+              label: 'شكاوى المكتب',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OfficeComplaintPage();
+                }));
+              },
+            ),
             const SizedBox(
               height: 40,
             ),
@@ -532,7 +440,7 @@ class _MorePageState extends State<MorePage> {
             const SizedBox(
               height: 40,
             ),
-          
+
             buildMenuButton(
               icon: Icons.create,
               label: localizations.translate('publish_property_2'),
@@ -563,59 +471,6 @@ class _MorePageState extends State<MorePage> {
                 }));
               },
             ),
-            const SizedBox(
-              height: 40,
-            ),
-            const Text(
-              "complaints",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Pacifico',
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ClousedCompailentPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ClousedCompailentPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ComplaintPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ComplaintPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ExistingCompailentPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ExistingCompailentPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('PushComplaintPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PushComplaintPage(
-                    officeId: '',
-                    type: false,
-                  );
-                }));
-              },
-            ),
 
             const SizedBox(
               height: 40,
@@ -633,64 +488,19 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('ExpiredPropertiesToPushPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ExpiredPropertiesToPushPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('PropertiesDontPushedYetPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PropertiesDontPushedYetPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('RentedPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return RentedPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('SalledPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SalledPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
               label: localizations.translate('ThePropertiesInWaitingPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ThePropertiesInWaitingPage();
+                  return MyPropertiesPage();
                 }));
               },
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('ToRentPage'),
+              label: localizations.translate('OfficeDonePropertiesPage'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ToRentPage();
-                }));
-              },
-            ),
-            buildMenuButton(
-              icon: Icons.report_problem,
-              label: localizations.translate('ToSallPage'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ToSallPage();
+                  return OfficeDonePropertiesPage();
                 }));
               },
             ),

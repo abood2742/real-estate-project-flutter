@@ -1,116 +1,69 @@
 import 'package:flutter/material.dart';
 
-class ComplaintCardProperty extends StatelessWidget {
-  const ComplaintCardProperty(
-      {super.key,
-      required this.propertyName,
-      required this.complaintTitle,
-      required this.complaintDate});
+/// بطاقة شكوى عقار
+class PropertyComplaintCard extends StatelessWidget {
+  final VoidCallback onTap;
+  final String date;
+  final String title;
+  final String city;
+  final String propertyNumber;
+  final String type;
 
-  final String propertyName;
-  final String complaintTitle;
-  final String complaintDate;
+
+
+  const PropertyComplaintCard({
+    super.key,
+    required this.onTap, 
+    required this.date, 
+    required this.title, 
+    required this.city, 
+    required this.propertyNumber, 
+    required this.type,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Card(
-            elevation: 2,
-            child: Container(
-              height: 250,
-              width: 450,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.white,
-              ),
-              child: Column(
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  // 🏢 اسم المكتب
-                  Row(
-                    children: [
-                      const Icon(Icons.business,
-                          color: Colors.grey, size: 22), // ✅ أصغر
-                      const SizedBox(width: 8),
-                      const Text(
-                        'اسم العقار : ',
-                        style: TextStyle(
-                          fontFamily: 'Pacifico',
-                          color: Color.fromARGB(115, 0, 128, 98),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16, // ✅ بدل 18
-                        ),
+                  const Icon(Icons.home, color: Colors.green),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      "$type - $propertyNumber - $city",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Expanded(
-                        child: Text(
-                          propertyName,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.lightBlue,
-                              fontFamily: 'Pacifico'),
-                        ),
-                      ),
-                    ],
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  const SizedBox(height: 33),
-
-                  // 📝 عنوان الشكوى
-                  Row(
-                    children: [
-                      const Icon(Icons.title, color: Colors.grey, size: 22),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'عنوان الشكوى: ',
-                        style: TextStyle(
-                          fontFamily: 'Pacifico',
-                          color: Color.fromARGB(115, 0, 128, 98),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          complaintTitle,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.lightBlue,
-                              fontFamily: 'Pacifico'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 33),
-
-                  // 📅 تاريخ الشكوى
-                  Row(
-                    children: [
-                      const Icon(Icons.date_range,
-                          color: Colors.grey, size: 22),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'تاريخ الشكوى: ',
-                        style: TextStyle(
-                          fontFamily: 'Pacifico',
-                          color: Color.fromARGB(115, 0, 128, 98),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          complaintDate,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.lightBlue,
-                              fontFamily: 'Pacifico'),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    date.split('T')[0],
+                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
                   ),
                 ],
               ),
-            ),
-          )),
+              const SizedBox(height: 8),
+              Text(
+                title,
+                style: const TextStyle(fontSize: 14),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

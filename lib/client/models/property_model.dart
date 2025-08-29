@@ -34,12 +34,14 @@ class OfficeOfProperty {
   String officeId;
   String officeName;
   String officeEmail;
+  String? officePhone;
   Photo? officePhoto;
 
   OfficeOfProperty({
     required this.officeId,
     required this.officeName,
     required this.officeEmail,
+    this.officePhone,
     this.officePhoto,
   });
 
@@ -48,6 +50,7 @@ class OfficeOfProperty {
       officeId: json["id"],
       officeName: json["name"],
       officeEmail: json["office_email"],
+      officePhone: json["office_phone"],
       officePhoto: json["office_photo"] != null
           ? Photo.fromJson(json["office_photo"])
           : null,

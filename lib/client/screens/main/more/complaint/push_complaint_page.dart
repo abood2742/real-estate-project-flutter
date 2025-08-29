@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:property_system/client/components/custom_button.dart';
 import 'package:property_system/client/models/complaient/create_office_complaint_model.dart';
-import 'package:property_system/client/services/complainet_office_service.dart';
-import 'package:property_system/client/services/complainet_property_service.dart';
+import 'package:property_system/client/services/complaint_office_service.dart';
+import 'package:property_system/client/services/complaint_property_service.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
 class PushComplaintPage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _PushComplaintPageState extends State<PushComplaintPage> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
-  final ComplaintService _complaintService = ComplaintService();
+  final OfficeComplaintService _officeComplaintService = OfficeComplaintService();
 
   List<Uint8List> _webImages = [];
   List<io.File> _mobileImages = [];
@@ -92,9 +92,9 @@ class _PushComplaintPageState extends State<PushComplaintPage> {
       print('1');
 
       if (widget.type == true) {
-        await _complaintService.createComplaint(complaint, photos);
+        await _officeComplaintService.createComplaint(complaint, photos);
       } else{
-        await ComplainetPropertyService().createComplaint(complaint, photos);
+        await PropertyComplaintService().createComplaint(complaint, photos);
     }
       _showSnack('تم إرسال الشكوى بنجاح', Colors.green);
 

@@ -1,12 +1,12 @@
-
+// ThePropertiesInWaitingPage.dart
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:property_system/client/screens/main/more/complaint/cloused_compailent_page.dart';
-import 'package:property_system/client/screens/main/more/complaint/existing_compailent_page.dart';
+import 'package:property_system/office/screens/waiting/Accepted_Properties_Page.dart';
+import 'package:property_system/office/screens/waiting/Pending_Properties_Page.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
-class ComplaintPage extends StatelessWidget {
-  const ComplaintPage({super.key});
+class MyPropertiesPage extends StatelessWidget {
+  const MyPropertiesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +14,16 @@ class ComplaintPage extends StatelessWidget {
 
     return DefaultTabController(
       length: 2,
+      initialIndex: 0, // الافتراضي: ExpiredPropertiesToPushPage
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF3D60C6),
+          backgroundColor: const Color.fromARGB(255, 53, 150, 148),
           toolbarHeight: 40,
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                localizations.translate('submit_complaint'),
+                localizations.translate('عقاراتي'),
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -31,10 +32,10 @@ class ComplaintPage extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               SizedBox(
-                height: 50,
-                width: 50,
+                height: 30,
+                width: 30,
                 child: Lottie.asset(
-                  'assets/complaint.json',
+                  'assets/push.json',
                   repeat: true,
                   animate: true,
                 ),
@@ -48,20 +49,20 @@ class ComplaintPage extends StatelessWidget {
             unselectedLabelColor: Colors.white70,
             tabs: [
               Tab(
-                icon: const Icon(Icons.report_problem),
-                text: localizations.translate('existing_complaints'),
+                icon: const Icon(Icons.done),
+                text: localizations.translate('عقارات منشورة'),
               ),
               Tab(
-                icon: const Icon(Icons.done),
-                text: localizations.translate('closed_complaints'),
+                icon: const Icon(Icons.line_axis),
+                text: localizations.translate('عقارات في انتظار الموافقة'),
               ),
             ],
           ),
         ),
         body: TabBarView(
-          children: [
-            ExistingCompailentPage(),
-            ClousedCompailentPage(),
+          children: const [
+            AcceptedPropertiesPage(),
+            PendingPropertiesPage(),
           ],
         ),
       ),
