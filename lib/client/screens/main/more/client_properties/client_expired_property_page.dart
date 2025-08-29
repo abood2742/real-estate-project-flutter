@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/expired_components.dart';
 import 'package:property_system/client/models/client_done_Properties.dart';
+import 'package:property_system/client/screens/search/resault/property/Property_Details_Page.dart';
 import 'package:property_system/client/services/client_done_properties.dart';
 import 'package:property_system/l10n/app_localizations.dart';
 
@@ -90,7 +91,14 @@ class _ClientExpiredPropertyPageState extends State<ClientExpiredPropertyPage> {
           return ExpiredComponents(
             property: property,
             onTap: () {
-              // فتح تفاصيل العقار
+              Navigator.push(
+            context,
+            MaterialPageRoute(
+              // i think this page name has to be changed
+              builder: (_) => PropertyDetailsPage(
+                propertyModel: property.propertyModel,
+              ),
+            ));
             },
           );
         },

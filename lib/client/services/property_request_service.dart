@@ -94,43 +94,4 @@ class PropertyRequestService {
       return "Unexpected error occurred";
     }
   }
-
-  // دالة مساعدة لتصحيح البيانات قبل الإرسال
-  Map<String, dynamic> _debugRequestData({
-    required String property_Number,
-    required String propertyType,
-    required String typeOfPropertyType,
-    required String space,
-    required String location_Id,
-    required int owner_personal_Identity_Number,
-    required String owner_name,
-    required int client_personal_Identity_Number,
-    required String client_name,
-    required double price,
-    required String type,
-    DateTime? sell_Date,
-    DateTime? rental_Start_Date,
-    DateTime? rental_End_Date,
-  }) {
-    return {
-      "Archive": {
-        "property_Number": property_Number,
-        "propertyType": propertyType,
-        "typeOfPropertyType": typeOfPropertyType,
-        "space": space,
-        "location_Id": location_Id,
-      },
-      "Record": {
-        "owner_personal_Identity_Number": owner_personal_Identity_Number,
-        "owner_name": owner_name,
-        "client_personal_Identity_Number": client_personal_Identity_Number,
-        "client_name": client_name,
-        "price": price,
-        "type": type,
-        "sell_Date": sell_Date?.toIso8601String(),
-        "rental_Start_Date": rental_Start_Date?.toIso8601String(),
-        "rental_End_Date": rental_End_Date?.toIso8601String(),
-      }
-    };
-  }
 }
