@@ -22,15 +22,15 @@ class OfficeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 10,bottom: 2),
       child: GestureDetector(
         onTap: onTap,
         child: Card(
-          color: const Color.fromARGB(255, 164, 187, 237),
+          color:  Colors.white,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           elevation: 2,
-          shadowColor: const Color.fromARGB(255, 58, 145, 133),
+          shadowColor: const Color.fromARGB(255, 50, 160, 146),
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(

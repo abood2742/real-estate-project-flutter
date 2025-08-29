@@ -57,7 +57,7 @@ class _PaymentDetailsPageState extends State<SubscriptionsNextPage> {
           'بيانات الدفع',
           style: TextStyle(
             fontSize: 18,
-            color: Color.fromARGB(255, 44, 82, 207),
+            color: Colors.white,
             fontFamily: 'Pacifico',
           ),
         ),

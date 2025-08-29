@@ -1,3 +1,4 @@
+
 import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:property_system/client/models/property_type_model.dart';
 import 'package:property_system/client/services/License_service_done.dart';
 import 'package:property_system/client/services/property_service_done.dart';
 import 'package:property_system/client/services/propety_Type_service_done.dart';
+import 'package:property_system/l10n/app_localizations.dart';
 
 class CreateProperty extends StatefulWidget {
   const CreateProperty({
@@ -33,7 +35,7 @@ class _CreatePropertyState extends State<CreateProperty> {
     "industrial",
     "agricultural"
   ];
-  String selectedTypeOfPropertyTypes = 'residential'; // القيمة الافتراضية
+  String selectedTypeOfPropertyTypes = 'residential';
 
   List<PropertyTypeModel>? propertyTypes = [];
   PropertyTypeModel? selectedPropertyType;
@@ -67,15 +69,14 @@ class _CreatePropertyState extends State<CreateProperty> {
   Map<String, bool> boolAttributes = {};
   Map<String, dynamic> valueAttributes = {};
 
-  List<Uint8List> _propertyImagesBytes = []; // للويب
-  List<io.File> _propertyImagesFiles = []; // للهاتف
+  List<Uint8List> _propertyImagesBytes = [];
+  List<io.File> _propertyImagesFiles = [];
   final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
     fetchPropertyTypesInfo();
-    // ✅ اجعل أول نوع مفعل افتراضياً
     selectedTypeOfPropertyTypes = typesOfPropertyTypes.first;
   }
 
@@ -91,7 +92,6 @@ class _CreatePropertyState extends State<CreateProperty> {
       licenseTypes = fetchedLicensceTypesInfo!;
 
       if (propertyTypes!.isNotEmpty) {
-        // ✅ اجعل أول نوع فرعي (propertyType) مختار
         final filteredProps = propertyTypes!
             .where((p) => p.type == selectedTypeOfPropertyTypes)
             .toList();
@@ -137,24 +137,26 @@ class _CreatePropertyState extends State<CreateProperty> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: const Text('📝 نشر عقار'),
+        title: Text(localizations.translate('publish_property'),style: TextStyle(color: Colors.white),),
         centerTitle: true,
         backgroundColor: primaryColor,
       ),
       body: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: localizations.translate('text_direction') == 'rtl'
+            ? TextDirection.rtl
+            : TextDirection.ltr,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionTitle("اختر نوع العقار"),
+              _buildSectionTitle(localizations.translate('select_property_type')),
               const SizedBox(height: 10),
-
-              // ------------------ نوع العقار ------------------
               PropertyTypeSelector(
                 typesOfPropertyTypes: typesOfPropertyTypes,
                 selectedType: selectedTypeOfPropertyTypes,
@@ -167,14 +169,12 @@ class _CreatePropertyState extends State<CreateProperty> {
                             [];
 
                     if (filteredProps.isNotEmpty) {
-                      // ✅ اجعل أول نوع فرعي مفعل افتراضياً
                       selectedPropertyType = filteredProps.first;
                       fetchAttributesForType(selectedPropertyType!.id);
                     }
                   });
                 },
               ),
-              // ------------------ العقارات التابعة للنوع ------------------
               if (propertyTypes != null &&
                   propertyTypes!
                       .any((p) => p.type == selectedTypeOfPropertyTypes)) ...[
@@ -202,7 +202,7 @@ class _CreatePropertyState extends State<CreateProperty> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CustomSelectButton(
-                    label: 'بيع',
+                    label: localizations.translate('selling'),
                     isSelected: typeOperation == 'selling',
                     onPressed: () {
                       setState(() {
@@ -212,7 +212,7 @@ class _CreatePropertyState extends State<CreateProperty> {
                   ),
                   const SizedBox(width: 10),
                   CustomSelectButton(
-                    label: 'تأجير',
+                    label: localizations.translate('renting'),
                     isSelected: typeOperation == 'renting',
                     onPressed: () {
                       setState(() {
@@ -223,28 +223,28 @@ class _CreatePropertyState extends State<CreateProperty> {
                 ],
               ),
               const SizedBox(height: 15),
-              _buildSectionTitle("البيانات الأساسية"),
+              _buildSectionTitle(localizations.translate('basic_information')),
               const SizedBox(height: 10),
               CustomCard(
                 children: [
                   CustomInput(
-                      label: "رقم العقار",
+                      label: localizations.translate('property_number'),
                       controller: propertyNumberController,
                       keyboardType: TextInputType.text),
                   CustomInput(
-                      label: "اسم صاحب العقار",
+                      label: localizations.translate('owner_name'),
                       controller: ownerController,
                       keyboardType: TextInputType.text),
                   CustomInput(
-                      label: "المساحة",
+                      label: localizations.translate('space'),
                       controller: spaceController,
                       keyboardType: TextInputType.number),
                   CustomInput(
-                      label: "السعر",
+                      label: localizations.translate('price'),
                       controller: priceController,
                       keyboardType: TextInputType.number),
                   CustomInput(
-                      label: "الوصف",
+                      label: localizations.translate('description'),
                       controller: descriptionController,
                       keyboardType: TextInputType.text),
                   LicenseTypeDropdown(
@@ -255,35 +255,35 @@ class _CreatePropertyState extends State<CreateProperty> {
                       });
                     },
                     items: licenseTypes,
-                    hint: 'اختر نوع الرخصة',
+                    hint: localizations.translate('select_license_type'),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
                   CustomInput(
-                      label: "رقم الرخصة",
+                      label: localizations.translate('license_number'),
                       controller: licenseNumberController,
                       keyboardType: TextInputType.text),
                   CustomInput(
-                      label: "المحافظة",
+                      label: localizations.translate('governorate'),
                       controller: governorateController,
                       keyboardType: TextInputType.text),
                   CustomInput(
-                      label: "المديرية",
+                      label: localizations.translate('province'),
                       controller: provinceController,
                       keyboardType: TextInputType.text),
                   CustomInput(
-                      label: "المدينة",
+                      label: localizations.translate('city'),
                       controller: cityController,
                       keyboardType: TextInputType.text),
                   CustomInput(
-                      label: "الشارع",
+                      label: localizations.translate('street'),
                       controller: streetController,
                       keyboardType: TextInputType.text),
                 ],
               ),
               const SizedBox(height: 20),
-              _buildSectionTitle("الصفات الإضافية"),
+              _buildSectionTitle(localizations.translate('additional_attributes')),
               const SizedBox(height: 10),
               CustomCard(
                 children: [
@@ -304,10 +304,8 @@ class _CreatePropertyState extends State<CreateProperty> {
                   )
                 ],
               ),
-
               const SizedBox(height: 30),
-              // داخل build، عرض الصور المرفوعة
-              _buildSectionTitle("صور العقار"),
+              _buildSectionTitle(localizations.translate('property_images')),
               const SizedBox(height: 10),
               Card(
                 elevation: 3,
@@ -322,7 +320,7 @@ class _CreatePropertyState extends State<CreateProperty> {
                         mini: true,
                         onPressed: _uploadPropertyPhotos,
                         backgroundColor: primaryColor,
-                        child: const Icon(Icons.add),
+                        child: const Icon(Icons.add,color: Colors.white,),
                       ),
                       const SizedBox(height: 16),
                       _propertyImagesBytes.isNotEmpty
@@ -347,7 +345,7 @@ class _CreatePropertyState extends State<CreateProperty> {
                                           fit: BoxFit.cover))
                                       .toList(),
                                 )
-                              : const Text('لم يتم اختيار صور'),
+                              : Text(localizations.translate('no_images_selected')),
                     ],
                   ),
                 ),
@@ -362,16 +360,15 @@ class _CreatePropertyState extends State<CreateProperty> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(success
-                            ? "✅ تم نشر العقار بنجاح"
-                            : "❌ فشل نشر العقار"),
-                        backgroundColor: success ? Colors.green : Colors.red,
+                            ? localizations.translate('property_published_success')
+                            : localizations.translate('property_published_failed')),
+                        backgroundColor: success ? Colors.green : const Color.fromARGB(255, 255, 166, 159),
                       ),
                     );
                   },
-                  icon: const Icon(Icons.send),
-                  label: const Text('نشر العقار'),
+                  label: Text(localizations.translate('publish_property_button',),style: TextStyle(color: Colors.white,fontFamily: 'Pacifico',fontSize: 16),),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
+                    backgroundColor: const Color.fromARGB(255, 0, 156, 187),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 40, vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -397,7 +394,7 @@ class _CreatePropertyState extends State<CreateProperty> {
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected
               ? const Color.fromARGB(255, 21, 129, 217)
-              : Colors.grey[300],
+              : Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -412,7 +409,6 @@ class _CreatePropertyState extends State<CreateProperty> {
               selectedPropertyType = selectedProp;
               fetchAttributesForType(selectedProp.id);
             }
-            // ❌ منع إلغاء الاختيار
           });
         },
         child: Column(
@@ -441,7 +437,6 @@ class _CreatePropertyState extends State<CreateProperty> {
     );
   }
 
-  // 🟢 Section Title
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
@@ -458,10 +453,9 @@ class _CreatePropertyState extends State<CreateProperty> {
 
     if (pickedFiles != null && pickedFiles.isNotEmpty) {
       if (kIsWeb) {
-        // للويب
         List<Uint8List> webImages = [];
         for (var file in pickedFiles) {
-          final bytes = await file.readAsBytes(); // <-- الطريقة الصحيحة
+          final bytes = await file.readAsBytes();
           webImages.add(bytes);
         }
         setState(() {
@@ -469,7 +463,6 @@ class _CreatePropertyState extends State<CreateProperty> {
           _propertyImagesFiles.clear();
         });
       } else {
-        // للهاتف
         List<io.File> mobileFiles =
             pickedFiles.map((f) => io.File(f.path)).toList();
         setState(() {
@@ -484,12 +477,11 @@ class _CreatePropertyState extends State<CreateProperty> {
     List<Map<String, dynamic>> allAttributes =
         toAttributeList(boolAttributes, valueAttributes);
 
-    // نحدد الصور حسب المنصة
     List<dynamic> photos = [];
     if (_propertyImagesFiles.isNotEmpty) {
-      photos = _propertyImagesFiles; // للجوال
+      photos = _propertyImagesFiles;
     } else if (_propertyImagesBytes.isNotEmpty) {
-      photos = _propertyImagesBytes; // للويب
+      photos = _propertyImagesBytes;
     }
 
     bool? status = await PropertyService().createProperty(
@@ -513,35 +505,32 @@ class _CreatePropertyState extends State<CreateProperty> {
     return status!;
   }
 
-List<Map<String, dynamic>> toAttributeList(
-  Map<String, dynamic> boolAttributes,
-  Map<String, dynamic> valueAttributes,
-) {
-  List<Map<String, dynamic>> result = [];
+  List<Map<String, dynamic>> toAttributeList(
+    Map<String, dynamic> boolAttributes,
+    Map<String, dynamic> valueAttributes,
+  ) {
+    List<Map<String, dynamic>> result = [];
 
-  // تحويل attributes إلى خريطة تسهل الوصول بالـ id
-  final Map<String, String> idToName = {
-    for (var attr in attributes) attr.id: attr.name,
-  };
+    final Map<String, String> idToName = {
+      for (var attr in attributes) attr.id: attr.name,
+    };
 
-  // boolean attributes
-  boolAttributes.forEach((key, value) {
-    if (value == false) return;
-    result.add({
-      "name": idToName[key] ?? key, // إرسال الاسم بدل id
-      "value": value.toString(),
+    boolAttributes.forEach((key, value) {
+      if (value == false) return;
+      result.add({
+        "name": idToName[key] ?? key,
+        "value": value.toString(),
+      });
     });
-  });
 
-  // value attributes
-  valueAttributes.forEach((key, value) {
-    if (value == 0 || value == "") return;
-    result.add({
-      "name": idToName[key] ?? key, // إرسال الاسم بدل id
-      "value": value.toString(),
+    valueAttributes.forEach((key, value) {
+      if (value == 0 || value == "") return;
+      result.add({
+        "name": idToName[key] ?? key,
+        "value": value.toString(),
+      });
     });
-  });
 
-  return result;
-}
+    return result;
+  }
 }

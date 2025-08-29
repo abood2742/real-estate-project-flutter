@@ -85,7 +85,7 @@ class _ClientReservationPageState extends State<ClientReservationPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 79, 142, 147),
+            backgroundColor: const Color.fromARGB(255, 17, 150, 199),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
