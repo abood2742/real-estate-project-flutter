@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:property_system/client/components/complaint_card_office.dart';
+import 'package:property_system/client/components/complaint_card_property.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reservation_page.dart';
 import 'package:property_system/client/screens/auth/register/Create_Office_Page.dart';
@@ -359,24 +361,18 @@ class _MorePageState extends State<MorePage> {
                     }));
                   },
                 ),
-                buildMenuButton(
-                  icon: Icons.person,
-                  label: '  ClientUserOfficeComplaintCase1',
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return ClientUserOfficeComplaintCase1(
-                        complaint: {},
-                        title: '',
-                        contained: '',
-                        date: '',
-                        name: '',
-                        phone: '',
-                        post: '',
-                      );
-                    }));
-                  },
-                ),
+                // buildMenuButton(
+                //   icon: Icons.person,
+                //   label: '  ClientUserOfficeComplaintCase1', 
+                //   onTap: () {
+                //     Navigator.push(context,
+                //         MaterialPageRoute(builder: (context) {
+                //       return ClientUserOfficeComplaintCase1(complaint: {},
+                     
+                //       );
+                //     }));
+                //   },
+                // ),
                 buildMenuButton(
                   icon: Icons.person,
                   label: '  ClientUserPropertyComplainetCase2',
@@ -438,7 +434,36 @@ class _MorePageState extends State<MorePage> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return PushComplaintPage(
-                        officeId: '',
+                        officeId: '', type: false,
+                      );
+                    }));
+                  },
+                ),
+                SizedBox(
+                  height: 100,
+                ),
+                buildMenuButton(
+                  icon: Icons.person,
+                  label: ' ComplaintCardOffice',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ComplaintCardOffice(officeName: 'التقى', complaintTitle: 'أخلاق', complaintDate: 'صحية ',
+                      );
+                    }));
+                  },
+                ),
+                SizedBox(
+                  height: 100,
+                ),
+
+                   buildMenuButton(
+                  icon: Icons.person,
+                  label: ' ComplaintCardProperty',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ComplaintCardProperty(propertyName: 'شقة', complaintTitle: 'تسرب المياه', complaintDate: 'من الماسورة',
                       );
                     }));
                   },
@@ -612,7 +637,7 @@ class _MorePageState extends State<MorePage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return PushComplaintPage(
-                    officeId: '',
+                    officeId: '', type: false,
                   );
                 }));
               },

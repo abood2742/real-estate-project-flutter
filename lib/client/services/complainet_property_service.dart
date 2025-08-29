@@ -6,17 +6,17 @@ import 'package:http_parser/http_parser.dart';
 import 'package:property_system/client/models/complaient/create_office_complaint_model.dart';
 import 'package:property_system/client/services/token_service.dart';
 
-class ComplaintService {
+class ComplainetPropertyService {
   final Dio _dio = Dio();
-
   Future<Response> createComplaint(
       CreateOfficeComplaintModel complaint, List<dynamic> images) async {
     try {
       final token = await AuthService.getAccessToken();
+      print('enter to service ');
 
       // تجهيز البيانات النصية
       FormData formData = FormData.fromMap({
-        "officeId": complaint.officeId,
+        "propertyId": complaint.officeId,
         "title": complaint.title,
         "content": complaint.content,
       });
@@ -56,10 +56,12 @@ class ComplaintService {
           throw Exception('نوع الملف غير مدعوم');
         }
       }
+      print('yes');
 
       // إرسال للـ API
       final response = await _dio.post(
-        'http://localhost:3000/api/office-complaint',
+        'http://localhost:3000/api/property-complaint',
+
         data: formData,
         options: Options(
           headers: {
@@ -68,6 +70,8 @@ class ComplaintService {
           },
         ),
       );
+            print('no');
+
 
       return response;
     } on DioError catch (e) {
