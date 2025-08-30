@@ -70,4 +70,65 @@ class BlogService {
     }
     return false;
   }
+
+  Future<List<BlogModel>?> getMyBlogs() async {
+    Dio dio = new Dio();
+    var token = await AuthService.getAccessToken();
+
+    try {
+      Response response = await dio.get('http://localhost:3000/api/blog/office',
+      options: Options(headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'multipart/form-data',
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> list = response.data;
+
+        List<BlogModel> blogs = [];
+
+        var blog;
+
+        for (int i = 0; i < list.length; i++) {
+          blog = BlogModel.fromJson(list[i]);
+          blogs.add(blog);
+        }
+
+        return blogs;
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print('Error response: ${e.response?.data}');
+      }
+      print('Exception: $e');
+      return null;
+    }
+    return null;
+  }
+
+  Future<bool?> deleteBlog({required String blogId}) async {
+    Dio dio = new Dio();
+    var token = await AuthService.getAccessToken();
+
+    try {
+      Response response = await dio.delete('http://localhost:3000/api/blog/$blogId',
+      options: Options(headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'multipart/form-data',
+        }),
+      );
+
+      if (response.statusCode == 202) {
+        return true;
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print('Error response: ${e.response?.data}');
+      }
+      print('Exception: $e');
+      return null;
+    }
+    return null;
+  }
 }

@@ -100,4 +100,44 @@ class PropertyService {
       return null;
     }
   }
+
+  Future<bool?> PayBeforeDeletePropertyById({
+    required String type,
+    required String cardNumber,
+    required int expiryMonth,
+    required int expiryYear,
+    required String cvv,
+    required String propertyId,
+  }) async {
+    Dio dio = Dio();
+
+    final body = {
+      'type': type,
+      'expiryYear': expiryYear,
+      'cardNumber': cardNumber,
+      'expiryMonth': expiryMonth,
+      'cvv': cvv
+    };
+
+    // التوكن
+    var token = await AuthService.getAccessToken();
+
+    try {
+      final response = await dio.post(
+        'http://localhost:3000/api/property/pay-before/$propertyId',
+        data: body,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      print(response.data);
+      return true;
+    } on DioException catch (e) {
+      print("Status code: ${e.response?.statusCode}");
+      print("Response data: ${e.response?.data}");
+      return null;
+    }
+  }
 }
