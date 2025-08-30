@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:property_system/client/components/expired_components.dart';
 import 'package:property_system/client/models/client_done_Properties.dart';
@@ -52,7 +53,7 @@ class _ClientExpiredPropertyPageState extends State<ClientExpiredPropertyPage> {
       if (list.isEmpty) {
         return Center(
           child: Text(
-            localizations.translate('no_properties_found'),
+            localizations.translate('no_properties'),
             style: const TextStyle(fontSize: 16),
           ),
         );
@@ -92,13 +93,13 @@ class _ClientExpiredPropertyPageState extends State<ClientExpiredPropertyPage> {
             property: property,
             onTap: () {
               Navigator.push(
-            context,
-            MaterialPageRoute(
-              // i think this page name has to be changed
-              builder: (_) => PropertyDetailsPage(
-                propertyModel: property.propertyModel,
-              ),
-            ));
+                context,
+                MaterialPageRoute(
+                  // i think this page name has to be changed
+                  builder: (_) => PropertyDetailsPage(
+                    propertyModel: property.propertyModel,
+                  ),
+                ));
             },
           );
         },
@@ -114,7 +115,7 @@ class _ClientExpiredPropertyPageState extends State<ClientExpiredPropertyPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                localizations.translate('your_expired_properties'),
+                localizations.translate('expired_properties'),
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.white,

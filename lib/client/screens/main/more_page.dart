@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:property_system/client/models/profile.model.dart';
 import 'package:property_system/client/reservation%20_for_client/client_reservation_page.dart';
@@ -175,7 +176,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.language,
-              label: localizations.translate('language'),
+              label: 'اللغة',
               onTap: () {
                 _showLanguageSheet(context);
               },
@@ -287,7 +288,7 @@ class _MorePageState extends State<MorePage> {
               },
             ),
             buildMenuButton(
-              icon: Icons.report_problem,
+              icon: FontAwesomeIcons.blog,
               label: localizations.translate('إنشاء مدونة'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -296,7 +297,7 @@ class _MorePageState extends State<MorePage> {
               },
             ),
             buildMenuButton(
-              icon: Icons.person,
+              icon: FontAwesomeIcons.compressAlt,
               label: 'شكاوى المكتب',
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -306,7 +307,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('ThePropertiesInWaitingPage'),
+              label: 'الشكاوى في قائمة الإنتظار',
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return MyPropertiesPage();
@@ -315,7 +316,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('OfficeDonePropertiesPage'),
+              label: 'صفحة عقارات المكتب المنتهية',
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return OfficeDonePropertiesPage();
@@ -356,7 +357,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('ClientExpiredPropertyPage'),
+              label: localizations.translate('صفحة العقارات المنتهية الصلاحية للعميل '),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ClientExpiredPropertyPage();
@@ -365,7 +366,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.book,
-              label: localizations.translate('ClientCreateReservationPage'),
+              label: localizations.translate('صفحة انشاء الحجز للعميل '),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ClientCreateReservationPage(
@@ -376,7 +377,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.book,
-              label: localizations.translate('ClientReservationPage'),
+              label:'حجوزات العميل',
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ClientReservationPage();
@@ -385,7 +386,7 @@ class _MorePageState extends State<MorePage> {
             ),
             buildMenuButton(
               icon: Icons.report_problem,
-              label: localizations.translate('PushComplaintPage'),
+              label: 'تقديم شكوى',
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return PushComplaintPage(

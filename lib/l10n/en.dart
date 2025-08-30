@@ -1,4 +1,3 @@
-
 const Map<String, String> en = {
   // من ClientProfile
   'profile': 'Profile',
@@ -74,6 +73,83 @@ const Map<String, String> en = {
   // من FavoritePage
   'favorites': 'Favorites',
   'properties': 'Properties',
+  // من PushComplaintPage
+  'submit_complaint': 'Submit Complaint',
+  'complaint_reason': 'Complaint Reason',
+  'enter_complaint_reason': 'Enter Complaint Reason',
+  'complaint_description': 'Complaint Description',
+  'write_complaint_details': 'Write Complaint Details',
+  'cancel_complaint': 'Cancel Complaint',
+  'submit_complaint_button': 'Submit Complaint',
+  'enter_complaint_title': 'Please enter a complaint title',
+  'enter_complaint_content': 'Please enter complaint content',
+  'complaint_submitted_success': 'Complaint submitted successfully',
+  'complaint_submission_failed': 'Failed to submit complaint',
+  // من OfficeDonePropertiesPage
+  'completed_properties': 'Completed Properties',
+  'no_completed_properties': 'No completed properties',
+  'sold': 'Sold',
+  'rented': 'Rented',
+  // من InitialPage
+  'app_description': 'The first property management app in Syria and the world',
+  'continue': 'Continue',
+  // من CreateBlogPage
+  'create_blog': 'Create Blog',
+  'save_as_draft': 'Save as Draft',
+  'blog_title': 'Blog Title',
+  'enter_blog_title': 'Enter Blog Title',
+  'blog_content': 'Blog Content',
+  'enter_blog_content': 'Enter Blog Content',
+  'blog_images': 'Blog Images',
+  'no_data_to_save': 'No data to save',
+  'draft_saved_success': '✅ Draft saved successfully',
+  'enter_title_content_images': 'Please enter title, content, and select images',
+  'blog_published_success': '✅ Blog published successfully!',
+  'publish_error': '❌ Publish error',
+  'publish_blog': 'Publish Blog',
+  // من OfficeComplaintPage
+  'complaints': 'Complaints',
+  'no_complaints': 'No complaints',
+  // من MyPropertiesPage
+  'my_properties': 'My Properties',
+  'published_properties': 'Published Properties',
+  'pending_properties': 'Pending Properties',
+  // من AcceptedPropertiesPage
+  'no_properties': 'No properties',
+  'properties_for_sale': 'Properties for Sale',
+  'properties_for_rent': 'Properties for Rent',
+  // من ClientExpiredPropertyPage
+  'expired_properties': 'Your Expired Properties',
+  // من ClientCreateReservationPage
+  'payment_details': 'Payment Details for Property Reservation',
+  'card_number': 'Card Number',
+  'card_number_hint': '1234 5678 9012 3456',
+  'enter_card_number': 'Please enter card number',
+  'card_number_length_error': 'Card number must be 16 digits',
+  'expiry_date': 'Expiry Date',
+  'expiry_date_hint': 'MM/YY',
+  'enter_expiry_date': 'Please enter expiry date',
+  'expiry_date_format_error': 'Date must be in MM/YY format',
+  'cvv': 'CVV',
+  'cvv_hint': '123',
+  'enter_cvv': 'Please enter CVV',
+  'cvv_length_error': 'CVV must be 3 digits',
+  'card_type': 'Card Type',
+  'visa': 'Visa',
+  'mastercard': 'MasterCard',
+  'confirm_reservation': 'Confirm Reservation',
+  'security_info': 'We do not store your card details. Payment is fully secure.',
+  'success': 'Success ✅',
+  'reservation_success': 'Property reserved successfully!',
+  'ok': 'OK',
+  'reservation_failed': 'Reservation failed ❌',
+  // من RegisterPage
+  'register_account': 'تسجيل حساب',
+  'phone_number_s': 'phone number',
+  'email_s': 'email',
+  'register': 'تسجيل',
+  'already_have_account': 'هل لديك حساب بالفعل؟',
+  'sign_in': 'تسجيل الدخول',
   // إضافة مفتاح subscriptions كما طلبت
   'subscriptions': 'Subscriptions',
 };

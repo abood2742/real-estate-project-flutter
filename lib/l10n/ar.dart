@@ -1,4 +1,3 @@
-
 const Map<String, String> ar = {
   // من ClientProfile
   'profile': 'الملف الشخصي',
@@ -74,6 +73,83 @@ const Map<String, String> ar = {
   // من FavoritePage
   'favorites': 'المفضلة',
   'properties': 'العقارات',
+  // من PushComplaintPage
+  'submit_complaint': 'تقديم شكوى',
+  'complaint_reason': 'سبب الشكوى',
+  'enter_complaint_reason': 'أدخل سبب الشكوى',
+  'complaint_description': 'وصف الشكوى',
+  'write_complaint_details': 'اكتب تفاصيل الشكوى',
+  'cancel_complaint': 'إلغاء الشكوى',
+  'submit_complaint_button': 'إرسال الشكوى',
+  'enter_complaint_title': 'يرجى إدخال عنوان للشكوى',
+  'enter_complaint_content': 'يرجى إدخال محتوى الشكوى',
+  'complaint_submitted_success': 'تم إرسال الشكوى بنجاح',
+  'complaint_submission_failed': 'فشل إرسال الشكوى',
+  // من OfficeDonePropertiesPage
+  'completed_properties': 'عقارات منتهية',
+  'no_completed_properties': 'لا توجد عقارات منتهية',
+  'sold': 'مباعة',
+  'rented': 'مؤجرة',
+  // من InitialPage
+  'app_description': 'تطبيق إدارة العقارات الأول في سورية والعالم',
+  'continue': 'استمرار',
+  // من CreateBlogPage
+  'create_blog': 'إنشاء مدونة',
+  'save_as_draft': 'حفظ كمسودة',
+  'blog_title': 'عنوان المدونة',
+  'enter_blog_title': 'أدخل عنوان المدونة',
+  'blog_content': 'محتوى المدونة',
+  'enter_blog_content': 'أدخل محتوى المدونة',
+  'blog_images': 'صور المدونة',
+  'no_data_to_save': 'لا توجد بيانات لحفظها',
+  'draft_saved_success': '✅ تم حفظ المسودة بنجاح',
+  'enter_title_content_images': 'يرجى إدخال العنوان والمحتوى واختيار صورة',
+  'blog_published_success': '✅ تم نشر المدونة بنجاح!',
+  'publish_error': '❌ خطأ في النشر',
+  'publish_blog': 'نشر المدونة',
+  // من OfficeComplaintPage
+  'complaints': 'الشكاوى',
+  'no_complaints': 'لا توجد شكاوى',
+  // من MyPropertiesPage
+  'my_properties': 'عقاراتي',
+  'published_properties': 'عقارات منشورة',
+  'pending_properties': 'عقارات في انتظار الموافقة',
+  // من AcceptedPropertiesPage
+  'no_properties': 'لا توجد عقارات',
+  'properties_for_sale': 'عقارات للبيع',
+  'properties_for_rent': 'عقارات للإيجار',
+  // من ClientExpiredPropertyPage
+  'expired_properties': 'عقاراتك المنتهية',
+  // من ClientCreateReservationPage
+  'payment_details': 'بيانات الدفع لحجز العقار',
+  'card_number': 'رقم البطاقة',
+  'card_number_hint': '1234 5678 9012 3456',
+  'enter_card_number': 'الرجاء إدخال رقم البطاقة',
+  'card_number_length_error': 'رقم البطاقة يجب أن يكون 16 رقمًا',
+  'expiry_date': 'تاريخ الانتهاء',
+  'expiry_date_hint': 'MM/YY',
+  'enter_expiry_date': 'الرجاء إدخال تاريخ الانتهاء',
+  'expiry_date_format_error': 'يجب أن يكون التاريخ بالصيغة MM/YY',
+  'cvv': 'CVV',
+  'cvv_hint': '123',
+  'enter_cvv': 'الرجاء إدخال CVV',
+  'cvv_length_error': 'CVV يجب أن يكون 3 أرقام',
+  'card_type': 'نوع البطاقة',
+  'visa': 'Visa',
+  'mastercard': 'MasterCard',
+  'confirm_reservation': 'تأكيد الحجز',
+  'security_info': 'نحن لا نخزن بيانات بطاقتك البنكية. الدفع آمن بالكامل.',
+  'success': 'نجاح ✅',
+  'reservation_success': 'تم حجز العقار بنجاح!',
+  'ok': 'موافق',
+  'reservation_failed': 'فشل الحجز ❌',
+  // من RegisterPage
+  'register_account': 'تسجيل حساب',
+  'phone_number_s': 'رقم الهاتف',
+  'email_s': 'البريد الإلكتروني',
+  'register': 'تسجيل',
+  'already_have_account': 'هل لديك حساب بالفعل؟',
+  'sign_in': 'تسجيل الدخول',
   // إضافة مفتاح subscriptions كما طلبت
   'subscriptions': 'الاشتراكات',
 };
