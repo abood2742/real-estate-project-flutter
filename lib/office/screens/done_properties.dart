@@ -4,6 +4,7 @@ import 'package:property_system/client/components/property_cards/property_card.d
 import 'package:property_system/client/models/property_model.dart';
 import 'package:property_system/client/screens/search/resault/property/Property_Details_Page.dart';
 import 'package:property_system/office/services/office_properties.dart';
+import 'package:property_system/l10n/app_localizations.dart';
 
 class OfficeDonePropertiesPage extends StatefulWidget {
   const OfficeDonePropertiesPage({super.key});
@@ -33,6 +34,7 @@ class _OfficeDonePropertiesPageState extends State<OfficeDonePropertiesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
 
     // تقسيم العقارات حسب نوع العملية
     final soldProperties = propertyModels
@@ -50,7 +52,7 @@ class _OfficeDonePropertiesPageState extends State<OfficeDonePropertiesPage> {
       if (list.isEmpty) {
         return Center(
           child: Text(
-            'لا توجد عقارات منتهية',
+            localizations.translate('no_completed_properties'),
             style: const TextStyle(fontSize: 16),
           ),
         );
@@ -86,13 +88,13 @@ class _OfficeDonePropertiesPageState extends State<OfficeDonePropertiesPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 79, 142, 147),
+          backgroundColor: const Color.fromARGB(255, 68, 137, 255),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'عقارات منتهية',
-                style: TextStyle(fontSize: 20, color: Colors.white),
+              Text(
+                localizations.translate('completed_properties'),
+                style: const TextStyle(fontSize: 20, color: Colors.white),
               ),
               const SizedBox(width: 16),
               Lottie.asset(
@@ -105,13 +107,13 @@ class _OfficeDonePropertiesPageState extends State<OfficeDonePropertiesPage> {
             ],
           ),
           centerTitle: true,
-          bottom: const TabBar(
+          bottom: TabBar(
             indicatorColor: Colors.white,
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white70,
             tabs: [
-              Tab(text: 'مباعة'),
-              Tab(text: 'مؤجرة'),
+              Tab(text: localizations.translate('sold')),
+              Tab(text: localizations.translate('rented')),
             ],
           ),
         ),
